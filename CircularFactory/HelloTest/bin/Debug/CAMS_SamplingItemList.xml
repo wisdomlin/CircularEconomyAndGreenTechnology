@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CAMS_SamplingItemList>
+  <CAMS_SamplingItem CAMS="CAMS_ParticulateMatters" SamplingItem="Opacity" SamplingFrequency="10" />
+  <CAMS_SamplingItem CAMS="CAMS_GaseousPollutants" SamplingItem="SulfurDioxide" SamplingFrequency="900" />
+  <CAMS_SamplingItem CAMS="CAMS_GaseousPollutants" SamplingItem="NitrogenOxides" SamplingFrequency="900" />
+  <CAMS_SamplingItem CAMS="CAMS_GaseousPollutants" SamplingItem="CarbonMonoxide" SamplingFrequency="900" />
+  <CAMS_SamplingItem CAMS="CAMS_GaseousPollutants" SamplingItem="TotalReducedSulfur" SamplingFrequency="900" />
+  <CAMS_SamplingItem CAMS="CAMS_GaseousPollutants" SamplingItem="HydrogenChloride" SamplingFrequency="900" />
+  <CAMS_SamplingItem CAMS="CAMS_GaseousPollutants" SamplingItem="VolatileOrganicLiquid" SamplingFrequency="900" />
+  <CAMS_SamplingItem CAMS="CAMS_DilutionGas" SamplingItem="Oxygen" SamplingFrequency="900" />
+  <CAMS_SamplingItem CAMS="CAMS_FlowRate" SamplingItem="FlowRate" SamplingFrequency="60" />
+  <CAMS_SamplingItem CAMS="CAMS_FlowRate" SamplingItem="Temperature" SamplingFrequency="60" />
+</CAMS_SamplingItemList>

@@ -1,0 +1,9 @@
+D:\Workspace\Branches\HelloTest\MeasureItem\bin\Debug\netstandard1.4\MeasureItem.deps.json
+D:\Workspace\Branches\HelloTest\MeasureItem\bin\Debug\netstandard1.4\MeasureItem.dll
+D:\Workspace\Branches\HelloTest\MeasureItem\bin\Debug\netstandard1.4\MeasureItem.pdb
+D:\Workspace\Branches\HelloTest\MeasureItem\obj\Debug\netstandard1.4\MeasureItem.csproj.CoreCompileInputs.cache
+D:\Workspace\Branches\HelloTest\MeasureItem\obj\Debug\netstandard1.4\MeasureItem.AssemblyInfo.cs
+D:\Workspace\Branches\HelloTest\MeasureItem\obj\Debug\netstandard1.4\MeasureItem.dll
+D:\Workspace\Branches\HelloTest\MeasureItem\obj\Debug\netstandard1.4\MeasureItem.pdb
+D:\Workspace\Branches\HelloTest\MeasureItem\obj\Debug\netstandard1.4\MeasureItem.csprojAssemblyReference.cache
+D:\Workspace\Branches\HelloTest\MeasureItem\bin\Debug\netstandard1.4\CAMS_MeasureItemList.xml

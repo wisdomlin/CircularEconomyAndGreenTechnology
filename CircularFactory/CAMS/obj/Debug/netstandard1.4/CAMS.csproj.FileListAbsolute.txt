@@ -1,0 +1,13 @@
+D:\Workspace\Branches\HelloTest\CAMS\bin\Debug\netstandard1.4\CAMS.deps.json
+D:\Workspace\Branches\HelloTest\CAMS\bin\Debug\netstandard1.4\CAMS.dll
+D:\Workspace\Branches\HelloTest\CAMS\bin\Debug\netstandard1.4\CAMS.pdb
+D:\Workspace\Branches\HelloTest\CAMS\obj\Debug\netstandard1.4\CAMS.csproj.CoreCompileInputs.cache
+D:\Workspace\Branches\HelloTest\CAMS\obj\Debug\netstandard1.4\CAMS.AssemblyInfo.cs
+D:\Workspace\Branches\HelloTest\CAMS\obj\Debug\netstandard1.4\CAMS.dll
+D:\Workspace\Branches\HelloTest\CAMS\obj\Debug\netstandard1.4\CAMS.pdb
+D:\Workspace\Branches\HelloTest\CAMS\obj\Debug\netstandard1.4\CAMS.csprojAssemblyReference.cache
+D:\Workspace\Branches\HelloTest\CAMS\obj\Debug\netstandard1.4\CAMS.csproj.CopyComplete
+D:\Workspace\Branches\HelloTest\CAMS\bin\Debug\netstandard1.4\CAMS_SamplingItemList.xml
+D:\Workspace\Branches\HelloTest\CAMS\bin\Debug\netstandard1.4\SamplingItemBase.dll
+D:\Workspace\Branches\HelloTest\CAMS\bin\Debug\netstandard1.4\SamplingItemBase.pdb
+D:\Workspace\Branches\HelloTest\CAMS\obj\Debug\netstandard1.4\CAMS.AssemblyInfoInputs.cache
