@@ -1,6 +1,6 @@
-# CircularEconomyAndGreenTechnology
-
+# CircularFactory
 Example for 需求、測試、設計
+
 ## 需求分析
 * 在這個做垃圾集中與分類的工廠中，需要一個**連續自動監測設施 (Continuous Auto Monitoring Systems，簡稱 CAMS)**，它可以連續自動「*採樣 (Sampling)*」、「*分析 (Analyzing)*」 與「*記錄 (Recording)*」。監測設施有許多種類，例如：粒狀污染物、氣狀污染物、稀釋氣體、排放流率等。
 * **粒狀污染物監測設施 (CAMS_ParticulateMatters)**，其量測項目為：**不透光率 (Opacity)**。
