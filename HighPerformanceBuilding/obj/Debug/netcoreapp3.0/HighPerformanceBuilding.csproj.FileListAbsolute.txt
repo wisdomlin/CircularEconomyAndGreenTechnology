@@ -1,0 +1,14 @@
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\HighPerformanceBuilding\bin\Debug\netcoreapp3.0\Properties\launchSettings.json
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\HighPerformanceBuilding\bin\Debug\netcoreapp3.0\HighPerformanceBuilding.exe
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\HighPerformanceBuilding\bin\Debug\netcoreapp3.0\HighPerformanceBuilding.deps.json
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\HighPerformanceBuilding\bin\Debug\netcoreapp3.0\HighPerformanceBuilding.runtimeconfig.json
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\HighPerformanceBuilding\bin\Debug\netcoreapp3.0\HighPerformanceBuilding.runtimeconfig.dev.json
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\HighPerformanceBuilding\bin\Debug\netcoreapp3.0\HighPerformanceBuilding.dll
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\HighPerformanceBuilding\bin\Debug\netcoreapp3.0\HighPerformanceBuilding.pdb
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\HighPerformanceBuilding\obj\Debug\netcoreapp3.0\HighPerformanceBuilding.csprojAssemblyReference.cache
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\HighPerformanceBuilding\obj\Debug\netcoreapp3.0\HighPerformanceBuilding.csproj.CoreCompileInputs.cache
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\HighPerformanceBuilding\obj\Debug\netcoreapp3.0\HighPerformanceBuilding.AssemblyInfoInputs.cache
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\HighPerformanceBuilding\obj\Debug\netcoreapp3.0\HighPerformanceBuilding.AssemblyInfo.cs
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\HighPerformanceBuilding\obj\Debug\netcoreapp3.0\HighPerformanceBuilding.RazorTargetAssemblyInfo.cache
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\HighPerformanceBuilding\obj\Debug\netcoreapp3.0\HighPerformanceBuilding.dll
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\HighPerformanceBuilding\obj\Debug\netcoreapp3.0\HighPerformanceBuilding.pdb

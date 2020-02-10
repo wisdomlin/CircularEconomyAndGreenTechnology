@@ -1,0 +1,17 @@
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.WPF\bin\Debug\netcoreapp3.0\BiologicalProcessing.WPF.exe
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.WPF\bin\Debug\netcoreapp3.0\BiologicalProcessing.WPF.deps.json
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.WPF\bin\Debug\netcoreapp3.0\BiologicalProcessing.WPF.runtimeconfig.json
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.WPF\bin\Debug\netcoreapp3.0\BiologicalProcessing.WPF.runtimeconfig.dev.json
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.WPF\bin\Debug\netcoreapp3.0\BiologicalProcessing.WPF.dll
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.WPF\bin\Debug\netcoreapp3.0\BiologicalProcessing.WPF.pdb
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.WPF\obj\Debug\netcoreapp3.0\MainWindow.g.cs
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.WPF\obj\Debug\netcoreapp3.0\App.g.cs
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.WPF\obj\Debug\netcoreapp3.0\BiologicalProcessing.WPF_MarkupCompile.cache
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.WPF\obj\Debug\netcoreapp3.0\BiologicalProcessing.WPF_MarkupCompile.lref
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.WPF\obj\Debug\netcoreapp3.0\MainWindow.baml
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.WPF\obj\Debug\netcoreapp3.0\BiologicalProcessing.WPF.g.resources
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.WPF\obj\Debug\netcoreapp3.0\BiologicalProcessing.WPF.AssemblyInfoInputs.cache
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.WPF\obj\Debug\netcoreapp3.0\BiologicalProcessing.WPF.AssemblyInfo.cs
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.WPF\obj\Debug\netcoreapp3.0\BiologicalProcessing.WPF.dll
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.WPF\obj\Debug\netcoreapp3.0\BiologicalProcessing.WPF.pdb
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.WPF\obj\Debug\netcoreapp3.0\BiologicalProcessing.WPF.csprojAssemblyReference.cache

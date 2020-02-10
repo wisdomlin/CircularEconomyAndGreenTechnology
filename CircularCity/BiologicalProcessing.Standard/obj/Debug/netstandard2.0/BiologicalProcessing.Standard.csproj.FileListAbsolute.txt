@@ -1,0 +1,8 @@
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.Standard\bin\Debug\netstandard2.0\BiologicalProcessing.Standard.deps.json
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.Standard\bin\Debug\netstandard2.0\BiologicalProcessing.Standard.dll
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.Standard\bin\Debug\netstandard2.0\BiologicalProcessing.Standard.pdb
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.Standard\obj\Debug\netstandard2.0\BiologicalProcessing.Standard.AssemblyInfoInputs.cache
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.Standard\obj\Debug\netstandard2.0\BiologicalProcessing.Standard.AssemblyInfo.cs
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.Standard\obj\Debug\netstandard2.0\BiologicalProcessing.Standard.dll
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.Standard\obj\Debug\netstandard2.0\BiologicalProcessing.Standard.pdb
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\CircularFactory\BiologicalProcessing.Standard\obj\Debug\netstandard2.0\BiologicalProcessing.Standard.csprojAssemblyReference.cache

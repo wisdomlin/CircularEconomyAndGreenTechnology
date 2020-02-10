@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\CircularFactory",
+    "\\CircularFactory\\BiologicalProcessing.Standard",
+    "\\CircularFactory\\BiologicalProcessing.Standard\\WWTP"
+  ],
+  "SelectedNode": "\\CircularFactory\\BiologicalProcessing.Standard\\WWTP\\WWTP.cs",
+  "PreviewInSolutionExplorer": false
+}

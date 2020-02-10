@@ -1,0 +1,16 @@
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\BAD-LP\bin\Debug\netcoreapp3.0\appsettings.Development.json
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\BAD-LP\bin\Debug\netcoreapp3.0\appsettings.json
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\BAD-LP\bin\Debug\netcoreapp3.0\Properties\launchSettings.json
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\BAD-LP\bin\Debug\netcoreapp3.0\BAD-LP.exe
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\BAD-LP\bin\Debug\netcoreapp3.0\BAD-LP.deps.json
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\BAD-LP\bin\Debug\netcoreapp3.0\BAD-LP.runtimeconfig.json
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\BAD-LP\bin\Debug\netcoreapp3.0\BAD-LP.runtimeconfig.dev.json
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\BAD-LP\bin\Debug\netcoreapp3.0\BAD-LP.dll
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\BAD-LP\bin\Debug\netcoreapp3.0\BAD-LP.pdb
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\BAD-LP\obj\Debug\netcoreapp3.0\BAD-LP.csproj.CoreCompileInputs.cache
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\BAD-LP\obj\Debug\netcoreapp3.0\BAD-LP.AssemblyInfoInputs.cache
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\BAD-LP\obj\Debug\netcoreapp3.0\BAD-LP.AssemblyInfo.cs
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\BAD-LP\obj\Debug\netcoreapp3.0\BAD-LP.RazorTargetAssemblyInfo.cache
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\BAD-LP\obj\Debug\netcoreapp3.0\BAD-LP.dll
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\BAD-LP\obj\Debug\netcoreapp3.0\BAD-LP.pdb
+C:\Workspace\Branches\CircularEconomyAndGreenTechnology\BAD-LP\obj\Debug\netcoreapp3.0\BAD-LP.csprojAssemblyReference.cache
