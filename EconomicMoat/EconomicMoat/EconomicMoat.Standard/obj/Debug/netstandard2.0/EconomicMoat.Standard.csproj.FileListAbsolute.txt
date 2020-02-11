@@ -1,8 +1,0 @@
-C:\Workspace\Branches\CircularEconomyAndGreenTechnology\EconomicMoat\EconomicMoat\EconomicMoat.Standard\bin\Debug\netstandard2.0\EconomicMoat.Standard.deps.json
-C:\Workspace\Branches\CircularEconomyAndGreenTechnology\EconomicMoat\EconomicMoat\EconomicMoat.Standard\bin\Debug\netstandard2.0\EconomicMoat.Standard.dll
-C:\Workspace\Branches\CircularEconomyAndGreenTechnology\EconomicMoat\EconomicMoat\EconomicMoat.Standard\bin\Debug\netstandard2.0\EconomicMoat.Standard.pdb
-C:\Workspace\Branches\CircularEconomyAndGreenTechnology\EconomicMoat\EconomicMoat\EconomicMoat.Standard\obj\Debug\netstandard2.0\EconomicMoat.Standard.AssemblyInfoInputs.cache
-C:\Workspace\Branches\CircularEconomyAndGreenTechnology\EconomicMoat\EconomicMoat\EconomicMoat.Standard\obj\Debug\netstandard2.0\EconomicMoat.Standard.AssemblyInfo.cs
-C:\Workspace\Branches\CircularEconomyAndGreenTechnology\EconomicMoat\EconomicMoat\EconomicMoat.Standard\obj\Debug\netstandard2.0\EconomicMoat.Standard.dll
-C:\Workspace\Branches\CircularEconomyAndGreenTechnology\EconomicMoat\EconomicMoat\EconomicMoat.Standard\obj\Debug\netstandard2.0\EconomicMoat.Standard.pdb
-C:\Workspace\Branches\CircularEconomyAndGreenTechnology\EconomicMoat\EconomicMoat\EconomicMoat.Standard\obj\Debug\netstandard2.0\EconomicMoat.Standard.csprojAssemblyReference.cache
