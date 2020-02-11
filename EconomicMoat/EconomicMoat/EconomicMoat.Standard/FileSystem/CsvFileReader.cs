@@ -13,69 +13,27 @@ namespace EconomicMoat.Standard
     /// </summary>
     public class CsvFileReader
     {
+
+        public CsvFileStructure Cfs;
+        public DatalineAnalysisLogic Dal;
+
         #region File Properties
         public string FilePath;
         public Char[] Delimiters;
-
-        public int HeadingLinesStartAt;
-        public int HeaderLineStartAt;
-        public int DataLinesStartAt;
-        public int FooterLinesStartAt;
         #endregion
 
         #region Class CONSTANTS
-        /// <summary>
-        /// Constant Value = -1
-        /// </summary>
-        public int COUNT_UNKNOWN = -1;
-        /// <summary>
-        /// Constant Value = -1
-        /// </summary>
-        public int NOT_APPLIED = -1;
+
+
         #endregion
 
-        public DataLinesFormat Dlf;
-
-
         private string[] headers;
-        private DataTable table;
 
         public CsvFileReader()
         {
-            table = new DataTable();
-
             // Default Values
             FilePath = "./";
             Delimiters = new Char[] { ',', '\\', '\n', ' ', '\t' };
-            HeadingLinesStartAt = NOT_APPLIED;
-            HeaderLineStartAt = 1;
-            DataLinesStartAt = 2;
-            FooterLinesStartAt = NOT_APPLIED;
-        }
-
-        public bool ReadAllTgFiles()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool FindDatesBeyondTgThreshold(int Threshold)
-        {
-            bool res = true;
-            try
-            {
-                // TODO: Assign FindDatesBeyondThreshold() for ProcessDataLines()
-                Dlf.AnalysisLogicAsThreshold = Threshold;
-                ReadFullFile();
-            }
-            catch
-            {
-                res = false;
-            }
-            finally
-            {
-
-            }
-            return res;
         }
 
         public bool ReadFullFile()
@@ -108,17 +66,16 @@ namespace EconomicMoat.Standard
             return res;
         }
 
-        private enum Locations { HeadingLines, HeaderLines, DataLines, FooterLines }
         private void ProcessForEachLine(string line, int line_index)
         {
-            Locations loc = DetermineLocationFor(line_index);
+            CsvFileStructure.Locations loc = DetermineLocationFor(line_index);
             switch (loc)
             {
-                case Locations.HeadingLines:
+                case CsvFileStructure.Locations.HeadingLines:
                     {
                         break;
                     }
-                case Locations.HeaderLines:
+                case CsvFileStructure.Locations.HeaderLines:
                     {
                         headers = line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
                         string[] DataTypes = {
@@ -131,24 +88,22 @@ namespace EconomicMoat.Standard
                         for (int i = 0; i < headers.Length; i++)
                         {
 
-                            DataColumn col = new DataColumn(headers[i], Type.GetType(DataTypes[i]));
-                            table.Columns.Add(col);
-                            col.AllowDBNull = true;
-                            col.Unique = false;
+                            //DataColumn col = new DataColumn(headers[i], Type.GetType(DataTypes[i]));
+                            //dtAnalysisResult.Columns.Add(col);
+                            //col.AllowDBNull = true;
+                            //col.Unique = false;
                         }
                         break;
                     }
-                case Locations.DataLines:
+                case CsvFileStructure.Locations.DataLines:
                     {
                         string[] splits = line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
                         // TODO: Check (splits.Length == headers.Length)
-                        //DataLinesFormat.TryParseAndAnalysisDataLines(splits);
-                        Dal.Analyze(int n, string splits[n], out DataRow drAnalysisResult);
-                        Dt.add(drAnalysisResult);
-
+                        Dal.CustomizedAnalyze(splits);
+                        //dtAnalysisResult.Rows.Add(drAnalysisResult);
                         break;
                     }
-                case Locations.FooterLines:
+                case CsvFileStructure.Locations.FooterLines:
                     {
                         break;
                     }
@@ -159,19 +114,18 @@ namespace EconomicMoat.Standard
             }
         }
 
-        private Locations DetermineLocationFor(int line_index)
+        private CsvFileStructure.Locations DetermineLocationFor(int line_index)
         {
             // 針對所有分界點由低到高排序 (每個分界點皆須是 Unique，不適用的分界點為 -1)
-            List<Tuple<int, Locations>> list = new List<Tuple<int, Locations>>();
-            list.Add(Tuple.Create(HeadingLinesStartAt, Locations.HeadingLines));
-            list.Add(Tuple.Create(HeaderLineStartAt, Locations.HeaderLines));
-            list.Add(Tuple.Create(DataLinesStartAt, Locations.DataLines));
-            list.Add(Tuple.Create(FooterLinesStartAt, Locations.FooterLines));
+            List<Tuple<int, CsvFileStructure.Locations>> list = new List<Tuple<int, CsvFileStructure.Locations>>();
+            list.Add(Tuple.Create(Cfs.HeaderLineStartAt, CsvFileStructure.Locations.HeaderLines));
+            list.Add(Tuple.Create(Cfs.DataLinesStartAt, CsvFileStructure.Locations.DataLines));
+            list.Add(Tuple.Create(Cfs.FooterLinesStartAt, CsvFileStructure.Locations.FooterLines));
             list.Sort((x, y) => y.Item1.CompareTo(x.Item1));
 
             // 依序比較是否進入該點範圍內，直到全部比較完畢
-            Locations result = list[0].Item2;
-            foreach (Tuple<int, Locations> entry in list)
+            CsvFileStructure.Locations result = list[0].Item2;
+            foreach (Tuple<int, CsvFileStructure.Locations> entry in list)
             {
                 if (entry.Item1 <= line_index)
                 {
@@ -180,5 +134,11 @@ namespace EconomicMoat.Standard
             }
             return result;
         }
+
+        public bool ReadAllTgFiles()
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
