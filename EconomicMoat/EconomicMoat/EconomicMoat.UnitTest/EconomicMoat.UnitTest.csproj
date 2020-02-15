@@ -16,4 +16,8 @@
     <ProjectReference Include="..\EconomicMoat.Standard\EconomicMoat.Standard.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="JudgeManagement\" />
+  </ItemGroup>
+
 </Project>

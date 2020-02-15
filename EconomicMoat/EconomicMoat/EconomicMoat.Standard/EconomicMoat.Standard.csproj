@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
+    <Folder Include="CsvFileReader\DatalineEntityFormat\" />
     <Folder Include="DataPipelines\" />
     <Folder Include="DataVisualizations\" />
     <Folder Include="InfrastructureDecisions\" />

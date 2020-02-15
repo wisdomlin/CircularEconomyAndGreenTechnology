@@ -5,7 +5,7 @@ using System.Data;
 
 namespace EconomicMoat.UnitTest
 {
-    class TestCsvFileReader
+    class CsvFileReader_CsvFileStructure
     {
         string Path;
         CsvFileReader Cfr;
@@ -22,7 +22,7 @@ namespace EconomicMoat.UnitTest
             Cfs = new CsvFileStructure();
             Cfs.HeaderLineStartAt = 21;
             Cfs.DataLinesStartAt = 22;
-            Cfs.FooterLinesStartAt = Cfs.NOT_APPLIED;
+            Cfs.FooterLinesCount = 0;
 
             Cfr.Cfs = Cfs;
         }
@@ -30,8 +30,8 @@ namespace EconomicMoat.UnitTest
         [Test]
         public void TestReadFullFile()
         {
-            Cfr.Dal = new DatalineAnalysisLogic();  // TODO: 創建，不做事的 DAL
-            Cfr.Dal.dlf = new DataLinesFormat();
+            Cfr.Dal = new DatalineAnalysisLogic();
+            Cfr.Dal.Def = new DatalineEntityFormat();
             bool result = Cfr.ReadFullFile();
             Assert.IsTrue(result);
         }
@@ -39,8 +39,9 @@ namespace EconomicMoat.UnitTest
         [Test]
         public void TestFindDatesBeyondTgThreshold()
         {
-            Cfr.Dal = new DatalineAnalysisLogic();
-            Cfr.Dal.dlf = new DataLinesFormat();
+            Cfr.Dal = new Dal_TgAbsMaxAlarm();
+            //Cfr.Dal.SetThreshold(330);
+            Cfr.Dal.Def = new Def_TG();
             bool result = Cfr.ReadFullFile();
             Assert.IsTrue(result);
         }

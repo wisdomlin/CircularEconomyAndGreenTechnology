@@ -6,7 +6,7 @@ namespace EconomicMoat.Standard
 {
     public class CsvFileStructure
     {
-        public enum Locations 
+        public enum LocationInFile 
         { 
             HeadingLines, 
             HeaderLines, 
@@ -16,18 +16,13 @@ namespace EconomicMoat.Standard
 
         public int HeaderLineStartAt;
         public int DataLinesStartAt;
-        public int FooterLinesStartAt;
-
-        /// <summary>
-        /// Constant Value = -1
-        /// </summary>
-        public int NOT_APPLIED = -1;
+        public int FooterLinesCount;
 
         public CsvFileStructure()
         {
-            HeaderLineStartAt = 21;
-            DataLinesStartAt = 22;
-            FooterLinesStartAt = NOT_APPLIED;
+            HeaderLineStartAt = 1;
+            DataLinesStartAt = 2;
+            FooterLinesCount = 0;
         }
     }
 }

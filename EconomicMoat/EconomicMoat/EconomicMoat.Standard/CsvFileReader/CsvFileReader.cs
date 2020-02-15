@@ -4,6 +4,7 @@ using System.Data;
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
+using System.Linq;
 
 namespace EconomicMoat.Standard
 {
@@ -13,7 +14,6 @@ namespace EconomicMoat.Standard
     /// </summary>
     public class CsvFileReader
     {
-
         public CsvFileStructure Cfs;
         public DatalineAnalysisLogic Dal;
 
@@ -22,16 +22,14 @@ namespace EconomicMoat.Standard
         public Char[] Delimiters;
         #endregion
 
-        #region Class CONSTANTS
-
-
-        #endregion
-
+        #region Supports
         private string[] headers;
+        private int FileTotalLinesCount;
+        #endregion
 
         public CsvFileReader()
         {
-            // Default Values
+            // Default File Properties
             FilePath = "./";
             Delimiters = new Char[] { ',', '\\', '\n', ' ', '\t' };
         }
@@ -46,6 +44,8 @@ namespace EconomicMoat.Standard
                 using (BufferedStream bs = new BufferedStream(fs))
                 using (StreamReader sr = new StreamReader(bs))
                 {
+                    if (Cfs.FooterLinesCount > 0)
+                        FileTotalLinesCount = File.ReadLines(FilePath).Count();
                     int line_index = 1;
                     string line;
                     while ((line = sr.ReadLine()) != null)
@@ -66,44 +66,26 @@ namespace EconomicMoat.Standard
             return res;
         }
 
-        private void ProcessForEachLine(string line, int line_index)
+        private void ProcessForEachLine(string Line, int LineIndex)
         {
-            CsvFileStructure.Locations loc = DetermineLocationFor(line_index);
-            switch (loc)
+            CsvFileStructure.LocationInFile Loc = DetermineLocationInFile(LineIndex);
+            switch (Loc)
             {
-                case CsvFileStructure.Locations.HeadingLines:
+                case CsvFileStructure.LocationInFile.HeadingLines:
                     {
                         break;
                     }
-                case CsvFileStructure.Locations.HeaderLines:
+                case CsvFileStructure.LocationInFile.HeaderLines:
                     {
-                        headers = line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
-                        string[] DataTypes = {
-                            "System.UInt16",
-                            "System.UInt16",
-                            "System.DateTime",
-                            "System.Int16",
-                            "System.SByte" };
-
-                        for (int i = 0; i < headers.Length; i++)
-                        {
-
-                            //DataColumn col = new DataColumn(headers[i], Type.GetType(DataTypes[i]));
-                            //dtAnalysisResult.Columns.Add(col);
-                            //col.AllowDBNull = true;
-                            //col.Unique = false;
-                        }
+                        headers = Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
                         break;
                     }
-                case CsvFileStructure.Locations.DataLines:
+                case CsvFileStructure.LocationInFile.DataLines:
                     {
-                        string[] splits = line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
-                        // TODO: Check (splits.Length == headers.Length)
-                        Dal.CustomizedAnalyze(splits);
-                        //dtAnalysisResult.Rows.Add(drAnalysisResult);
+                        ProcessForEachDataline(Line);
                         break;
                     }
-                case CsvFileStructure.Locations.FooterLines:
+                case CsvFileStructure.LocationInFile.FooterLines:
                     {
                         break;
                     }
@@ -114,20 +96,31 @@ namespace EconomicMoat.Standard
             }
         }
 
-        private CsvFileStructure.Locations DetermineLocationFor(int line_index)
+        private void ProcessForEachDataline(string Line)
         {
+            string[] LineSplits = Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
+            // TODO: Check (splits.Length == headers.Length)
+            Dal.CustomizedAnalyze(LineSplits);
+        }
+
+        private CsvFileStructure.LocationInFile DetermineLocationInFile(int LineIndex)
+        {
+            // 如果已經進入 FooterLines，則直接回傳 LocationInFile.FooterLines
+            if (Cfs.FooterLinesCount > 0 &&
+                    (FileTotalLinesCount - LineIndex) < Cfs.FooterLinesCount)
+                return CsvFileStructure.LocationInFile.FooterLines;
+
             // 針對所有分界點由低到高排序 (每個分界點皆須是 Unique，不適用的分界點為 -1)
-            List<Tuple<int, CsvFileStructure.Locations>> list = new List<Tuple<int, CsvFileStructure.Locations>>();
-            list.Add(Tuple.Create(Cfs.HeaderLineStartAt, CsvFileStructure.Locations.HeaderLines));
-            list.Add(Tuple.Create(Cfs.DataLinesStartAt, CsvFileStructure.Locations.DataLines));
-            list.Add(Tuple.Create(Cfs.FooterLinesStartAt, CsvFileStructure.Locations.FooterLines));
-            list.Sort((x, y) => y.Item1.CompareTo(x.Item1));
+            List<Tuple<int, CsvFileStructure.LocationInFile>> list = new List<Tuple<int, CsvFileStructure.LocationInFile>>();
+            list.Add(Tuple.Create(Cfs.HeaderLineStartAt, CsvFileStructure.LocationInFile.HeaderLines));
+            list.Add(Tuple.Create(Cfs.DataLinesStartAt, CsvFileStructure.LocationInFile.DataLines));
+            list.Sort((x, y) => x.Item1.CompareTo(y.Item1));
 
             // 依序比較是否進入該點範圍內，直到全部比較完畢
-            CsvFileStructure.Locations result = list[0].Item2;
-            foreach (Tuple<int, CsvFileStructure.Locations> entry in list)
+            CsvFileStructure.LocationInFile result = CsvFileStructure.LocationInFile.HeadingLines;
+            foreach (Tuple<int, CsvFileStructure.LocationInFile> entry in list)
             {
-                if (entry.Item1 <= line_index)
+                if (entry.Item1 <= LineIndex)
                 {
                     result = entry.Item2;
                 }
