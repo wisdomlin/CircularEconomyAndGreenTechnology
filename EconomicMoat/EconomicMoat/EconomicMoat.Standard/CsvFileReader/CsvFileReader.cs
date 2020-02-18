@@ -9,8 +9,8 @@ using System.Linq;
 namespace EconomicMoat.Standard
 {
     /// <summary>
-    /// -1 if no Header Line
-    /// N if Header Line is at Nth line. (N starts from 1)
+    /// Default Delimiters: { ',', '\\', '\n', ' ', '\t' }
+    /// 
     /// </summary>
     public class CsvFileReader
     {
@@ -29,11 +29,13 @@ namespace EconomicMoat.Standard
 
         public CsvFileReader()
         {
-            // Default File Properties
-            FilePath = "./";
-            Delimiters = new Char[] { ',', '\\', '\n', ' ', '\t' };
+
         }
 
+        /// <summary>
+        /// FilePath is required.
+        /// </summary>
+        /// <returns></returns>
         public bool ReadFullFile()
         {
             bool res = true;

@@ -5,6 +5,9 @@ namespace EconomicMoat.Standard
 {
     public class Def_TG : DatalineEntityFormat
     {
+        /// <summary>
+        /// Dataline Entity Format for TG CSV File
+        /// </summary>
         public Def_TG()
         {
             FormatLookUpTable = new Dictionary<string, (int, string)>();

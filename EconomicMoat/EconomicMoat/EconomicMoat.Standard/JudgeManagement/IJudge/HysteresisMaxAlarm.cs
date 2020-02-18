@@ -4,11 +4,11 @@ using System.Text;
 
 namespace EconomicMoat.Standard
 {   
-    public class HysteresisMaxJudge : IJudge
+    public class HysteresisMaxAlarm : IJudge
     {
         private SpecValue AlarmHigh;
 
-        public HysteresisMaxJudge(SpecValue AlarmHigh)
+        public HysteresisMaxAlarm(SpecValue AlarmHigh)
         {
             this.AlarmHigh = AlarmHigh;
         }

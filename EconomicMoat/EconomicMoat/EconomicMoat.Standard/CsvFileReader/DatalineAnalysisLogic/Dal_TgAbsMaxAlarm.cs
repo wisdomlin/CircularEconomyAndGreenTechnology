@@ -8,6 +8,9 @@ namespace EconomicMoat.Standard
     {
         public string sAlarmHigh;
 
+        /// <summary>
+        /// Select Datalines whose TG > AbsMaxAlarm
+        /// </summary>
         public Dal_TgAbsMaxAlarm()
         {
             dtAnalysisResultFormat = new DataTable();
@@ -27,13 +30,12 @@ namespace EconomicMoat.Standard
             Def.LineSplits = LineSplits;
             string ValueType = Def.GetValueType("TG");
             string ValueString = Def.GetValueString("TG");
-
             PresentValue PV = new PresentValue(ValueType, ValueString);
+
             SpecValue AlarmHigh = new SpecValue(ValueType, sAlarmHigh);
-
-            AbsMaxJudge absMaxJudge = new AbsMaxJudge(AlarmHigh);   // TODO: Create by Factory to decouple Modules
-            bool JudgeResult = absMaxJudge.Judge(PV);
-
+            AbsMaxAlarm absMaxAlarm = new AbsMaxAlarm(AlarmHigh);   // TODO: Create by Factory to decouple Modules
+            
+            bool JudgeResult = absMaxAlarm.Judge(PV);
             if (JudgeResult)
             {
                 drAnalysisResult["DATE"] = Def.GetValueString("DATE");

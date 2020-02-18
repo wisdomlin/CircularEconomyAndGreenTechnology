@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EconomicMoat.UnitTest", "EconomicMoat.UnitTest\EconomicMoat.UnitTest.csproj", "{F53AE060-A655-4ADB-BE2C-C808D6FB56D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EconomicMoat.ModuleTest", "EconomicMoat.UnitTest\EconomicMoat.ModuleTest.csproj", "{F53AE060-A655-4ADB-BE2C-C808D6FB56D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EconomicMoat.IntegrationTest", "EconomicMoat.IntegrationTest\EconomicMoat.IntegrationTest.csproj", "{8434C575-DC87-489E-B17C-138393FEE10E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EconomicMoat.SubsystemTest", "EconomicMoat.IntegrationTest\EconomicMoat.SubsystemTest.csproj", "{8434C575-DC87-489E-B17C-138393FEE10E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EconomicMoat.SystemTest", "EconomicMoat.SystemTest\EconomicMoat.SystemTest.csproj", "{AB889966-487B-426A-A609-FA5EAB411DA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EconomicMoat.SystemTest", "EconomicMoat.SystemTest\EconomicMoat.SystemTest.csproj", "{AB889966-487B-426A-A609-FA5EAB411DA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EconomicMoat.Standard", "EconomicMoat.Standard\EconomicMoat.Standard.csproj", "{222156EE-A2E4-4B90-BAAF-741440A1AF58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EconomicMoat.Standard", "EconomicMoat.Standard\EconomicMoat.Standard.csproj", "{222156EE-A2E4-4B90-BAAF-741440A1AF58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

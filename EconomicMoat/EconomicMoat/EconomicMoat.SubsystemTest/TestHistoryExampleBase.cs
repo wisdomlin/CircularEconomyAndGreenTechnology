@@ -2,7 +2,7 @@ using EconomicMoat.Standard;
 using NUnit.Framework;
 using System.Data;
 
-namespace EconomicMoat.IntegrationTest
+namespace EconomicMoat.SubsystemTest
 {
     public class TestHistoryExampleBase
     {
@@ -42,7 +42,7 @@ namespace EconomicMoat.IntegrationTest
         {
             
 
-            DataTable dt;
+            //DataTable dt;
             // index: Datetime
             // col 1: Region
             // col 2: Temperature

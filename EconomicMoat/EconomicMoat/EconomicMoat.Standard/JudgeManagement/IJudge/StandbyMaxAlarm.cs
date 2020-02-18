@@ -4,11 +4,11 @@ using System.Text;
 
 namespace EconomicMoat.Standard
 {   
-    public class StandbyMinMaxJudge : IJudge
+    public class StandbyMaxAlarm : IJudge
     {
         private SpecValue AlarmHigh;
 
-        public StandbyMinMaxJudge(SpecValue AlarmHigh)
+        public StandbyMaxAlarm(SpecValue AlarmHigh)
         {
             this.AlarmHigh = AlarmHigh;
         }
