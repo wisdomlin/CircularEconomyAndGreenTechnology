@@ -8,12 +8,6 @@ namespace EconomicMoat.ModuleTest
 {
     class TestCsvFileReader
     {
-        private string GetConfigFolder()
-        {
-            string ProjectFolderPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\"));
-            return ProjectFolderPath + @"CsvFileReader\CsvFileReaderConfig\";
-        }
-
         [Test]
         public void UC01_ReadOneCsvFile()
         {
@@ -30,6 +24,12 @@ namespace EconomicMoat.ModuleTest
             CsvFileReader Cfr = new CsvFileReaderFactory().CreateCsvFileReader(ConfigPath);
             bool result = Cfr.ReadFullFile();
             Assert.IsTrue(result);
+        }
+
+        private string GetConfigFolder()
+        {
+            string ProjectFolderPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\"));
+            return ProjectFolderPath + @"CsvFileReader\CsvFileReaderConfig\";
         }
     }
 }

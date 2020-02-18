@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EconomicMoat.ModuleTest", "EconomicMoat.UnitTest\EconomicMoat.ModuleTest.csproj", "{F53AE060-A655-4ADB-BE2C-C808D6FB56D6}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EconomicMoat.SubsystemTest", "EconomicMoat.IntegrationTest\EconomicMoat.SubsystemTest.csproj", "{8434C575-DC87-489E-B17C-138393FEE10E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EconomicMoat.SystemTest", "EconomicMoat.SystemTest\EconomicMoat.SystemTest.csproj", "{AB889966-487B-426A-A609-FA5EAB411DA7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EconomicMoat.Standard", "EconomicMoat.Standard\EconomicMoat.Standard.csproj", "{222156EE-A2E4-4B90-BAAF-741440A1AF58}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EconomicMoat.ModuleTest", "EconomicMoat.ModuleTest\EconomicMoat.ModuleTest.csproj", "{4989BE28-0956-4CD6-B436-491AA40B3D33}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EconomicMoat.SubsystemTest", "EconomicMoat.SubsystemTest\EconomicMoat.SubsystemTest.csproj", "{7411ED7A-CAFA-407A-88A3-3DC130E83BEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,14 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F53AE060-A655-4ADB-BE2C-C808D6FB56D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F53AE060-A655-4ADB-BE2C-C808D6FB56D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F53AE060-A655-4ADB-BE2C-C808D6FB56D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F53AE060-A655-4ADB-BE2C-C808D6FB56D6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8434C575-DC87-489E-B17C-138393FEE10E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8434C575-DC87-489E-B17C-138393FEE10E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8434C575-DC87-489E-B17C-138393FEE10E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8434C575-DC87-489E-B17C-138393FEE10E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AB889966-487B-426A-A609-FA5EAB411DA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AB889966-487B-426A-A609-FA5EAB411DA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB889966-487B-426A-A609-FA5EAB411DA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +25,14 @@ Global
 		{222156EE-A2E4-4B90-BAAF-741440A1AF58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{222156EE-A2E4-4B90-BAAF-741440A1AF58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{222156EE-A2E4-4B90-BAAF-741440A1AF58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4989BE28-0956-4CD6-B436-491AA40B3D33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4989BE28-0956-4CD6-B436-491AA40B3D33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4989BE28-0956-4CD6-B436-491AA40B3D33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4989BE28-0956-4CD6-B436-491AA40B3D33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7411ED7A-CAFA-407A-88A3-3DC130E83BEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7411ED7A-CAFA-407A-88A3-3DC130E83BEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7411ED7A-CAFA-407A-88A3-3DC130E83BEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7411ED7A-CAFA-407A-88A3-3DC130E83BEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

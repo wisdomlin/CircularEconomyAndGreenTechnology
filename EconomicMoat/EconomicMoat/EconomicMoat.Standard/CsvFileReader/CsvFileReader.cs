@@ -39,6 +39,8 @@ namespace EconomicMoat.Standard
         public bool ReadFullFile()
         {
             bool res = true;
+            int LineIndex = 1;
+            string Line = "";
             try
             {
                 // [using statement] for better memory management
@@ -48,17 +50,16 @@ namespace EconomicMoat.Standard
                 {
                     if (Cfs.FooterLinesCount > 0)
                         FileTotalLinesCount = File.ReadLines(FilePath).Count();
-                    int line_index = 1;
-                    string line;
-                    while ((line = sr.ReadLine()) != null)
+                    while ((Line = sr.ReadLine()) != null)
                     {
-                        ProcessForEachLine(line, line_index);
-                        line_index++;
+                        ProcessForEachLine(Line, LineIndex);
+                        LineIndex++;
                     }
                 }
             }
             catch
             {
+                Console.WriteLine("LineIndex: " + LineIndex.ToString() + "\tLine: " + Line.ToString());
                 res = false;
             }
             finally

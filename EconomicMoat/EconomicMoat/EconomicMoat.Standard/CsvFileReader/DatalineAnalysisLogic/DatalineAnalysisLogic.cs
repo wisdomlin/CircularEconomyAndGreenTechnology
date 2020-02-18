@@ -8,26 +8,34 @@ namespace EconomicMoat.Standard
     {
         public DatalineEntityFormat Def;
         public DataTable dtAnalysisResultFormat;
-        internal DataRow drAnalysisResult;
 
         public DatalineAnalysisLogic()
         {
+            // Define dtAnalysisResultFormat.Columns Start
             dtAnalysisResultFormat = new DataTable();
-            // 決定自身分析結果資料表之 Columns Here: 
 
-            // --------------------------------------
-            drAnalysisResult = dtAnalysisResultFormat.NewRow();
+            // Define dtAnalysisResultFormat.Columns End
 
+            // Customize Analysis Setup Start
+
+            // Customize Analysis Setup End
         }
 
         internal virtual void CustomizedAnalyze(string[] LineSplits)
         {
+            // Preparation Start
             DataRow drAnalysisResult = dtAnalysisResultFormat.NewRow();
+            Def.LineSplits = LineSplits;
+            // Preparation End
 
-            // Do Customized Analysis Here
+            // Generate Dataline Analysis Result Start
 
-            // Store drAnalysisResult Finally
+
+            // Generate Dataline Analysis Result End
+
+            // Store Dataline Analysis Result Start
             StoreAnalysisResult(drAnalysisResult);
+            // Store Dataline Analysis Result End
         }
 
         internal void StoreAnalysisResult(DataRow drAnalysisResult)
@@ -41,7 +49,7 @@ namespace EconomicMoat.Standard
                 sb.Append(item);
                 sb.Append(',');
             }
-            sb.AppendLine();
+            //sb.AppendLine();
             Console.WriteLine(sb.ToString());
         }
     }
