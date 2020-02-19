@@ -6,11 +6,13 @@ namespace EconomicMoat.Standard
 {   
     public class HysteresisMaxAlarm : IJudge
     {
-        private SpecValue AlarmHigh;
+        private SpecValue SV;
+        private SpecValue AH;
 
-        public HysteresisMaxAlarm(SpecValue AlarmHigh)
+        public HysteresisMaxAlarm(SpecValue SV, SpecValue AH)
         {
-            this.AlarmHigh = AlarmHigh;
+            this.SV = SV;
+            this.AH = AH;
         }
 
         public bool Judge(PresentValue PV)

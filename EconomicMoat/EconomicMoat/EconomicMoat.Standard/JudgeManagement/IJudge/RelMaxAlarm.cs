@@ -4,13 +4,15 @@ using System.Text;
 
 namespace EconomicMoat.Standard
 {   
-    public class MaxAlarm : IJudge
+    public class RelMaxAlarm : IJudge
     {
-        private SpecValue AlarmHigh;
+        private SpecValue SV;
+        private SpecValue AH;
 
-        public MaxAlarm(SpecValue AlarmHigh)
+        public RelMaxAlarm(SpecValue SV, SpecValue AH)
         {
-            this.AlarmHigh = AlarmHigh;
+            this.SV = SV;
+            this.AH = AH;
         }
 
         public bool Judge(PresentValue PV)

@@ -6,11 +6,15 @@ namespace EconomicMoat.Standard
 {   
     public class StandbyMinMaxAlarm : IJudge
     {
-        private SpecValue AlarmHigh;
+        private SpecValue SV;
+        private SpecValue AL;
+        private SpecValue AH;
 
-        public StandbyMinMaxAlarm(SpecValue AlarmHigh)
+        public StandbyMinMaxAlarm(SpecValue SV, SpecValue AL, SpecValue AH)
         {
-            this.AlarmHigh = AlarmHigh;
+            this.SV = SV;
+            this.AL = AL;
+            this.AH = AH;
         }
 
         public bool Judge(PresentValue PV)

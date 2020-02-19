@@ -6,11 +6,11 @@ namespace EconomicMoat.Standard
 {   
     public class AbsMinAlarm : IJudge
     {
-        private SpecValue AlarmHigh;
+        private SpecValue AL;
 
-        public AbsMinAlarm(SpecValue AlarmHigh)
+        public AbsMinAlarm(SpecValue AL)
         {
-            this.AlarmHigh = AlarmHigh;
+            this.AL = AL;
         }
 
         public bool Judge(PresentValue PV)
