@@ -1,8 +1,10 @@
 ﻿using EconomicMoat.Standard;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace EconomicMoat.ModuleTest
 {
@@ -13,6 +15,7 @@ namespace EconomicMoat.ModuleTest
         {
             string ConfigPath = GetConfigFolder() + "UC01_ReadOneCsvFile.Config";
             CsvFileReader Cfr = new CsvFileReaderFactory().CreateCsvFileReader(ConfigPath);
+
             bool result = Cfr.ReadFullFile();
             Assert.IsTrue(result);
         }
@@ -24,6 +27,38 @@ namespace EconomicMoat.ModuleTest
             CsvFileReader Cfr = new CsvFileReaderFactory().CreateCsvFileReader(ConfigPath);
             bool result = Cfr.ReadFullFile();
             Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void UC03_ReadTenCsvFiles()
+        {
+            string ConfigPath = GetConfigFolder() + "UC01_ReadOneCsvFile.Config";
+            CsvFileReader Cfr = new CsvFileReaderFactory().CreateCsvFileReader(ConfigPath);
+
+            // Find all files in a folder
+            string FolderPath = @"C:\Workspace\Publications\EIA\Model\ECA_blend_tg";
+            DirectoryInfo d = new DirectoryInfo(FolderPath);
+
+            int i = 0;
+            foreach (FileInfo file in d.GetFiles("TG_*.txt"))
+            {
+                // Do something for each file
+                string FilePath = file.FullName;
+                Cfr.SetFilePath(FilePath);
+                bool result = Cfr.ReadFullFile();
+                Assert.IsTrue(result);
+
+                i++;
+                if (i >= 10)
+                    break;
+            }
+        }
+
+        [Test]
+        public void UC04_TestNLogReadableFormat()
+        {
+            // STAID, SOUID, DATE, TG, Q_TG
+
         }
 
         private string GetConfigFolder()

@@ -69,6 +69,11 @@ namespace EconomicMoat.Standard
             return res;
         }
 
+        public void SetFilePath(string FilePath)
+        {
+            this.FilePath = FilePath;
+        }
+
         private void ProcessForEachLine(string Line, int LineIndex)
         {
             CsvFileStructure.LocationInFile Loc = DetermineLocationInFile(LineIndex);
