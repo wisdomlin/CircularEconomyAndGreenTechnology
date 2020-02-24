@@ -55,10 +55,29 @@ namespace EconomicMoat.ModuleTest
         }
 
         [Test]
-        public void UC04_JsonStructuredLoggingForTenCsvFiles()
+        public void UC04_JsonStructLogAnalyzeTenCsvFiles()
         {
             // STAID, SOUID, DATE, TG, Q_TG
+            string ConfigPath = GetConfigFolder() + "UC02_ReadFileAndCustomizeAnalysis.Config";
+            CsvFileReader Cfr = new CsvFileReaderFactory().CreateCsvFileReader(ConfigPath);
 
+            // Find all CSV files in a folder
+            string FolderPath = @"C:\Workspace\Publications\EIA\Model\ECA_blend_tg";
+            DirectoryInfo Dir = new DirectoryInfo(FolderPath);
+
+            int i = 0;
+            foreach (FileInfo file in Dir.GetFiles("TG_*.txt"))
+            {
+                // Do something for each file
+                string FilePath = file.FullName;
+                Cfr.SetFilePath(FilePath);
+                bool result = Cfr.ReadFullFile();
+                Assert.IsTrue(result);
+
+                i++;
+                if (i >= 10)
+                    break;
+            }
         }
 
         private string GetConfigFolder()
