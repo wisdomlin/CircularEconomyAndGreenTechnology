@@ -9,18 +9,15 @@ namespace EconomicMoat.Standard
     /// </summary>
     public class Dal_TgAbsMaxAlarm : DatalineAnalysisLogic
     {
-        public string sAlarmHigh;
-
         public Dal_TgAbsMaxAlarm()
         {
             // Define dtAnalysisResultFormat.Columns Start
-            dtAnalysisResultFormat = new DataTable();
             dtAnalysisResultFormat.Columns.Add("DATE");
             dtAnalysisResultFormat.Columns.Add("TG");
             // Define dtAnalysisResultFormat.Columns End
 
             // Customize Analysis Setup Start
-            sAlarmHigh = "230"; // TODO: SetThreshold()
+            
             // Customize Analysis Setup End
         }
 
@@ -38,6 +35,7 @@ namespace EconomicMoat.Standard
             PresentValue PV = new PresentValue(ValueType, ValueString);
 
             // 2. Prepare IJudge
+            string sAlarmHigh = "230";  // TODO: Get SpecValue Dynamically
             SpecValue AlarmHigh = new SpecValue(ValueType, sAlarmHigh);
             AbsMaxAlarm absMaxAlarm = new AbsMaxAlarm(AlarmHigh);   // TODO: Create by Factory to decouple Modules
 
