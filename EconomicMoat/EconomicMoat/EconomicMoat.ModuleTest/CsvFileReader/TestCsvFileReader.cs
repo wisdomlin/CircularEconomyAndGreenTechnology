@@ -55,7 +55,7 @@ namespace EconomicMoat.ModuleTest
         }
 
         [Test]
-        public void UC04_TestNLogReadableFormat()
+        public void UC04_JsonStructuredLoggingForTenCsvFiles()
         {
             // STAID, SOUID, DATE, TG, Q_TG
 
