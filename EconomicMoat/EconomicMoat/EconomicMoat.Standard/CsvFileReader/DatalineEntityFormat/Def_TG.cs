@@ -10,8 +10,6 @@ namespace EconomicMoat.Standard
         /// </summary>
         public Def_TG()
         {
-            FormatLookUpTable = new Dictionary<string, (int, string)>();
-
             // Specify (FieldName, ValueAddress, ValueType) Here:
             FormatLookUpTable.Add("STAID", (ValueAddress: 0, ValueType: "UInt16"));
             FormatLookUpTable.Add("SOUID", (ValueAddress: 1, ValueType: "UInt16"));

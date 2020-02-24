@@ -7,18 +7,15 @@ namespace EconomicMoat.Standard
     public class DatalineAnalysisLogic
     {
         public DatalineEntityFormat Def;
-        public DataTable dtAnalysisResultFormat;
 
+        public DataTable dtAnalysisResultFormat;
         public DatalineAnalysisLogic()
         {
-            // Define dtAnalysisResultFormat.Columns Start
             dtAnalysisResultFormat = new DataTable();
+            // Define dtAnalysisResultFormat.Columns in Subclass.
 
-            // Define dtAnalysisResultFormat.Columns End
+            // Customize Analysis Setup in Subclass.
 
-            // Customize Analysis Setup Start
-
-            // Customize Analysis Setup End
         }
 
         internal virtual void CustomizedAnalyze(string[] LineSplits)

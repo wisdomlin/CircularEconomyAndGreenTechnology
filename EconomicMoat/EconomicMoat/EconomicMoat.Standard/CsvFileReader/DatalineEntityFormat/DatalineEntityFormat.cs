@@ -15,7 +15,7 @@ namespace EconomicMoat.Standard
         {
             FormatLookUpTable = new Dictionary<string, (int, string)>();
 
-            // Specify (FieldName, ValueAddress, ValueType) Here:
+            // Specify (FieldName, ValueAddress, ValueType) in Subclass.
 
         }
 

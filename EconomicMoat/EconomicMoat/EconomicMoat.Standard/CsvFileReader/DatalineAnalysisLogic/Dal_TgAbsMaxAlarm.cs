@@ -11,14 +11,12 @@ namespace EconomicMoat.Standard
     {
         public Dal_TgAbsMaxAlarm()
         {
-            // Define dtAnalysisResultFormat.Columns Start
+            // Define dtAnalysisResultFormat.Columns in Subclass.
             dtAnalysisResultFormat.Columns.Add("DATE");
             dtAnalysisResultFormat.Columns.Add("TG");
-            // Define dtAnalysisResultFormat.Columns End
 
-            // Customize Analysis Setup Start
-            
-            // Customize Analysis Setup End
+            // Customize Analysis Setup in Subclass.
+
         }
 
         internal override void CustomizedAnalyze(string[] LineSplits)
