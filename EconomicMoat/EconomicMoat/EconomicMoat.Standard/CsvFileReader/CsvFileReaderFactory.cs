@@ -13,91 +13,73 @@ namespace EconomicMoat.Standard
         private XmlDocument XmlDoc;
 
         /// <summary>
-        /// Dependency Management
+        /// If Aggregate Root Create Fails, return null.
         /// </summary>
         /// <returns></returns>
         public CsvFileReader CreateCsvFileReader(string ConfigPath)
         {
-            XmlDoc = new XmlDocument();
-            XmlDoc.Load(ConfigPath);
-
             CsvFileReader Cfr;
             try
             {
-                // Try by Config Management
+                // Read Config
+                XmlDoc = new XmlDocument();
+                XmlDoc.Load(ConfigPath);
+
+                // Select Objects and Parameters
                 Cfr = (CsvFileReader)GetInstance(GetThisNamespace() +
                     SelectSingleOption("CsvFileReader", "CsvFileReader"));
                 Cfr.FilePath = SelectSingleOption("CsvFileReader", "FilePath");
                 Cfr.Delimiters = SelectMultipleOptions("CsvFileReader", "Delimiters");
+
+                // Dependency Management
+                Cfr.Cfs = CreateCsvFileStructure();
+                Cfr.Dal = CreateDatalineAnalysisLogic();
+                return Cfr;
             }
             catch
             {
-                // Catch by Default Management
-                Cfr = new CsvFileReader();
-                Cfr.FilePath = @"C:\Workspace\Publications\EIA\Model\ECA_blend_tg\TG_STAID000001.txt";
-                Cfr.Delimiters = new Char[] { ',', ' ' };
+                return null;
             }
-            Cfr.Cfs = CreateCsvFileStructure();
-            Cfr.Dal = CreateDatalineAnalysisLogic();
-            return Cfr;
         }
 
         private CsvFileStructure CreateCsvFileStructure()
         {
             CsvFileStructure Cfs;
-            try
-            {
-                // Try by Config Management
-                Cfs = (CsvFileStructure)GetInstance(GetThisNamespace() +
-                    SelectSingleOption("CsvFileStructure", "CsvFileStructure"));
-                Cfs.HeaderLineStartAt = int.Parse(SelectSingleOption("CsvFileStructure", "HeaderLineStartAt"));
-                Cfs.DataLinesStartAt = int.Parse(SelectSingleOption("CsvFileStructure", "DataLinesStartAt"));
-                Cfs.FooterLinesCount = int.Parse(SelectSingleOption("CsvFileStructure", "FooterLinesCount"));
-            }
-            catch
-            {
-                // Catch by Default Management
-                Cfs = new CsvFileStructure();
-                Cfs.HeaderLineStartAt = 1;
-                Cfs.DataLinesStartAt = 2;
-                Cfs.FooterLinesCount = 0;
-                // TODO: NLog: "[This Method] [Try by Config] fails and [Catch by Default]."
-            }
+            // Select Objects and Parameters
+            Cfs = (CsvFileStructure)GetInstance(GetThisNamespace() +
+                SelectSingleOption("CsvFileStructure", "CsvFileStructure"));
+            Cfs.HeaderLineStartAt = int.Parse(SelectSingleOption("CsvFileStructure", "HeaderLineStartAt"));
+            Cfs.DataLinesStartAt = int.Parse(SelectSingleOption("CsvFileStructure", "DataLinesStartAt"));
+            Cfs.FooterLinesCount = int.Parse(SelectSingleOption("CsvFileStructure", "FooterLinesCount"));
+
+            // Dependency Management
+
             return Cfs;
         }
 
         private DatalineAnalysisLogic CreateDatalineAnalysisLogic()
         {
             DatalineAnalysisLogic Dal;
-            try
-            {
-                // Try by Config Management
-                Dal = (DatalineAnalysisLogic)GetInstance(GetThisNamespace() +
-                    SelectSingleOption("DatalineAnalysisLogic", "DatalineAnalysisLogic"));
-            }
-            catch
-            {
-                // Catch by Default Management
-                Dal = new DatalineAnalysisLogic();
-            }
+
+            // Select Objects and Parameters
+            Dal = (DatalineAnalysisLogic)GetInstance(GetThisNamespace() +
+                SelectSingleOption("DatalineAnalysisLogic", "DatalineAnalysisLogic"));
+
+            // Dependency Management
             Dal.Def = CreateDatalineEntityFormat();
+
             return Dal;
         }
 
         private DatalineEntityFormat CreateDatalineEntityFormat()
         {
             DatalineEntityFormat Def;
-            try
-            {
-                // Try by Config Management
-                Def = (DatalineEntityFormat)GetInstance(GetThisNamespace() +
-                    SelectSingleOption("DatalineEntityFormat", "DatalineEntityFormat"));
-            }
-            catch
-            {
-                // Catch by Default Management
-                Def = new DatalineEntityFormat();
-            }
+            // Select Objects and Parameters
+            Def = (DatalineEntityFormat)GetInstance(GetThisNamespace() +
+                SelectSingleOption("DatalineEntityFormat", "DatalineEntityFormat"));
+
+            // Dependency Management
+
             return Def;
         }
 
