@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="CsvFileReader\DatalineEntityFormat\" />
-    <Folder Include="DataPipelines\" />
     <Folder Include="DataVisualizations\" />
     <Folder Include="InfrastructureDecisions\" />
     <Folder Include="StatisticModels\" />
@@ -14,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="NLog.Config" Version="4.6.8" />
+    <PackageReference Include="System.Threading.Tasks.Dataflow" Version="4.11.0" />
   </ItemGroup>
 
 </Project>
