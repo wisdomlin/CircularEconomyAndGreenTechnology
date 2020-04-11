@@ -40,28 +40,29 @@ namespace EconomicMoat.ModuleTest
         {
             // Create a BufferBlock<byte[]> object. This object serves as the 
             // target block for the producer and the source block for the consumer.
-            var buffer = new System.Threading.Tasks.Dataflow.BufferBlock<byte[]>();
+            var buffer = new BufferBlock<byte[]>();
             var Dpc = new DataflowProducerConsumer();
 
             // Start the consumer. The Consume method runs asynchronously. 
-            List<System.Threading.Tasks.Task> consumers = new List<System.Threading.Tasks.Task>();
+            List<Task> consumers = new List<Task>();
             for (int j = 1; j <= 10; j++)
             {
                 consumers.Add(Dpc.ConsumeAsyncAndTryReceive(buffer));
             }
 
-            // Post source data to the dataflow block.
+
+            // Post source data to [the BufferBlock].
             Dpc.Produce(buffer);
 
             // Wait for the consumer to process all data.
-            foreach (System.Threading.Tasks.Task consumer in consumers)
+            foreach (Task consumer in consumers)
             {
                 consumer.Wait();
             }
 
             // Print the count of bytes processed to the console.
             int i = 1;
-            foreach (System.Threading.Tasks.Task<int> consumer in consumers)
+            foreach (Task<int> consumer in consumers)
             {
                 Console.WriteLine("Consumer " + i + " Processed {0} bytes.", consumer.Result);
                 i++;
@@ -69,7 +70,7 @@ namespace EconomicMoat.ModuleTest
         }
 
         [Test]
-        public void UC03_DataflowReadWrite()
+        public void UC03_DataflowReadWriteInt()
         {
             // Create a BufferBlock<int> object.
             var bufferBlock = new System.Threading.Tasks.Dataflow.BufferBlock<int>();
@@ -128,6 +129,133 @@ namespace EconomicMoat.ModuleTest
             // Demonstrate asynchronous dataflow operations.
             Drw.AsyncSendReceive(bufferBlock).Wait();
         }
+
+        [Test]
+        public void UC03_DataflowReadWriteString()
+        {
+            // Create a BufferBlock<int> object.
+            var bufferBlock = new BufferBlock<string>();
+            var Drw = new DataflowReadWrite();
+
+            // Post several messages to the block.
+            for (int i = 0; i < 3; i++)
+            {
+                bufferBlock.Post("String,Start," + i + ",End");
+            }
+
+            // Receive the messages back from the block.
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine(bufferBlock.Receive());
+            }
+
+            // Post more messages to the block.
+            for (int i = 0; i < 3; i++)
+            {
+                bufferBlock.Post("String,Start," + i + ",End");
+            }
+
+            // TryReceive the messages back from the block.
+            string value;
+            while (bufferBlock.TryReceive(out value))
+            {
+                Console.WriteLine(value);
+            }
+
+            // Write to and read from the message block concurrently.
+            var post01 = Task.Run(() =>
+            {
+                bufferBlock.Post("String,Start,0,End");
+                bufferBlock.Post("String,Start,1,End");
+            });
+            var receive = Task.Run(() =>
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Console.WriteLine(bufferBlock.Receive());
+                }
+            });
+            var post2 = Task.Run(() =>
+            {
+                bufferBlock.Post("String,Start,2,End");
+            });
+            Task.WaitAll(post01, receive, post2);
+
+            /* Sample output:
+               2
+               0
+               1
+             */
+
+            // Demonstrate asynchronous dataflow operations.
+            Drw.AsyncSendReceive(bufferBlock).Wait();
+        }
+
+        //[Test]
+        //public void UC03_DataflowReadWriteStringArray()
+        //{
+        //    // Create a BufferBlock<int> object.
+        //    var bufferBlock = new BufferBlock<string[]>();
+        //    var Drw = new DataflowReadWrite();
+
+        //    // Post several messages to the block.
+        //    for (int i = 0; i < 3; i++)
+        //    {
+        //        string[] arr = { "Start-", i.ToString(), "-End" };
+        //        bufferBlock.Post(arr);
+        //    }
+
+        //    // Receive the messages back from the block.
+        //    for (int i = 0; i < 3; i++)
+        //    {
+        //        Console.WriteLine(bufferBlock.Receive());
+        //    }
+
+        //    // Post more messages to the block.
+        //    for (int i = 0; i < 3; i++)
+        //    {
+        //        string[] arr = { "Start-", i.ToString(), "-End" };
+        //        bufferBlock.Post(arr);
+        //    }
+
+        //    // TryReceive the messages back from the block.
+        //    string[] value;
+        //    while (bufferBlock.TryReceive(out value))
+        //    {
+        //        Console.WriteLine(value);
+        //    }
+
+        //    // Write to and read from the message block concurrently.
+        //    var post01 = Task.Run(() =>
+        //    {
+        //        string[] arr0 = { "Start-", (0).ToString(), "-End" };
+        //        bufferBlock.Post(arr0);
+        //        string[] arr1 = { "Start-", (1).ToString(), "-End" };
+        //        bufferBlock.Post(arr1);
+        //    });
+        //    var receive = Task.Run(() =>
+        //    {
+        //        for (int i = 0; i < 3; i++)
+        //        {
+        //            Console.WriteLine(bufferBlock.Receive());
+        //        }
+        //    });
+        //    var post2 = Task.Run(() =>
+        //    {
+        //        string[] arr2 = { "Start-", (2).ToString(), "-End" };
+        //        bufferBlock.Post(arr2);
+        //    });
+        //    Task.WaitAll(post01, receive, post2);
+
+        //    /* Sample output:
+        //       2
+        //       0
+        //       1
+        //     */
+
+        //    // Demonstrate asynchronous dataflow operations.
+        //    Drw.AsyncSendReceive(bufferBlock).Wait();
+        //}
 
         [Test]
         public void UC04_DataflowExecutionBlocks_CountBytesSync()

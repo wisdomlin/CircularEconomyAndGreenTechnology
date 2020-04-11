@@ -75,7 +75,7 @@ namespace EconomicMoat.ModuleTest
                 Assert.IsTrue(result);
 
                 i++;
-                if (i >= 10)
+                if (i >= 1)
                     break;
             }
         }

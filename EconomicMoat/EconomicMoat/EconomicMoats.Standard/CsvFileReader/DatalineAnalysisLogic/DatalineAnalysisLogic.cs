@@ -6,6 +6,10 @@ namespace EconomicMoat.Standard
 {
     public class DatalineAnalysisLogic
     {
+
+        public Char[] Delimiters;
+
+
         public DatalineEntityFormat Def;
 
         public DataTable dtAnalysisResultFormat;
@@ -18,8 +22,10 @@ namespace EconomicMoat.Standard
 
         }
 
-        internal virtual void CustomizedAnalyze(string[] LineSplits)
+        internal virtual void CustomizedAnalyze(string Line)
         {
+            string[] LineSplits = Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
+
             // Preparation Start
             DataRow drAnalysisResult = dtAnalysisResultFormat.NewRow();
             Def.LineSplits = LineSplits;

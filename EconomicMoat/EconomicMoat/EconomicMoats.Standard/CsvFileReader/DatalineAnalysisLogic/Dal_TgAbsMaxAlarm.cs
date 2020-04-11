@@ -22,11 +22,12 @@ namespace EconomicMoat.Standard
 
         }
 
-        internal override void CustomizedAnalyze(string[] LineSplits)
+        internal override void CustomizedAnalyze(string Line)
         {
             // Preparation Start
             //DataRow dicAnalysisResult = dtAnalysisResultFormat.NewRow();
             Dictionary<string, string> dicAnalysisResult = new Dictionary<string, string>();
+            string[] LineSplits = Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
             Def.LineSplits = LineSplits;
             // Preparation End
 
@@ -69,26 +70,7 @@ namespace EconomicMoat.Standard
         internal void StoreAnalysisResult(Dictionary<string, string> dicAnalysisResult)
         {
             NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-            //Dictionary<string, string> dic = new Dictionary<string, string>();
-            logger.Info("{@value1}", dicAnalysisResult); // dict. Result:  Test "key1"=1, "key2"=2
-
-            //logger.Info("Test {value1}", new { OrderId = 2, Status = "Processing" }); // anomynous object. Result: Test { OrderId = 2, Status = Processing }
-            //logger.Info("Test {@value1}", new 
-            //{ 
-            //    OrderId = 2, 
-            //    Status = "Processing" 
-            //}); // anomynous object. Result:Test {"OrderId":2, "Status":"Processing"}
-
-            //dtAnalysisResultFormat.Rows.Add(drAnalysisResult);
-
-            //// Show Analysis Result
-            //StringBuilder sb = new StringBuilder();
-            //foreach (var item in drAnalysisResult.ItemArray)
-            //{
-            //    dic.Add(item., item.ToString());
-            //}
-            ////sb.AppendLine();
-            //Console.WriteLine(sb.ToString());
+            logger.Info("{@value1}", dicAnalysisResult);
         }
     }
 }

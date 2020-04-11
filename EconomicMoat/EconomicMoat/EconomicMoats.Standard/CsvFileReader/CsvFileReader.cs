@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks.Dataflow;
+using System.Threading.Tasks;
 
 namespace EconomicMoat.Standard
 {
@@ -25,6 +27,8 @@ namespace EconomicMoat.Standard
         #region Supports
         private string[] headers;
         private int FileTotalLinesCount;
+
+        BufferBlock<string> buffer;
         #endregion
 
         public CsvFileReader()
@@ -41,8 +45,24 @@ namespace EconomicMoat.Standard
             bool res = true;
             int LineIndex = 1;
             string Line = "";
+
+            // Create a BufferBlock<byte[]> object. This object serves as the 
+            // target block for the producer and the source block for the consumer.
+            buffer = new BufferBlock<string>();
+
+            // Start the consumer. The Consume method runs asynchronously. 
+            //Dal_TgAbsMaxAlarmConsumer Dalpc = new Dal_TgAbsMaxAlarmConsumer();
+            Dal.Delimiters = Delimiters;
+            List<Task> consumers = new List<Task>();
+            for (int j = 1; j <= 10; j++)
+            {
+                consumers.Add(((Dal_TgAbsMaxAlarmConsumer)Dal).CustomizedAnalyze_AsyncSendReceive(buffer));
+            }
+
+            
             try
             {
+                // Post source data to [the BufferBlock].
                 // [using statement] for better memory management
                 using (FileStream fs = File.Open(FilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 using (BufferedStream bs = new BufferedStream(fs))
@@ -52,10 +72,18 @@ namespace EconomicMoat.Standard
                         FileTotalLinesCount = File.ReadLines(FilePath).Count();
                     while ((Line = sr.ReadLine()) != null)
                     {
+                        
                         ProcessForEachLine(Line, LineIndex);
                         LineIndex++;
                     }
                 }
+
+                // Wait for the consumer to process all data.
+                Task.WaitAll(consumers.ToArray());
+                //foreach (Task consumer in consumers)
+                //{
+                //    consumer.Wait();
+                //}
             }
             catch
             {
@@ -106,9 +134,13 @@ namespace EconomicMoat.Standard
 
         private void ProcessForEachDataline(string Line)
         {
-            string[] LineSplits = Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
+            //string[] LineSplits = Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
             // TODO: Check (splits.Length == headers.Length)
-            Dal.CustomizedAnalyze(LineSplits);
+
+            //Dal.CustomizedAnalyze(Line);            
+
+            // Post Input data to [TargetBlock].
+            buffer.Post(Line);
         }
 
         private CsvFileStructure.LocationInFile DetermineLocationInFile(int LineIndex)

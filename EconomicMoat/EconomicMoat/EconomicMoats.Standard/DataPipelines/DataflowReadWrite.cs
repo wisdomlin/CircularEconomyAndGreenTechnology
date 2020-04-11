@@ -28,5 +28,26 @@ namespace EconomicMoat.Standard
                2
              */
         }
+
+        public async Task AsyncSendReceive(BufferBlock<string> bufferBlock)
+        {
+            // Asynchronously post the messages to the block.
+            for (int i = 0; i < 3; i++)
+            {
+                await bufferBlock.SendAsync("String,Start," + i + ",End");
+            }
+
+            // Asynchronously receive the messages back from the block.
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine(await bufferBlock.ReceiveAsync());
+            }
+
+            /* Output:
+               0
+               1
+               2
+             */
+        }
     }
 }
