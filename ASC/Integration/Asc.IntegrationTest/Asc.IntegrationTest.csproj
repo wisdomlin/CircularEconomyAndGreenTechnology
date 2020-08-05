@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -13,7 +13,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CircularCities.Standard\CircularCities.Mudule.csproj" />
+    <ProjectReference Include="..\Asc.Integration\Asc.Integration.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="UC01_ConsumerProducer.Config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DACF\Data\" />
+    <Folder Include="DACF\Result\" />
   </ItemGroup>
 
 </Project>

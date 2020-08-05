@@ -13,18 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EconomicMoats.Subsystem\Asc.Integration.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="UC01_ConsumerProducer.Config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DACF\Data\" />
-    <Folder Include="DACF\Result\" />
+    <ProjectReference Include="..\Asc.CircularCities.Mudule\Asc.CircularCities.Mudule.csproj" />
   </ItemGroup>
 
 </Project>
