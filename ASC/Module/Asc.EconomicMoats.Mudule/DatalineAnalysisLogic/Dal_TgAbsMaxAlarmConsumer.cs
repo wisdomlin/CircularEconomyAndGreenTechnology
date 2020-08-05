@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 
-namespace EconomicMoats.Standard
+namespace Asc
 {
     /// <summary>
     /// Select Datalines whose TG > AbsMaxAlarm

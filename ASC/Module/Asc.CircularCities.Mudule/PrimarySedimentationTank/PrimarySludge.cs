@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CircularCities.Standard
+namespace Asc
 {
     public class PrimarySludge
     {

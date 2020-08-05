@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EconomicMoats.Standard
+namespace Asc
 {
     /// <summary>
     /// Specify your CSV File Structure by HeaderLineStartAt, DataLinesStartAt, and FooterLinesCount.

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 
-namespace EconomicMoats.Standard
+namespace Asc
 {
     /// <summary>
     /// Select Datalines whose TG > AbsMaxAlarm

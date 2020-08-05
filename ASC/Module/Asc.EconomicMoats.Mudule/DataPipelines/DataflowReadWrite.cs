@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 
-namespace EconomicMoats.Standard
+namespace Asc
 {
     // Demonstrates a how to write to and read from a dataflow block.
     public class DataflowReadWrite

@@ -1,8 +1,8 @@
 using NUnit.Framework;
-using CircularCities.Standard;
+
 using System;
 
-namespace CircularCities.ModuleTest
+namespace Asc
 {
     public class TestPrimarySedimentationTank
     {

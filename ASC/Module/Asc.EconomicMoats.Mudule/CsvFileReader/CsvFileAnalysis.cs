@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks.Dataflow;
 using System.Threading.Tasks;
 
-namespace EconomicMoats.Standard
+namespace Asc
 {
     /// <summary>
     /// Default Delimiters: { ',', '\\', '\n', ' ', '\t' }

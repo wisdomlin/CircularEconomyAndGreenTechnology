@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace EconomicMoats.Standard
+namespace Asc
 {
     public static class sExtGenericTryParse
     {

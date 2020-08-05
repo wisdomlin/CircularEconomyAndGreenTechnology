@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EconomicMoats.Standard
+namespace Asc
 {
     public class Def_TG : DatalineEntityAndFormat
     {

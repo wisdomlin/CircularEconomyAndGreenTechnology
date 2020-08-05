@@ -2,7 +2,7 @@
 using System.Data;
 using System.Text;
 
-namespace EconomicMoats.Standard
+namespace Asc
 {
     public class DatalineAnalysisLogic
     {

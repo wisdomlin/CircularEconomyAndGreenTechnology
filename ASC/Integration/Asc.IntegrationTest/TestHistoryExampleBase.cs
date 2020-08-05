@@ -1,8 +1,8 @@
-//using EconomicMoats.Standard;
+//
 using NUnit.Framework;
 using System.Data;
 
-namespace EconomicMoats.SubsystemTest
+namespace Asc
 {
     public class TestHistoryExampleBase
     {

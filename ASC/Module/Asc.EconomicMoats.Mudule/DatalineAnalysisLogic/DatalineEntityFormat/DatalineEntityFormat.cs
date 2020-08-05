@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EconomicMoats.Standard
+namespace Asc
 {
     /// <summary>
     /// DatalineEntityFormat specifies: FieldName, ValueAddress, ValueType

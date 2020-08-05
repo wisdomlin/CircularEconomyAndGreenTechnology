@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 
-namespace EconomicMoats.Standard
+namespace Asc
 {
     public class Dal_FaoFpi : DatalineAnalysisLogic
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EconomicMoats.Standard
+namespace Asc
 {
     interface IJudge
     {

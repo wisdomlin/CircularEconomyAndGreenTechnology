@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Asc.System
+namespace Asc
 {
     public class Class1
     {

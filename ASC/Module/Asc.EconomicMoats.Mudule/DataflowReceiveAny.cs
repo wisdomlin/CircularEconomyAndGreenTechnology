@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks.Dataflow;
 
 
-namespace EconomicMoats.Standard
+namespace Asc
 {
     // Demonstrates how to unlink dataflow blocks.
     public class DataflowReceiveAny

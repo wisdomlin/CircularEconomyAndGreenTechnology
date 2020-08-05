@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using Microsoft.ML;
 
-namespace EconomicMoats.Mudule
+namespace Asc
 {
     public class ChangePointAnalysis
     {

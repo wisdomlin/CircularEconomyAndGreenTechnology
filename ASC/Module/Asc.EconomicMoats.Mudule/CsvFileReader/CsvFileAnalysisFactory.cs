@@ -6,7 +6,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace EconomicMoats.Standard
+namespace Asc
 {
     public class CsvFileAnalysisFactory
     {

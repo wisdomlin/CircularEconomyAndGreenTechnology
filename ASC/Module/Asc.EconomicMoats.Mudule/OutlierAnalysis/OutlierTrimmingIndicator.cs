@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EconomicMoats.Standard
+namespace Asc
 {
     public class OutlierTrimmingIndicator
     {

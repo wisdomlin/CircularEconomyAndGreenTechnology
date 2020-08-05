@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 
-namespace EconomicMoats.Standard
+namespace Asc
 {
     // Demonstrates a basic producer and consumer pattern that uses dataflow.
     public class DataflowProducerConsumer

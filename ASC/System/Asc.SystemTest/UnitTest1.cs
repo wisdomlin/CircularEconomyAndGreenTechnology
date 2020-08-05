@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using Moq;
 
-namespace EconomicMoat.SystemTest
+namespace Asc
 {
     public class Tests
     {

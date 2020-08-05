@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EconomicMoats.Standard
+namespace Asc
 {
     public class StructuredLogger : IStructuredLogger
     {
