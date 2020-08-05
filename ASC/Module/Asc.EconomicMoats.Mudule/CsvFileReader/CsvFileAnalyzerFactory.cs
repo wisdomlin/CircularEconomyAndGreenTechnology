@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace Asc
 {
-    public class CsvFileAnalysisFactory
+    public class CsvFileAnalyzerFactory
     {
         private XmlDocument XmlDoc;
 
