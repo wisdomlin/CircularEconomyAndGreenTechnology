@@ -1,39 +1,39 @@
-﻿using EconomicMoat.Standard;
+﻿//using EconomicMoats.Standard;
 using NUnit.Framework;
 using System;
 using System.Data;
 using System.IO;
 
-namespace EconomicMoat.SubsystemTest
+namespace EconomicMoats.SubsystemTest
 {
     class CsvFileReader_DataPipelines
     {
         [Test]
         public void UC01_ConsumerProducer()
         {
-            // -------------------
-            // ReadTenCsvFiles
-            // -------------------
-            string ConfigPath = GetConfigFolder() + "UC01_ConsumerProducer.Config";
-            CsvFileReader Cfr = new CsvFileReaderFactory().CreateCsvFileReader(ConfigPath);
+            //// -------------------
+            //// ReadTenCsvFiles
+            //// -------------------
+            //string ConfigPath = GetConfigFolder() + "UC01_ConsumerProducer.Config";
+            //CsvFileAnalyzer Cfr = new CsvFileAnalysisFactory().CreateCsvFileReader(ConfigPath);
 
-            // Find all files in a folder
-            string FolderPath = @"C:\Workspace\Publications\EIA\Model\ECA_blend_tg";
-            DirectoryInfo d = new DirectoryInfo(FolderPath);
+            //// Find all files in a folder
+            //string FolderPath = @"C:\Workspace\Publications\EIA\Model\ECA_blend_tg";
+            //DirectoryInfo d = new DirectoryInfo(FolderPath);
 
-            int i = 0;
-            foreach (FileInfo file in d.GetFiles("TG_*.txt"))
-            {
-                // Do something for each file
-                string FilePath = file.FullName;
-                Cfr.SetFilePath(FilePath);
-                bool result = Cfr.ReadFullFile();
-                Assert.IsTrue(result);
+            //int i = 0;
+            //foreach (FileInfo file in d.GetFiles("TG_*.txt"))
+            //{
+            //    // Do something for each file
+            //    string FilePath = file.FullName;
+            //    Cfr.SetFilePath(FilePath);
+            //    bool result = Cfr.ReadCsvFile();
+            //    Assert.IsTrue(result);
 
-                i++;
-                if (i >= 1)
-                    break;
-            }
+            //    i++;
+            //    if (i >= 1)
+            //        break;
+            //}
         }
 
         private string GetConfigFolder()

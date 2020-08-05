@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EconomicMoat.Standard
+namespace EconomicMoats.Standard
 {
     public class LoggerManager
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 
-namespace EconomicMoat.Standard
+namespace EconomicMoats.Standard
 {
     // Demonstrates how to provide delegates to exectution dataflow blocks.
     public class DataflowExecutionBlocks

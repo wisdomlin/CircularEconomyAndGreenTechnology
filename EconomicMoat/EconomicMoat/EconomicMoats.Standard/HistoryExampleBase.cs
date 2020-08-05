@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EconomicMoat.Standard
+namespace EconomicMoats.Standard
 {
     public class HistoryExampleBase
     {

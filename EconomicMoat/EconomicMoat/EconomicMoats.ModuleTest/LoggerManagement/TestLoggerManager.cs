@@ -1,4 +1,4 @@
-﻿using EconomicMoat.Standard;
+﻿using EconomicMoats.Standard;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

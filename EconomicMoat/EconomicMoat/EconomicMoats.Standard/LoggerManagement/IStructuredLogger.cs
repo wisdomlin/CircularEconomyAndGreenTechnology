@@ -1,4 +1,4 @@
-﻿namespace EconomicMoat.Standard
+﻿namespace EconomicMoats.Standard
 {
     public interface IStructuredLogger
     {
