@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Asc
 {
-    public class OutlierTrimmingIndicator
+    public class OutlierTrimmingAnalyzer
     {
         private double[] source;
         private bool isSourceSet = false;
@@ -14,14 +14,15 @@ namespace Asc
         private double Med;
         private double MAD;
 
-        public void SetOringinalSeries(double[] remainingErrorComponent)
+        public bool SetOriginalSeriesAndDoAnalysis(double[] remainingErrorComponent)
         {
             source = remainingErrorComponent;
             isSourceSet = true;
-            OutlierIndicatorProcedure();
+            bool res = OutlierIndicatorProcedure();
+            return res;
         }
 
-        private void OutlierIndicatorProcedure()
+        private bool OutlierIndicatorProcedure()
         {
             if (isSourceSet == true)
             {
@@ -42,10 +43,13 @@ namespace Asc
 
                 ConfidenceInterval_Lower = Med - 3 * MAD;
                 ConfidenceInterval_Upper = Med + 3 * MAD;
+
+                return true;
             }
             else
             {
                 // throw new No Source Exception
+                return false;
             }
         }
 

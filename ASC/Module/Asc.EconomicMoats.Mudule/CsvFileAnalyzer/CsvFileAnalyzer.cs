@@ -84,7 +84,7 @@ namespace Asc
                 //    consumer.Wait();
                 //}
             }
-            catch
+            catch (Exception e)
             {
                 Console.WriteLine("LineIndex: " + LineIndex.ToString() + "\tLine: " + Line.ToString());
                 res = false;

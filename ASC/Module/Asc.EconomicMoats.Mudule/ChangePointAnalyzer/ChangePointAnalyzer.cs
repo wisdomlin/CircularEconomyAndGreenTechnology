@@ -6,13 +6,18 @@ using Microsoft.ML;
 
 namespace Asc
 {
-    public class ChangePointAnalysis
+    public class ChangePointAnalyzer
     {
 
         public string _dataPath = Path.Combine(Environment.CurrentDirectory, "Data", "FPI_jul20_CPA.csv");
 
         //assign the Number of records in dataset file to constant variable
-        const int _docsize = 366;
+        public int _docsize = 366;
+        public string _docName = "ChangePoints";
+        public bool _hasHeader = false;
+
+        public int Confidence = 95;   // Magic Number to have 6 Change Points
+        public int SlidingWindowDivided = 30;   // Magic Number to have 6 Change Points
 
         public void RunAnalysis()
         {
@@ -23,7 +28,7 @@ namespace Asc
 
             //STEP 1: Common data loading configuration
             // <SnippetLoadData>
-            IDataView dataView = mlContext.Data.LoadFromTextFile<TrendData>(path: _dataPath, hasHeader: true, separatorChar: ',');
+            IDataView dataView = mlContext.Data.LoadFromTextFile<TrendData>(path: _dataPath, hasHeader: _hasHeader, separatorChar: ',');
             // </SnippetLoadData>
 
             //// Spike detects pattern temporary changes
@@ -39,12 +44,18 @@ namespace Asc
 
         public void DetectChangepoint(MLContext mlContext, int docSize, IDataView trendData)
         {
-            int Divided = 30;   // Magic Number to have *6 Change Points*
-            string FilePath = @"C:\Workspace\Branches\CircularEconomyAndGreenTechnology\EconomicMoat\EconomicMoat\EconomicMoats.ModuleTest\ChangePointAnalysis\Result\" +
-                "result" + DateTime.Now.ToString("_yyyyMMdd-HHmm-ss_") + Divided.ToString() + ".csv";
+            
 
             //Console.WriteLine("Detect Persistent changes in pattern");
-            using (var file = new StreamWriter(FilePath, true))
+
+            string ResultFilePath = AppDomain.CurrentDomain.BaseDirectory
+                    + @"Result\" + DateTime.Now.ToString("yyyyMMdd-HHmm") + "\\Cpa\\" + _docName + ".csv";
+            //public string ResultFilePath = AppDomain.CurrentDomain.BaseDirectory + @"Result\" +
+            //    "ChangePoints" + ".csv";
+
+            FileInfo FI = new FileInfo(ResultFilePath);
+            FI.Directory.Create();  // If the directory already exists, this method does nothing.
+            using (var file = new StreamWriter(ResultFilePath, true))
             {
                 file.WriteLine("Detect Persistent changes in pattern");
             }
@@ -54,13 +65,13 @@ namespace Asc
             var iidChangePointEstimator = mlContext.Transforms.DetectIidChangePoint(
                 outputColumnName: nameof(TrendPrediction.Prediction),
                 inputColumnName: nameof(TrendData.Index),
-                confidence: 95,
-                changeHistoryLength: docSize / Divided);
+                confidence: Confidence,
+                changeHistoryLength: _docsize / SlidingWindowDivided);    // [100% / Divided] x-range: The length of the sliding window on p-values for computing the martingale score.
             // </SnippetAddChangePointTrainer>
 
             //STEP 3: Create the transform
             //Console.WriteLine("=============== Training the model Using Change Point Detection Algorithm===============");            
-            using (var file = new StreamWriter(FilePath, true))
+            using (var file = new StreamWriter(ResultFilePath, true))
             {
                 file.WriteLine("=============== Training the model Using Change Point Detection Algorithm===============");
             }
@@ -68,7 +79,7 @@ namespace Asc
             var iidChangePointTransform = iidChangePointEstimator.Fit(CreateEmptyDataView(mlContext));
             // </SnippetTrainModel2>
             //Console.WriteLine("=============== End of training process ===============");            
-            using (var file = new StreamWriter(FilePath, true))
+            using (var file = new StreamWriter(ResultFilePath, true))
             {
                 file.WriteLine("=============== End of training process ===============");
             }
@@ -83,8 +94,8 @@ namespace Asc
             // </SnippetCreateEnumerable2>
 
             // <SnippetDisplayHeader2>
-            Console.WriteLine("Alert\tScore\tP-Value\tMartingale value");
-            using (var file = new StreamWriter(FilePath, true))
+            //Console.WriteLine("Alert\tScore\tP-Value\tMartingale value");
+            using (var file = new StreamWriter(ResultFilePath, true))
             {
                 file.WriteLine("Alert\tScore\tP-Value\tMartingale value");
             }
@@ -92,6 +103,7 @@ namespace Asc
 
             // <SnippetDisplayResults2>
             int counter = 0;
+            int CpCnt = 0;
             foreach (var p in predictions)
             {
                 var results = $"{p.Prediction[0]}\t{p.Prediction[1]:f2}\t{p.Prediction[2]:F2}\t{p.Prediction[3]:F2}";
@@ -99,16 +111,17 @@ namespace Asc
                 if (p.Prediction[0] == 1)
                 {
                     results += " <-- alert is on, predicted changepoint";
+                    CpCnt++;
                 }
                 //Console.WriteLine(results);                
-                using (var file = new StreamWriter(FilePath, true))
+                using (var file = new StreamWriter(ResultFilePath, true))
                 {
                     file.WriteLine(results);
                 }
                 counter++;
             }
             //Console.WriteLine("");            
-            using (var file = new StreamWriter(FilePath, true))
+            using (var file = new StreamWriter(ResultFilePath, true))
             {
                 file.WriteLine("Counter: " + counter.ToString());
             }

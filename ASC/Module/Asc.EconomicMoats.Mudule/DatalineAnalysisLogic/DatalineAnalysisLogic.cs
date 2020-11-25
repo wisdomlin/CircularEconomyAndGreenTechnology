@@ -13,6 +13,7 @@ namespace Asc
         public DatalineEntityAndFormat Def;
 
         public DataTable dtAnalysisResultFormat;
+        
         public DatalineAnalysisLogic()
         {
             dtAnalysisResultFormat = new DataTable();

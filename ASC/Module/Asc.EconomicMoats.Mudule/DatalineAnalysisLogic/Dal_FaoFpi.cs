@@ -7,20 +7,13 @@ namespace Asc
 {
     public class Dal_FaoFpi : DatalineAnalysisLogic
     {
-        //String[] Date;
-        //double[] Fpi;
-        //double[] Mpi;
-        //double[] Dpi;
-        //double[] Cpi;
-        //double[] Opi;
-        //double[] Spi;
-        List<string> DateList = new List<string>();
-        List<double> FpiList = new List<double>();
-        List<double> MpiList = new List<double>();
-        List<double> DpiList = new List<double>();
-        List<double> CpiList = new List<double>();
-        List<double> OpiList = new List<double>();
-        List<double> SpiList = new List<double>();
+        public List<string> DateList = new List<string>();
+        public List<double> FpiList = new List<double>();
+        public List<double> MpiList = new List<double>();
+        public List<double> DpiList = new List<double>();
+        public List<double> CpiList = new List<double>();
+        public List<double> OpiList = new List<double>();
+        public List<double> SpiList = new List<double>();
 
         internal override void CustomizedAnalyze(string Line)
         {

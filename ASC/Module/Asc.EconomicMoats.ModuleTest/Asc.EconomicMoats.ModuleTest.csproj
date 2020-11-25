@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="CsvFileAnalyzer\Data\" />
     <Folder Include="JudgeManagement\" />
   </ItemGroup>
 
@@ -27,6 +28,12 @@
     </None>
     <None Update="CsvFileAnalyzer\CsvFileAnalyzerConfig\UC02_ReadFileAndCustomizeAnalysis.Config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CsvFileAnalyzer\Data\prc_fsc_idx_1_Data.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CsvFileAnalyzer\Data\prc_fsc_idx_1_Data_ACP.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

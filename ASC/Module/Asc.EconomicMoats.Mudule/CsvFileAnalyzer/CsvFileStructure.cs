@@ -17,7 +17,13 @@ namespace Asc
             FooterLines
         }
 
+        /// <summary>
+        /// 1 means starting from the first line.
+        /// </summary>
         public int HeaderLineStartAt;
+        /// <summary>
+        /// 2 means starting from the second line.
+        /// </summary>
         public int DataLinesStartAt;
         public int FooterLinesCount;
 

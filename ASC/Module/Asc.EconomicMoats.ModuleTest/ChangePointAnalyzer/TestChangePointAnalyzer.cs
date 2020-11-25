@@ -9,14 +9,15 @@ using System.Text.RegularExpressions;
 
 namespace Asc
 {
-    class TestCPA
+    class TestChangePointAnalyzer
     {
         [Test]
         public void UC01_TestCPA_Fpi()
         {
-            ChangePointAnalysis Cpa = new ChangePointAnalysis();
+            ChangePointAnalyzer Cpa = new ChangePointAnalyzer();
             //Cpa._dataPath = @"C:\Workspace\Branches\CircularEconomyAndGreenTechnology\EconomicMoat\EconomicMoat\EconomicMoats.ModuleTest\ChangePointAnalysis\Data\FPI_jul20_CPA.csv";
-            Cpa._dataPath = @"C:\Workspace\Branches\CircularEconomyAndGreenTechnology\EconomicMoat\EconomicMoat\EconomicMoats.ModuleTest\ChangePointAnalysis\Data\FpiAfterSsaAsTrend.csv"; 
+            Cpa._dataPath = @"C:\Workspace\Branches\CircularEconomyAndGreenTechnology\EconomicMoat\EconomicMoat\EconomicMoats.ModuleTest\ChangePointAnalysis\Data\FpiAfterSsaAsTrend.csv";
+            Cpa._docsize = 366;
             Cpa.RunAnalysis();
         }
     }
