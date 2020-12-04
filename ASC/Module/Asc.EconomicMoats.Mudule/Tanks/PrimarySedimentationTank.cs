@@ -7,13 +7,13 @@ namespace Asc
 {
     public class PrimarySedimentationTank
     {
-        public string TankType;
+        public string TankId;
         public double DataAvg;
         public int DataAmount;
 
         public PrimarySedimentationTank(string tankType)
         {
-            TankType = tankType;
+            TankId = tankType;
             Initialize();
         }
 
@@ -35,7 +35,8 @@ namespace Asc
                 {
                     double G1 = DataAvg;
                     int N1 = DataAmount;
-                    DataAvg = (G1 * (N1 / N2) + G2) / ((N1 / N2) + 1);
+                    DataAvg = (G1 * ((double)N1 / (double)N2) + G2) / (((double)N1 / (double)N2) + 1);
+                    DataAmount += N2;
                 }
             }
             catch (Exception e)

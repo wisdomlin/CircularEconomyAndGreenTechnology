@@ -182,7 +182,7 @@ public partial class alglib
     /********************************************************************
     Class defining an ALGLIB exception
     ********************************************************************/
-    public class alglibexception : System.Exception
+    public class alglibexception : Exception
     {
         public string msg;
         public alglibexception(string s)

@@ -10,7 +10,7 @@ namespace Asc
         public List<DateTime> List_Dt;
         public List<double> Ts;
 
-        public string TankType;
+        public string TankID;
         public double DataAvg;
         public int DataAmount
         {
@@ -19,7 +19,7 @@ namespace Asc
 
         public QuickMixTank(string tankType)
         {
-            TankType = tankType;
+            TankID = tankType;
             Initialize();
         }
 
