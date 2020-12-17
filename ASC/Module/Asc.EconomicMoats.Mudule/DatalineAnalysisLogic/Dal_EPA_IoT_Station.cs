@@ -10,6 +10,10 @@ namespace Asc
     public class Dal_EPA_IoT_Station : DatalineAnalysisLogic
     {
         public List<string> DeviceIdList;
+        public List<string> DeviceTypeList;
+        public List<string> DeviceIdList_;
+        public Dictionary<string, List<string>> DeviceIdList_byType;
+
         public Dictionary<string, QuickMixTank> Dic_Qmt;
         public bool useDeviceIdList = true;
 
@@ -64,81 +68,66 @@ namespace Asc
             double oVal = Convert.ToDouble(pM2_5);
 
             // 根據 [time] 欄位值，將 [PM2.5] 欄位值，分配至 相對應 [時間模式] 之 [快混池] (月、週、日、時)
-            DistributeQmt_Month(oDate, oVal);
-            DistributeQmt_Week(oDate, oVal);
-            DistributeQmt_Day(oDate, oVal);
-            DistributeQmt_Hour(oDate, oVal);
+            DistributeQmt_Month(oDate, DeviceID, oVal);
+            DistributeQmt_Week(oDate, DeviceID, oVal);
+            DistributeQmt_Day(oDate, DeviceID, oVal);
+            DistributeQmt_Hour(oDate, DeviceID, oVal);
 
             // 根據 [time] 欄位值，將 [PM2.5] 欄位值，分配至 相對應 [空間模式] 之 [快混池] (年均值、季均值)
             DistributeQmt_Year(oDate, DeviceID, oVal);
             DistributeQmt_Season(oDate, DeviceID, oVal);
         }
 
-        private void DistributeQmt_Hour(DateTime oDate, double oVal)
+        private void DistributeQmt_Hour(DateTime oDate, string deviceID, double oVal)
         {
-            string t = "Hour_" + "HH" + oDate.ToString("HH");
-            if (Dic_Qmt.TryGetValue(t, out QuickMixTank Qmt))
-            {
-                // Add
-                Qmt.List_Dt.Add(oDate);
-                Qmt.Ts.Add(oVal);
-            }
-            else
-            {
-                // Exception
-                throw new Exception();
-            }
-        }
-
-        private void DistributeQmt_Day(DateTime oDate, double oVal)
-        {
-            string t = "Day_" + "dd" + oDate.ToString("dd");
-            if (Dic_Qmt.TryGetValue(t, out QuickMixTank Qmt))
-            {
-                // Add
-                Qmt.List_Dt.Add(oDate);
-                Qmt.Ts.Add(oVal);
-            }
-            else
-            {
-                // Exception
-                throw new Exception();
-            }
-        }
-
-        private void DistributeQmt_Month(DateTime oDate, double oVal)
-        {
-            string t = "Month_" + "MM" + oDate.ToString("MM");
-            if (Dic_Qmt.TryGetValue(t, out QuickMixTank Qmt))
-            {
-                // Add
-                Qmt.List_Dt.Add(oDate);
-                Qmt.Ts.Add(oVal);
-            }
-            else
-            {
-                // Exception
-                throw new Exception();
-            }
-        }
-
-        private void DistributeQmt_Week(DateTime oDate, double oVal)
-        {
-            //string t = oDate.ToString("HH");
-            // Seriously cheat.  If it is Monday, Tuesday or Wednesday, it'll 
-            // be the same week# as whatever Thursday, Friday or Saturday are,
-            // and we always get those right
-            DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(oDate);
-            //if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday)
+            // "Hour23_TrafficArea", "Hour23_IndustrialArea", "Hour23_ResidentialArea", "Hour23_AllArea", 
+            string QmtIndex = "Hour_" + oDate.ToString("HH");
+            AddDateAndValueToQmt(oDate, oVal, QmtIndex + "_AllArea");
+            //if (Dic_Qmt.TryGetValue(t, out QuickMixTank Qmt))
             //{
-            //    oDate = oDate.AddDays(3);
+            //    // Add
+            //    Qmt.List_Dt.Add(oDate);
+            //    Qmt.Ts.Add(oVal);
+            //}
+            //else
+            //{
+            //    // Exception
+            //    throw new Exception();
             //}
 
-            // Return the week of our adjusted day
-            //int result = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(oDate, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-            int result = (int)day;
-            string t = "Week_" + "ww" + result.ToString("00");
-            if (Dic_Qmt.TryGetValue(t, out QuickMixTank Qmt))
+            // Special Area
+            if (isTrafficArea(deviceID))
+            {
+                AddDateAndValueToQmt(oDate, oVal, QmtIndex + "_TrafficArea");
+            }
+            if (isIndustrialArea(deviceID))
+            {
+                AddDateAndValueToQmt(oDate, oVal, QmtIndex + "_IndustrialArea");
+            }
+            if (isResidentialArea(deviceID))
+            {
+                AddDateAndValueToQmt(oDate, oVal, QmtIndex + "_ResidentialArea");
+            }
+        }
+
+        private bool isResidentialArea(string deviceID)
+        {
+            return DeviceIdList_byType["ResidentialArea"].Contains(deviceID);
+        }
+
+        private bool isIndustrialArea(string deviceID)
+        {
+            return DeviceIdList_byType["IndustrialArea"].Contains(deviceID);
+        }
+
+        private bool isTrafficArea(string deviceID)
+        {
+            return DeviceIdList_byType["TrafficArea"].Contains(deviceID);
+        }
+
+        private void AddDateAndValueToQmt(DateTime oDate, double oVal, string qmtIndex)
+        {
+            if (Dic_Qmt.TryGetValue(qmtIndex, out QuickMixTank Qmt))
             {
                 // Add
                 Qmt.List_Dt.Add(oDate);
@@ -148,6 +137,71 @@ namespace Asc
             {
                 // Exception
                 throw new Exception();
+            }
+        }
+
+        private void DistributeQmt_Day(DateTime oDate, string deviceID, double oVal)
+        {
+            // "Hour23_TrafficArea", "Hour23_IndustrialArea", "Hour23_ResidentalArea", "Hour23_AllArea", 
+            string QmtIndex = "Day_" + oDate.ToString("dd");
+            AddDateAndValueToQmt(oDate, oVal, QmtIndex + "_AllArea");
+
+            // Special Area
+            if (isTrafficArea(deviceID))
+            {
+                AddDateAndValueToQmt(oDate, oVal, QmtIndex + "_TrafficArea");
+            }
+            if (isIndustrialArea(deviceID))
+            {
+                AddDateAndValueToQmt(oDate, oVal, QmtIndex + "_IndustrialArea");
+            }
+            if (isResidentialArea(deviceID))
+            {
+                AddDateAndValueToQmt(oDate, oVal, QmtIndex + "_ResidentialArea");
+            }
+        }
+
+        private void DistributeQmt_Month(DateTime oDate, string deviceID, double oVal)
+        {
+            // "Hour23_TrafficArea", "Hour23_IndustrialArea", "Hour23_ResidentalArea", "Hour23_AllArea", 
+            string QmtIndex = "Month_" + oDate.ToString("MM");
+            AddDateAndValueToQmt(oDate, oVal, QmtIndex + "_AllArea");
+
+            // Special Area
+            if (isTrafficArea(deviceID))
+            {
+                AddDateAndValueToQmt(oDate, oVal, QmtIndex + "_TrafficArea");
+            }
+            if (isIndustrialArea(deviceID))
+            {
+                AddDateAndValueToQmt(oDate, oVal, QmtIndex + "_IndustrialArea");
+            }
+            if (isResidentialArea(deviceID))
+            {
+                AddDateAndValueToQmt(oDate, oVal, QmtIndex + "_ResidentialArea");
+            }
+        }
+
+        private void DistributeQmt_Week(DateTime oDate, string deviceID, double oVal)
+        {
+            // "Hour23_TrafficArea", "Hour23_IndustrialArea", "Hour23_ResidentalArea", "Hour23_AllArea", 
+            DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(oDate);           
+            int result = (int)day;
+            string QmtIndex = "Week_" + result.ToString("00");
+            AddDateAndValueToQmt(oDate, oVal, QmtIndex + "_AllArea");
+
+            // Special Area
+            if (isTrafficArea(deviceID))
+            {
+                AddDateAndValueToQmt(oDate, oVal, QmtIndex + "_TrafficArea");
+            }
+            if (isIndustrialArea(deviceID))
+            {
+                AddDateAndValueToQmt(oDate, oVal, QmtIndex + "_IndustrialArea");
+            }
+            if (isResidentialArea(deviceID))
+            {
+                AddDateAndValueToQmt(oDate, oVal, QmtIndex + "_ResidentialArea");
             }
         }
 
