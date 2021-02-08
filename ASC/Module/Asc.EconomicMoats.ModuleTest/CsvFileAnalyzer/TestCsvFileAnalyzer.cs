@@ -11,6 +11,8 @@ namespace Asc
 {
     class TestCsvFileAnalyzer
     {
+        Dictionary<string, List<string>> DeviceIdList_byType;
+
         [Test]
         public void UC01_ReadTgCsvAndBaseAnalysis()
         {
@@ -198,11 +200,11 @@ namespace Asc
             Cfs.DataLinesStartAt = 2;
             Cfs.FooterLinesCount = 0;
 
-            Dal_EPA_IoT_Station Dal = new Dal_EPA_IoT_Station();
+            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5();
             DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
 
-            List<string> DeviceIdList = CreateDeviceIdList();
-            List<string> DeviceTypeList = CreateDeviceTypeList();
+            List<string> DeviceIdList = GetDeviceIdList();
+            List<string> DeviceTypeList = GetDeviceTypeList();
             List<string> TankIdList = CreateTankIdList(DeviceIdList, DeviceTypeList);
             Dictionary<string, List<string>> DeviceIdList_byType = GetDeviceIdList_byType();
             CreateQmtAndPst(TankIdList,
@@ -214,8 +216,8 @@ namespace Asc
             Dal.Def = Def;
             Dal.Dic_Qmt = Dic_Qmt;
             Dal.DeviceIdList = DeviceIdList;
-            Dal.DeviceTypeList = DeviceTypeList;
-            Dal.DeviceIdList_byType = DeviceIdList_byType;
+            //Dal.DeviceTypeList = DeviceTypeList;
+            //Dal.DeviceIdList_byType = DeviceIdList_byType;
             Dal.useDeviceIdList = false;
             Cfr.Dal = Dal;
 
@@ -292,11 +294,11 @@ namespace Asc
             Cfs.DataLinesStartAt = 2;
             Cfs.FooterLinesCount = 0;
 
-            Dal_EPA_IoT_Station Dal = new Dal_EPA_IoT_Station();
+            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5();
             DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
 
-            List<string> DeviceIdList = CreateDeviceIdList();
-            List<string> DeviceTypeList = CreateDeviceTypeList();
+            List<string> DeviceIdList = GetDeviceIdList();
+            List<string> DeviceTypeList = GetDeviceTypeList();
             List<string> TankIdList = CreateTankIdList(DeviceIdList, DeviceTypeList);
             Dictionary<string, List<string>> DeviceIdList_byType = GetDeviceIdList_byType();
             CreateQmtAndPst(TankIdList,
@@ -308,8 +310,8 @@ namespace Asc
             Dal.Def = Def;
             Dal.Dic_Qmt = Dic_Qmt;
             Dal.DeviceIdList = DeviceIdList;
-            Dal.DeviceTypeList = DeviceTypeList;
-            Dal.DeviceIdList_byType = DeviceIdList_byType;
+            //Dal.DeviceTypeList = DeviceTypeList;
+            //Dal.DeviceIdList_byType = DeviceIdList_byType;
             Dal.useDeviceIdList = false;
             Cfr.Dal = Dal;
 
@@ -414,11 +416,11 @@ namespace Asc
             Cfs.DataLinesStartAt = 2;
             Cfs.FooterLinesCount = 0;
 
-            Dal_EPA_IoT_Station Dal = new Dal_EPA_IoT_Station();
+            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5();
             DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
 
-            List<string> DeviceIdList = CreateDeviceIdList();
-            List<string> DeviceTypeList = CreateDeviceTypeList();
+            List<string> DeviceIdList = GetDeviceIdList();
+            List<string> DeviceTypeList = GetDeviceTypeList();
             List<string> TankIdList = CreateTankIdList(DeviceIdList, DeviceTypeList);
             Dictionary<string, List<string>> DeviceIdList_byType = GetDeviceIdList_byType();
             CreateQmtAndPst(TankIdList,
@@ -430,8 +432,8 @@ namespace Asc
             Dal.Def = Def;
             Dal.Dic_Qmt = Dic_Qmt;
             Dal.DeviceIdList = DeviceIdList;
-            Dal.DeviceTypeList = DeviceTypeList;
-            Dal.DeviceIdList_byType = DeviceIdList_byType;
+            //Dal.DeviceTypeList = DeviceTypeList;
+            //Dal.DeviceIdList_byType = DeviceIdList_byType;
             Dal.useDeviceIdList = true;
             Cfr.Dal = Dal;
 
@@ -488,11 +490,11 @@ namespace Asc
             Cfs.DataLinesStartAt = 2;
             Cfs.FooterLinesCount = 0;
 
-            Dal_EPA_IoT_Station Dal = new Dal_EPA_IoT_Station();
+            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5();
             DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
 
-            List<string> DeviceIdList = CreateDeviceIdList();
-            List<string> DeviceTypeList = CreateDeviceTypeList();
+            List<string> DeviceIdList = GetDeviceIdList();
+            List<string> DeviceTypeList = GetDeviceTypeList();
             List<string> TankIdList = CreateTankIdList(DeviceIdList, DeviceTypeList);
             Dictionary<string, List<string>> DeviceIdList_byType = GetDeviceIdList_byType();
 
@@ -506,8 +508,8 @@ namespace Asc
             Dal.Def = Def;
             Dal.Dic_Qmt = Dic_Qmt;
             Dal.DeviceIdList = DeviceIdList;
-            Dal.DeviceTypeList = DeviceTypeList;
-            Dal.DeviceIdList_byType = DeviceIdList_byType;
+            //Dal.DeviceTypeList = DeviceTypeList;
+            //Dal.DeviceIdList_byType = DeviceIdList_byType;
             Dal.useDeviceIdList = true;
             Cfr.Dal = Dal;
 
@@ -567,6 +569,7 @@ namespace Asc
         public void UC11_Aggregate2018to2020_ThreeYears()
         {
             // 1. Creation Management
+            // 1.1 
             CsvFileAnalyzer Cfr = new CsvFileAnalyzer();
             Cfr.Delimiters = new char[] { '\t', ',', '\"' };
 
@@ -575,11 +578,12 @@ namespace Asc
             Cfs.DataLinesStartAt = 2;
             Cfs.FooterLinesCount = 0;
 
-            Dal_EPA_IoT_Station Dal = new Dal_EPA_IoT_Station();
+            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5();
             DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
 
-            List<string> DeviceIdList = CreateDeviceIdList();
-            List<string> DeviceTypeList = CreateDeviceTypeList();
+            // 1.2 
+            List<string> DeviceIdList = GetDeviceIdList();
+            List<string> DeviceTypeList = GetDeviceTypeList();
             List<string> TankIdList = CreateTankIdList(DeviceIdList, DeviceTypeList);
             Dictionary<string, List<string>> DeviceIdList_byType = GetDeviceIdList_byType();
 
@@ -593,8 +597,8 @@ namespace Asc
             Dal.Def = Def;
             Dal.Dic_Qmt = Dic_Qmt;
             Dal.DeviceIdList = DeviceIdList;
-            Dal.DeviceTypeList = DeviceTypeList;
-            Dal.DeviceIdList_byType = DeviceIdList_byType;
+            //Dal.DeviceTypeList = DeviceTypeList;
+            //Dal.DeviceIdList_byType = DeviceIdList_byType;
             Dal.useDeviceIdList = true;
             Cfr.Dal = Dal;
 
@@ -648,6 +652,573 @@ namespace Asc
                 string ResultFilePath = ResultFolder + "\\" + TestMethod + "\\" + TestTime + "\\" + TankId + ".csv";
                 PrintPst(entry.Value, ResultFilePath);
             }
+        }
+
+        [Test]
+        public void UC12_FourTanks_201801_OneMonth()
+        {
+            // 1. Creation Management
+            // 1.1 CsvFileAnalyzer
+            CsvFileAnalyzer Cfr = new CsvFileAnalyzer();
+            Cfr.Delimiters = new char[] { '\t', ',', '\"' };
+
+            CsvFileStructure Cfs = new CsvFileStructure();
+            Cfs.HeaderLineStartAt = 1;
+            Cfs.DataLinesStartAt = 2;
+            Cfs.FooterLinesCount = 0;
+
+            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5();
+            DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
+
+            // 1.2 Tanks
+            DeviceIdList_byType = GetDeviceIdList_byType();
+            List<string> List_DeviceId = TankFactory.GetDeviceIdList();
+            List<string> List_DeviceType = TankFactory.GetDeviceTypeList();
+            List<string> List_TemporalModeUnit = TankFactory.GetTemporalModeUnitList();
+            List<string> List_TemporalMode = TankFactory.GetTemporalModeList();
+            List<string> List_SpatialModeUnit = TankFactory.GetSpatialModeList();
+            List<string> List_SpatioTemporalUnitMode = new List<string>();
+            List_SpatioTemporalUnitMode.AddRange(List_TemporalModeUnit);
+            List_SpatioTemporalUnitMode.AddRange(List_SpatialModeUnit);
+            List<string> TankIdList;
+
+            TankIdList = TankFactory.GetCombination(List_SpatioTemporalUnitMode, List_DeviceId);
+            TankFactory.CreateQmt(TankIdList, out Dictionary<string, QuickMixTank> Dic_Qmt_StumDi);
+
+            TankIdList = TankFactory.GetCombination(List_SpatioTemporalUnitMode, List_DeviceId);
+            TankFactory.CreatePst(TankIdList, out Dictionary<string, PrimarySedimentationTank> Dic_Pst_StumDi);
+
+            TankIdList = TankFactory.GetCombination(List_DeviceType, List_TemporalModeUnit);
+            TankFactory.CreateQmt(TankIdList, out Dictionary<string, QuickMixTank> Dic_Qmt_DtTmu);
+
+            TankIdList = TankFactory.GetCombination(List_DeviceType, List_TemporalMode);
+            TankFactory.CreateQmt(TankIdList, out Dictionary<string, QuickMixTank> Dic_Qmt_DtTm);
+
+            //List<string> TankIdList = CreateTankIdList(List_DeviceId, List_DeviceType);
+            //Dictionary<string, List<string>> DeviceIdList_byType = GetDeviceIdList_byType();
+
+            //bool Res_CreateQmtAndPst = CreateQmtAndPst(TankIdList,
+            //    out Dictionary<string, QuickMixTank> Dic_Qmt,
+            //    out Dictionary<string, PrimarySedimentationTank> Dic_Pst);
+            //Assert.IsTrue(Res_CreateQmtAndPst);
+
+            // 2. Dependency Management
+            Cfr.Cfs = Cfs;
+            Dal.Def = Def;
+            Dal.Dic_Qmt = Dic_Qmt_StumDi;
+            Dal.DeviceIdList = List_DeviceId;   // 攔污柵
+            //Dal.DeviceTypeList = List_DeviceType;
+            //Dal.DeviceIdList_byType = DeviceIdList_byType;
+            Dal.useDeviceIdList = true;
+            Cfr.Dal = Dal;
+
+            // 3. Read Csv files in specified directory, including its sub-directories.
+            string[] files =
+                Directory.GetFiles(@"D:\EPA_IoT_Station_Data\2018\201801\", "*.csv", SearchOption.AllDirectories);
+            foreach (string InputFilePath in files)
+            {
+                Cfr.FilePath = InputFilePath;
+
+                // Read Csv File and Distribute by Dataline Analysis Logic
+                bool Res_ReadCsvFile = Cfr.ReadCsvFile();
+                Assert.IsTrue(Res_ReadCsvFile, "InputFilePath: " + InputFilePath);
+
+                // ComputeAvg & Aggregate
+                foreach (KeyValuePair<string, QuickMixTank> entry in Dic_Qmt_StumDi)
+                {
+                    // ComputeAvg
+                    entry.Value.ComputeAvg();
+                    // Aggregate
+                    Dic_Pst_StumDi.TryGetValue(entry.Key, out PrimarySedimentationTank Pst);
+                    Pst.Aggregate(entry.Value.DataAmount, entry.Value.DataAvg);
+                    // Reset
+                    entry.Value.Reset();
+                }
+            }
+
+            // 4. Print Dic_Pst_TmuDi
+            // Create File Header for [月x1 + 週x1 + 日x1 + 時x1 + 年x3 + 季x12]
+            string ResultFolder = @"D:\Result\EPAIoT_station_Taichung_Result";
+            string TestMethod = TestContext.CurrentContext.Test.Name;
+            string TestTime = DateTime.Now.ToString("yyyyMMdd-HHmm");
+            string SubFolder = "SpatiaMode";
+            //List<string> TankIdList_forOutput = CreateTankIdList_TemporalMode();
+            //TankIdList_forOutput.AddRange(CreateTankIdList_SpatialMode());
+            List<string> TankIdList_forOutput = List_TemporalModeUnit;
+            TankIdList_forOutput.AddRange(CreateTankIdList_SpatialMode());
+            foreach (string TankId in TankIdList_forOutput)
+            {
+                string ResultFilePath = ResultFolder + "\\" + TestMethod + "\\" + TestTime + "\\" + SubFolder + "\\" + TankId + ".csv";
+                FileInfo FI = new FileInfo(ResultFilePath);
+                FI.Directory.Create();  // If the directory already exists, this method does nothing.
+                using (var file = new StreamWriter(ResultFilePath, false))
+                {
+                    file.WriteLine(string.Format("{0},{1},{2}", "TankId", "DataAmount", "DataAvg"));
+                }
+            }
+
+            // Create File Content for [月x1 + 週x1 + 日x1 + 時x1 + 年x3 + 季x12]
+            SubFolder = "SpatiaMode";
+            foreach (KeyValuePair<string, PrimarySedimentationTank> entry in Dic_Pst_StumDi)
+            {
+                // [FileName]_[RowId], e.g., [Y2018S04]_[DeviceId], [Week]_[01_DeviceType], 
+                string TankId = entry.Key.Split('_')[0];
+                string ResultFilePath = ResultFolder + "\\" + TestMethod + "\\" + TestTime + "\\" + SubFolder + "\\" + TankId + ".csv";
+                PrintPst(entry.Value, ResultFilePath);
+
+                // 可以順便 把 PST 分配到 第一個 QMT
+                DistributeToQmt_DtTmu(entry.Key, entry.Value, Dic_Qmt_DtTmu);
+            }
+
+            // Create File Header for [月x1 + 週x1 + 日x1 + 時x1 + 年x3 + 季x12]
+            SubFolder = "TemporalMode";
+            foreach (string TankId in List_DeviceType)
+            {
+                string ResultFilePath = ResultFolder + "\\" + TestMethod + "\\" + TestTime + "\\" + SubFolder + "\\" + TankId + ".csv";
+                FileInfo FI = new FileInfo(ResultFilePath);
+                FI.Directory.Create();  // If the directory already exists, this method does nothing.
+                using (var file = new StreamWriter(ResultFilePath, false))
+                {
+                    file.WriteLine(string.Format("{0},{1},{2}", "TankId", "DataAmount", "DataAvg"));
+                }
+            }
+
+
+
+            // 5. Dic_Qmt_DtTmu
+            SubFolder = "TemporalMode";
+            foreach (KeyValuePair<string, QuickMixTank> entry in Dic_Qmt_DtTmu)
+            {
+                // ComputeAvg
+                entry.Value.ComputeAvg();
+                // Print Qmt
+                string TankId = entry.Key.Split('_')[0];
+                string ResultFilePath = ResultFolder + "\\" + TestMethod + "\\" + TestTime + "\\" + SubFolder + "\\" + TankId + ".csv";
+                PrintQmt(entry.Value, ResultFilePath);
+                // 可以順便 把 PST 分配到 第一個 QMT
+                DistributeToQmt_DtTm(entry.Key, entry.Value, Dic_Qmt_DtTm);
+            }
+
+            // 6. Dic_Qmt_DtTm
+            SubFolder = "TemporalMode";
+            foreach (KeyValuePair<string, QuickMixTank> entry in Dic_Qmt_DtTm)
+            {
+                // ComputeAvg
+                entry.Value.ComputeAvg();
+                // Print Qmt
+                string TankId = entry.Key.Split('_')[0];
+                string ResultFilePath = ResultFolder + "\\" + TestMethod + "\\" + TestTime + "\\" + SubFolder + "\\" + TankId + ".csv";
+                PrintQmt(entry.Value, ResultFilePath);
+            }
+        }
+
+        [Test]
+        public void UC13_FourTanks_2018_OneYear()
+        {
+            // 1. Creation Management
+            // 1.1 CsvFileAnalyzer
+            CsvFileAnalyzer Cfr = new CsvFileAnalyzer();
+            Cfr.Delimiters = new char[] { '\t', ',', '\"' };
+
+            CsvFileStructure Cfs = new CsvFileStructure();
+            Cfs.HeaderLineStartAt = 1;
+            Cfs.DataLinesStartAt = 2;
+            Cfs.FooterLinesCount = 0;
+
+            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5();
+            DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
+
+            // 1.2 Tanks
+            DeviceIdList_byType = GetDeviceIdList_byType();
+            List<string> List_DeviceId = TankFactory.GetDeviceIdList();
+            List<string> List_DeviceType = TankFactory.GetDeviceTypeList();
+            List<string> List_TemporalModeUnit = TankFactory.GetTemporalModeUnitList();
+            List<string> List_TemporalMode = TankFactory.GetTemporalModeList();
+            List<string> List_SpatialModeUnit = TankFactory.GetSpatialModeList();
+            List<string> List_SpatioTemporalUnitMode = new List<string>();
+            List_SpatioTemporalUnitMode.AddRange(List_TemporalModeUnit);
+            List_SpatioTemporalUnitMode.AddRange(List_SpatialModeUnit);
+            List<string> TankIdList;
+
+            TankIdList = TankFactory.GetCombination(List_SpatioTemporalUnitMode, List_DeviceId);
+            TankFactory.CreateQmt(TankIdList, out Dictionary<string, QuickMixTank> Dic_Qmt_StumDi);
+
+            TankIdList = TankFactory.GetCombination(List_SpatioTemporalUnitMode, List_DeviceId);
+            TankFactory.CreatePst(TankIdList, out Dictionary<string, PrimarySedimentationTank> Dic_Pst_StumDi);
+
+            TankIdList = TankFactory.GetCombination(List_DeviceType, List_TemporalModeUnit);
+            TankFactory.CreateQmt(TankIdList, out Dictionary<string, QuickMixTank> Dic_Qmt_DtTmu);
+
+            TankIdList = TankFactory.GetCombination(List_DeviceType, List_TemporalMode);
+            TankFactory.CreateQmt(TankIdList, out Dictionary<string, QuickMixTank> Dic_Qmt_DtTm);
+
+            //List<string> TankIdList = CreateTankIdList(List_DeviceId, List_DeviceType);
+            //Dictionary<string, List<string>> DeviceIdList_byType = GetDeviceIdList_byType();
+
+            //bool Res_CreateQmtAndPst = CreateQmtAndPst(TankIdList,
+            //    out Dictionary<string, QuickMixTank> Dic_Qmt,
+            //    out Dictionary<string, PrimarySedimentationTank> Dic_Pst);
+            //Assert.IsTrue(Res_CreateQmtAndPst);
+
+            // 2. Dependency Management
+            Cfr.Cfs = Cfs;
+            Dal.Def = Def;
+            Dal.Dic_Qmt = Dic_Qmt_StumDi;
+            Dal.DeviceIdList = List_DeviceId;   // 攔污柵
+            //Dal.DeviceTypeList = List_DeviceType;
+            //Dal.DeviceIdList_byType = DeviceIdList_byType;
+            Dal.useDeviceIdList = true;
+            Cfr.Dal = Dal;
+
+            // 3. Read Csv files in specified directory, including its sub-directories.
+            string[] files =
+                Directory.GetFiles(@"D:\EPA_IoT_Station_Data\2018\", "*.csv", SearchOption.AllDirectories);
+            foreach (string InputFilePath in files)
+            {
+                Cfr.FilePath = InputFilePath;
+
+                // Read Csv File and Distribute by Dataline Analysis Logic
+                bool Res_ReadCsvFile = Cfr.ReadCsvFile();
+                Assert.IsTrue(Res_ReadCsvFile, "InputFilePath: " + InputFilePath);
+
+                // ComputeAvg & Aggregate
+                foreach (KeyValuePair<string, QuickMixTank> entry in Dic_Qmt_StumDi)
+                {
+                    // ComputeAvg
+                    entry.Value.ComputeAvg();
+                    // Aggregate
+                    Dic_Pst_StumDi.TryGetValue(entry.Key, out PrimarySedimentationTank Pst);
+                    Pst.Aggregate(entry.Value.DataAmount, entry.Value.DataAvg);
+                    // Reset
+                    entry.Value.Reset();
+                }
+            }
+
+            // 4. Print Dic_Pst_TmuDi
+            // Create File Header for [月x1 + 週x1 + 日x1 + 時x1 + 年x3 + 季x12]
+            string ResultFolder = @"D:\Result\EPAIoT_station_Taichung_Result";
+            string TestMethod = TestContext.CurrentContext.Test.Name;
+            string TestTime = DateTime.Now.ToString("yyyyMMdd-HHmm");
+            string SubFolder = "SpatiaMode";
+            //List<string> TankIdList_forOutput = CreateTankIdList_TemporalMode();
+            //TankIdList_forOutput.AddRange(CreateTankIdList_SpatialMode());
+            List<string> TankIdList_forOutput = List_TemporalModeUnit;
+            TankIdList_forOutput.AddRange(CreateTankIdList_SpatialMode());
+            foreach (string TankId in TankIdList_forOutput)
+            {
+                string ResultFilePath = ResultFolder + "\\" + TestMethod + "\\" + TestTime + "\\" + SubFolder + "\\" + TankId + ".csv";
+                FileInfo FI = new FileInfo(ResultFilePath);
+                FI.Directory.Create();  // If the directory already exists, this method does nothing.
+                using (var file = new StreamWriter(ResultFilePath, false))
+                {
+                    file.WriteLine(string.Format("{0},{1},{2}", "TankId", "DataAmount", "DataAvg"));
+                }
+            }
+
+            // Create File Content for [月x1 + 週x1 + 日x1 + 時x1 + 年x3 + 季x12]
+            SubFolder = "SpatiaMode";
+            foreach (KeyValuePair<string, PrimarySedimentationTank> entry in Dic_Pst_StumDi)
+            {
+                // [FileName]_[RowId], e.g., [Y2018S04]_[DeviceId], [Week]_[01_DeviceType], 
+                string TankId = entry.Key.Split('_')[0];
+                string ResultFilePath = ResultFolder + "\\" + TestMethod + "\\" + TestTime + "\\" + SubFolder + "\\" + TankId + ".csv";
+                PrintPst(entry.Value, ResultFilePath);
+
+                // 可以順便 把 PST 分配到 第一個 QMT
+                DistributeToQmt_DtTmu(entry.Key, entry.Value, Dic_Qmt_DtTmu);
+            }
+
+            // Create File Header for [月x1 + 週x1 + 日x1 + 時x1 + 年x3 + 季x12]
+            SubFolder = "TemporalMode";
+            foreach (string TankId in List_DeviceType)
+            {
+                string ResultFilePath = ResultFolder + "\\" + TestMethod + "\\" + TestTime + "\\" + SubFolder + "\\" + TankId + ".csv";
+                FileInfo FI = new FileInfo(ResultFilePath);
+                FI.Directory.Create();  // If the directory already exists, this method does nothing.
+                using (var file = new StreamWriter(ResultFilePath, false))
+                {
+                    file.WriteLine(string.Format("{0},{1},{2}", "TankId", "DataAmount", "DataAvg"));
+                }
+            }
+
+
+
+            // 5. Dic_Qmt_DtTmu
+            SubFolder = "TemporalMode";
+            foreach (KeyValuePair<string, QuickMixTank> entry in Dic_Qmt_DtTmu)
+            {
+                // ComputeAvg
+                entry.Value.ComputeAvg();
+                // Print Qmt
+                string TankId = entry.Key.Split('_')[0];
+                string ResultFilePath = ResultFolder + "\\" + TestMethod + "\\" + TestTime + "\\" + SubFolder + "\\" + TankId + ".csv";
+                PrintQmt(entry.Value, ResultFilePath);
+                // 可以順便 把 PST 分配到 第一個 QMT
+                DistributeToQmt_DtTm(entry.Key, entry.Value, Dic_Qmt_DtTm);
+            }
+
+            // 6. Dic_Qmt_DtTm
+            SubFolder = "TemporalMode";
+            foreach (KeyValuePair<string, QuickMixTank> entry in Dic_Qmt_DtTm)
+            {
+                // ComputeAvg
+                entry.Value.ComputeAvg();
+                // Print Qmt
+                string TankId = entry.Key.Split('_')[0];
+                string ResultFilePath = ResultFolder + "\\" + TestMethod + "\\" + TestTime + "\\" + SubFolder + "\\" + TankId + ".csv";
+                PrintQmt(entry.Value, ResultFilePath);
+            }
+        }
+
+        [Test]
+        public void UC14_FourTanks_2018to2020_ThreeYears()
+        {
+            // 1. Creation Management
+            // 1.1 CsvFileAnalyzer
+            CsvFileAnalyzer Cfr = new CsvFileAnalyzer();
+            Cfr.Delimiters = new char[] { '\t', ',', '\"' };
+
+            CsvFileStructure Cfs = new CsvFileStructure();
+            Cfs.HeaderLineStartAt = 1;
+            Cfs.DataLinesStartAt = 2;
+            Cfs.FooterLinesCount = 0;
+
+            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5();
+            DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
+
+            // 1.2 Tanks
+            DeviceIdList_byType = GetDeviceIdList_byType();
+            List<string> List_DeviceId = TankFactory.GetDeviceIdList();
+            List<string> List_DeviceType = TankFactory.GetDeviceTypeList();
+            List<string> List_TemporalModeUnit = TankFactory.GetTemporalModeUnitList();
+            List<string> List_TemporalMode = TankFactory.GetTemporalModeList();
+            List<string> List_SpatialModeUnit = TankFactory.GetSpatialModeList();
+            List<string> List_SpatioTemporalUnitMode = new List<string>();
+            List_SpatioTemporalUnitMode.AddRange(List_TemporalModeUnit);
+            List_SpatioTemporalUnitMode.AddRange(List_SpatialModeUnit);
+            List<string> TankIdList;
+
+            TankIdList = TankFactory.GetCombination(List_SpatioTemporalUnitMode, List_DeviceId);
+            TankFactory.CreateQmt(TankIdList, out Dictionary<string, QuickMixTank> Dic_Qmt_StumDi);
+
+            TankIdList = TankFactory.GetCombination(List_SpatioTemporalUnitMode, List_DeviceId);
+            TankFactory.CreatePst(TankIdList, out Dictionary<string, PrimarySedimentationTank> Dic_Pst_StumDi);
+
+            TankIdList = TankFactory.GetCombination(List_DeviceType, List_TemporalModeUnit);
+            TankFactory.CreateQmt(TankIdList, out Dictionary<string, QuickMixTank> Dic_Qmt_DtTmu);
+
+            TankIdList = TankFactory.GetCombination(List_DeviceType, List_TemporalMode);
+            TankFactory.CreateQmt(TankIdList, out Dictionary<string, QuickMixTank> Dic_Qmt_DtTm);
+
+            //List<string> TankIdList = CreateTankIdList(List_DeviceId, List_DeviceType);
+            //Dictionary<string, List<string>> DeviceIdList_byType = GetDeviceIdList_byType();
+
+            //bool Res_CreateQmtAndPst = CreateQmtAndPst(TankIdList,
+            //    out Dictionary<string, QuickMixTank> Dic_Qmt,
+            //    out Dictionary<string, PrimarySedimentationTank> Dic_Pst);
+            //Assert.IsTrue(Res_CreateQmtAndPst);
+
+            // 2. Dependency Management
+            Cfr.Cfs = Cfs;
+            Dal.Def = Def;
+            Dal.Dic_Qmt = Dic_Qmt_StumDi;
+            Dal.DeviceIdList = List_DeviceId;   // 攔污柵
+            //Dal.DeviceTypeList = List_DeviceType;
+            //Dal.DeviceIdList_byType = DeviceIdList_byType;
+            Dal.useDeviceIdList = true;
+            Cfr.Dal = Dal;
+
+            // 3. Read Csv files in specified directory, including its sub-directories.
+            string[] files =
+                Directory.GetFiles(@"D:\EPA_IoT_Station_Data\", "*.csv", SearchOption.AllDirectories);
+            foreach (string InputFilePath in files)
+            {
+                Cfr.FilePath = InputFilePath;
+
+                // Read Csv File and Distribute by Dataline Analysis Logic
+                bool Res_ReadCsvFile = Cfr.ReadCsvFile();
+                Assert.IsTrue(Res_ReadCsvFile, "InputFilePath: " + InputFilePath);
+
+                // ComputeAvg & Aggregate
+                foreach (KeyValuePair<string, QuickMixTank> entry in Dic_Qmt_StumDi)
+                {
+                    // ComputeAvg
+                    entry.Value.ComputeAvg();
+                    // Aggregate
+                    Dic_Pst_StumDi.TryGetValue(entry.Key, out PrimarySedimentationTank Pst);
+                    Pst.Aggregate(entry.Value.DataAmount, entry.Value.DataAvg);
+                    // Reset
+                    entry.Value.Reset();
+                }
+            }
+
+            // 4. Print Dic_Pst_TmuDi
+            // Create File Header for [月x1 + 週x1 + 日x1 + 時x1 + 年x3 + 季x12]
+            string ResultFolder = @"D:\Result\EPAIoT_station_Taichung_Result";
+            string TestMethod = TestContext.CurrentContext.Test.Name;
+            string TestTime = DateTime.Now.ToString("yyyyMMdd-HHmm");
+            string SubFolder = "SpatiaMode";
+            //List<string> TankIdList_forOutput = CreateTankIdList_TemporalMode();
+            //TankIdList_forOutput.AddRange(CreateTankIdList_SpatialMode());
+            List<string> TankIdList_forOutput = List_TemporalModeUnit;
+            TankIdList_forOutput.AddRange(CreateTankIdList_SpatialMode());
+            foreach (string TankId in TankIdList_forOutput)
+            {
+                string ResultFilePath = ResultFolder + "\\" + TestMethod + "\\" + TestTime + "\\" + SubFolder + "\\" + TankId + ".csv";
+                FileInfo FI = new FileInfo(ResultFilePath);
+                FI.Directory.Create();  // If the directory already exists, this method does nothing.
+                using (var file = new StreamWriter(ResultFilePath, false))
+                {
+                    file.WriteLine(string.Format("{0},{1},{2}", "TankId", "DataAmount", "DataAvg"));
+                }
+            }
+
+            // Create File Content for [月x1 + 週x1 + 日x1 + 時x1 + 年x3 + 季x12]
+            SubFolder = "SpatiaMode";
+            foreach (KeyValuePair<string, PrimarySedimentationTank> entry in Dic_Pst_StumDi)
+            {
+                // [FileName]_[RowId], e.g., [Y2018S04]_[DeviceId], [Week]_[01_DeviceType], 
+                string TankId = entry.Key.Split('_')[0];
+                string ResultFilePath = ResultFolder + "\\" + TestMethod + "\\" + TestTime + "\\" + SubFolder + "\\" + TankId + ".csv";
+                PrintPst(entry.Value, ResultFilePath);
+
+                // 可以順便 把 PST 分配到 第一個 QMT
+                DistributeToQmt_DtTmu(entry.Key, entry.Value, Dic_Qmt_DtTmu);
+            }
+
+            // Create File Header for [月x1 + 週x1 + 日x1 + 時x1 + 年x3 + 季x12]
+            SubFolder = "TemporalMode";
+            foreach (string TankId in List_DeviceType)
+            {
+                string ResultFilePath = ResultFolder + "\\" + TestMethod + "\\" + TestTime + "\\" + SubFolder + "\\" + TankId + ".csv";
+                FileInfo FI = new FileInfo(ResultFilePath);
+                FI.Directory.Create();  // If the directory already exists, this method does nothing.
+                using (var file = new StreamWriter(ResultFilePath, false))
+                {
+                    file.WriteLine(string.Format("{0},{1},{2}", "TankId", "DataAmount", "DataAvg"));
+                }
+            }
+
+
+
+            // 5. Dic_Qmt_DtTmu
+            SubFolder = "TemporalMode";
+            foreach (KeyValuePair<string, QuickMixTank> entry in Dic_Qmt_DtTmu)
+            {
+                // ComputeAvg
+                entry.Value.ComputeAvg();
+                // Print Qmt
+                string TankId = entry.Key.Split('_')[0];
+                string ResultFilePath = ResultFolder + "\\" + TestMethod + "\\" + TestTime + "\\" + SubFolder + "\\" + TankId + ".csv";
+                PrintQmt(entry.Value, ResultFilePath);
+                // 可以順便 把 PST 分配到 第一個 QMT
+                DistributeToQmt_DtTm(entry.Key, entry.Value, Dic_Qmt_DtTm);
+            }
+
+            // 6. Dic_Qmt_DtTm
+            SubFolder = "TemporalMode";
+            foreach (KeyValuePair<string, QuickMixTank> entry in Dic_Qmt_DtTm)
+            {
+                // ComputeAvg
+                entry.Value.ComputeAvg();
+                // Print Qmt
+                string TankId = entry.Key.Split('_')[0];
+                string ResultFilePath = ResultFolder + "\\" + TestMethod + "\\" + TestTime + "\\" + SubFolder + "\\" + TankId + ".csv";
+                PrintQmt(entry.Value, ResultFilePath);
+            }
+        }
+        private void DistributeToQmt_DtTmu(string key, PrimarySedimentationTank value, Dictionary<string, QuickMixTank> dic_Qmt_DtTmu)
+        {
+            string[] splits = key.Split("_");
+            string TemporalModeUnit = splits[0];
+            string DeviceID = splits[1];
+            string DeviceType = GetDeviceType(DeviceID);
+            string QmtIndex = DeviceType + "_" + TemporalModeUnit;
+            // Add Special
+            if (dic_Qmt_DtTmu.TryGetValue(QmtIndex, out QuickMixTank Qmt))
+            {
+
+                Qmt.Ts.Add(value.DataAvg);
+            }
+            else
+            {
+                // No Distribution
+            }
+            // Add All
+            if (dic_Qmt_DtTmu.TryGetValue("AllArea_" + TemporalModeUnit, out QuickMixTank Qmt_AllArea))
+            {
+
+                Qmt_AllArea.Ts.Add(value.DataAvg);
+            }
+            else
+            {
+                // No Distribution
+            }
+        }
+
+        private string GetDeviceType(string deviceID)
+        {
+            if (DeviceIdList_byType["TrafficArea"].Contains(deviceID))
+                return "TrafficArea";
+            else if (DeviceIdList_byType["ResidentialArea"].Contains(deviceID))
+                return "ResidentialArea";
+
+            else if (DeviceIdList_byType["IndustrialArea"].Contains(deviceID))
+                return "IndustrialArea";
+            else
+                return "";
+        }
+
+        private void DistributeToQmt_DtTm(string key, QuickMixTank value, Dictionary<string, QuickMixTank> dic_Qmt_DtTm)
+        {
+            string[] splits = key.Split("_");
+            string DeviceType = splits[0];
+            string TemporalModeUnit = splits[1];
+            string TemporalMode = GetTemporalMode(TemporalModeUnit);
+            string QmtIndex = DeviceType + "_" + TemporalMode;
+            // Add Special
+            if (dic_Qmt_DtTm.TryGetValue(QmtIndex, out QuickMixTank Qmt))
+            {
+                // Add
+                Qmt.Ts.Add(value.DataAvg);
+            }
+            else
+            {
+                // No Distribution
+            }
+            // Add All
+            if (dic_Qmt_DtTm.TryGetValue("AllArea_" + TemporalMode, out QuickMixTank Qmt_AllArea))
+            {
+
+                Qmt_AllArea.Ts.Add(value.DataAvg);
+            }
+            else
+            {
+                // No Distribution
+            }
+        }
+
+        private string GetTemporalMode(string temporalModeUnit)
+        {
+            // Match the start of a string.
+            if (Regex.IsMatch(temporalModeUnit, "^Month"))
+            {
+                return "Month";
+            }
+            else if (Regex.IsMatch(temporalModeUnit, "^Week"))
+            {
+                return "Week";
+            }
+            else if (Regex.IsMatch(temporalModeUnit, "^Day"))
+            {
+                return "Day";
+            }
+            else if (Regex.IsMatch(temporalModeUnit, "^Hour"))
+            {
+                return "Hour";
+            }
+            else
+                return "";
         }
 
         private Dictionary<string, List<string>> GetDeviceIdList_byType()
@@ -1496,7 +2067,7 @@ namespace Asc
         {
             using (var file = new StreamWriter(FilePath, true))
             {
-                file.WriteLine(string.Format("{0},{1},{2}", "Pst_" + Pst.TankId, Pst.DataAmount, Pst.DataAvg));
+                file.WriteLine(string.Format("{0},{1},{2}", Pst.TankId, Pst.DataAmount, Pst.DataAvg));
             }
         }
 
@@ -1504,22 +2075,22 @@ namespace Asc
         {
             using (var file = new StreamWriter(FilePath, true))
             {
-                file.WriteLine(string.Format("{0},{1},{2}", "Qmt_" + Qmt.TankID, Qmt.DataAmount, Qmt.DataAvg));
+                file.WriteLine(string.Format("{0},{1},{2}", Qmt.TankID, Qmt.DataAmount, Qmt.DataAvg));
             }
 
-            // Debug Use
-            string QmtFilePath = @"D:\Result\EPAIoT_station_Taichung_Result\" +
-                    DateTime.Now.ToString("yyyyMMdd-HHmmss") + "_Qmt_" + Qmt.TankID + ".csv";
-            FileInfo FI = new FileInfo(QmtFilePath);
-            FI.Directory.Create();  // If the directory already exists, this method does nothing.
-            using (var file = new StreamWriter(QmtFilePath, true))
-            {
-                var TsAndDt = Qmt.Ts.Zip(Qmt.List_Dt, (n, w) => new { TS = n, DT = w });
-                foreach (var nw in TsAndDt)
-                {
-                    file.WriteLine(string.Format("{0},{1}", nw.TS, nw.DT.ToString("yyyy/MM/dd HH:mm")));
-                }
-            }
+            //// Debug Use
+            //string QmtFilePath = @"D:\Result\EPAIoT_station_Taichung_Result\" +
+            //        DateTime.Now.ToString("yyyyMMdd-HHmmss") + "_Qmt_" + Qmt.TankID + ".csv";
+            //FileInfo FI = new FileInfo(QmtFilePath);
+            //FI.Directory.Create();  // If the directory already exists, this method does nothing.
+            //using (var file = new StreamWriter(QmtFilePath, true))
+            //{
+            //    var TsAndDt = Qmt.Ts.Zip(Qmt.List_Dt, (n, w) => new { TS = n, DT = w });
+            //    foreach (var nw in TsAndDt)
+            //    {
+            //        file.WriteLine(string.Format("{0},{1}", nw.TS, nw.DT.ToString("yyyy/MM/dd HH:mm")));
+            //    }
+            //}
         }
 
         private bool isToPrint(string key)
@@ -1542,7 +2113,7 @@ namespace Asc
             return Res;
         }
 
-        private List<string> CreateDeviceIdList()
+        private List<string> GetDeviceIdList()
         {
             List<string> List_Device = new List<string>();
             List_Device.Add("6240072114");
@@ -2407,7 +2978,7 @@ namespace Asc
             List_Device.Add("6221860040");
             return List_Device;
         }
-        private List<string> CreateDeviceTypeList()
+        private List<string> GetDeviceTypeList()
         {
             List<string> List_Device = new List<string>();
             // 全部+交通+工業+社區

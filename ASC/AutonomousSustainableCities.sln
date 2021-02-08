@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Module", "Module", "{F02889E4-7FDC-4ABA-BAD0-E205B886E38C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReusableEntities", "ReusableEntities", "{F02889E4-7FDC-4ABA-BAD0-E205B886E38C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{B1D300FB-D89D-42BB-B706-53653DCE47F6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UseCases", "UseCases", "{B1D300FB-D89D-42BB-B706-53653DCE47F6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "System", "System", "{A335B309-405A-48D2-BA3D-65546DCD8BE6}"
 EndProject

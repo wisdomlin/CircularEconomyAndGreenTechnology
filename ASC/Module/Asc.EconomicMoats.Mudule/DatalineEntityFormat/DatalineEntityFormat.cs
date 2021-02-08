@@ -9,17 +9,17 @@ namespace Asc
     /// </summary>
     public class DatalineEntityAndFormat
     {
-        internal Dictionary<string, (int ValueAddress, string ValueType)> FormatLookUpTable;
+        internal Dictionary<string, (int ValueAddress, string ValueType)> LookUpTable;
         public string[] LineSplits;
 
         public DatalineEntityAndFormat()
         {
-            FormatLookUpTable = new Dictionary<string, (int, string)>();
+            LookUpTable = new Dictionary<string, (int, string)>();
         }
 
         public int GetValueAddress(string FieldName)
         {
-            bool hasFound = FormatLookUpTable.TryGetValue(FieldName, out var tuple);
+            bool hasFound = LookUpTable.TryGetValue(FieldName, out var tuple);
             if (hasFound)
             {
                 return tuple.ValueAddress;
@@ -32,7 +32,7 @@ namespace Asc
 
         public string GetValueType(string FieldName)
         {
-            bool hasFound = FormatLookUpTable.TryGetValue(FieldName, out var tuple);
+            bool hasFound = LookUpTable.TryGetValue(FieldName, out var tuple);
             if (hasFound)
             {
                 return tuple.ValueType;
@@ -43,6 +43,11 @@ namespace Asc
             }
         }
 
+        /// <summary>
+        /// TODO: to be deleted (after replacing LineSplits with Delimiters)
+        /// </summary>
+        /// <param name="FieldName"></param>
+        /// <returns></returns>
         public string GetValueString(string FieldName)
         {
             string ValueString = LineSplits[GetValueAddress(FieldName)];
