@@ -75,7 +75,7 @@ namespace Asc
         [Test]
         public void UC02_XSSF_xlsx()
         {
-            Efa_xlsx_DicDoubleList Ea = new Efa_xlsx_DicDoubleList();
+            Efa_Dic_StringList_DoubleList_Fpi Ea = new Efa_Dic_StringList_DoubleList_Fpi();
             Ea.FilePath = AppDomain.CurrentDomain.BaseDirectory
                         + "Result\\Result_Summary\\" + "Result_Auto_Data" + ".xlsx";
             Ea.SheetName = "Product";

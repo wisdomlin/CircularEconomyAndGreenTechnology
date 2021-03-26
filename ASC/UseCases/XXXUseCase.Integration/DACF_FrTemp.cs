@@ -77,17 +77,6 @@ namespace Asc
         private ConcurrentDictionary<string, List<double>> Dic_TG_List = new ConcurrentDictionary<string, List<double>>();
         private ConcurrentDictionary<string, List<string>> Dic_Q_TG_List = new ConcurrentDictionary<string, List<string>>();
 
-        public bool InterIntegratedSpikeAnalyzer()
-        {
-            bool res = true;
-            // -9999 的 Spike 拿掉
-
-            // Spike 整合指標，by 月份統計
-
-            // Suspended: 連續或接近的 Spike 整合(True Spikes)
-
-            return res;
-        }
 
         // SSA
         private ConcurrentDictionary<string, double[]> Dic_trendTempArr;
@@ -134,15 +123,6 @@ namespace Asc
                 StoreArrayAsMetaCsv(Dal.STAID.ToArray(), Dal.DATE.ToArray(), Dal.TG.ToArray(), Dal.Q_TG.ToArray(), "RawTemp_" + sID);
             }
 
-            // 4. Store as Excel 
-            //Efa_xlsx_DicDoubleList Ea = new Efa_xlsx_DicDoubleList();
-            //Ea.FilePath = AppDomain.CurrentDomain.BaseDirectory
-            //            + "Result\\Result_Summary\\" + "Result_Auto_Data_Original" + ".xlsx";
-            //Ea.SheetName = "Original";
-            //Ea.dicListDate = Dal.dicListDate;
-            //Ea.dicListFpi = Dal.dicListFpi;
-            //Ea.CreateExcel();
-
             return result;
         }
 
@@ -161,25 +141,7 @@ namespace Asc
                     SsaTemp.AnalyzeSequence(out double[] trendTempArr, out double[] noiseTempArr);
                     Dic_trendTempArr.TryAdd(entry.Key, trendTempArr);
                     Dic_noiseTempArr.TryAdd(entry.Key, noiseTempArr);
-                    //StoreArrayAsMetaCsv(Dic_DATE_List[entry.Key].ToArray(), trendTempArr, "trendTemp_" + entry.Key.ToString());
-                    //StoreArrayAsResultCsv(Dal.dicListDate[entry.Key].ToArray(), trendFpiArr, "Trend\\" + "trendFpi_" + entry.Key.ToString());
-                    //StoreArrayAsResultCsv(Dal.dicListDate[entry.Key].ToArray(), noiseFpiArr, "Noise\\" + "noiseFpi_" + entry.Key.ToString());
                 }
-
-                //Efa_xlsx_DicDoubleArrTemp Ea = new Efa_xlsx_DicDoubleArrTemp();
-                //Ea.dicListDate = Dic_DATE_List;
-
-                //Ea.FilePath = AppDomain.CurrentDomain.BaseDirectory
-                //            + "Result\\Result_Summary\\" + "Result_Auto_Data_Trend_Temp" + ".xlsx";
-                //Ea.SheetName = "Trend";
-                //Ea.dicArrData = Dic_trendTempArr;
-                //Ea.CreateExcel();
-
-                //Ea.FilePath = AppDomain.CurrentDomain.BaseDirectory
-                //            + "Result\\Result_Summary\\" + "Result_Auto_Data_Noise_Temp" + ".xlsx";
-                //Ea.SheetName = "Noise";
-                //Ea.dicArrData = Dic_noiseTempArr;
-                //Ea.CreateExcel();
             }
             catch
             {
@@ -203,7 +165,7 @@ namespace Asc
                 //StoreArrayAsResultCsv(LowerFpi, UpperFpi, "Ota\\" + "OtaFpi_" + entry.Key);
             }
 
-            Efa_xlsx_DicDouble Ea = new Efa_xlsx_DicDouble();
+            Efa_Dic_Double_Double_Ota Ea = new Efa_Dic_Double_Double_Ota();
             Ea.FilePath = AppDomain.CurrentDomain.BaseDirectory
                         + "Result\\Result_Summary\\" + "Result_Auto_Data_Ota" + ".xlsx";
             Ea.SheetName = "Ota";
@@ -222,14 +184,15 @@ namespace Asc
                 {
                     SpikeAnalyzer SpaTemp = new SpikeAnalyzer();
                     SpaTemp._dataPath = AppDomain.CurrentDomain.BaseDirectory
-                        + @"Meta\" + "RawTemp_" + entry.Key + ".txt";
+                        + @"Meta\DACF_FrTemp\" + @"Cfa\" + "RawTemp_" + entry.Key + ".txt";
                     SpaTemp._hasHeader = false;
                     SpaTemp._separatorChar = ',';
                     SpaTemp._docName = "SpaTemp_" + entry.Key;
                     SpaTemp.Confidence = 95;
 
-                    SpaTemp._docsize = entry.Value.Count;   // Total Days, roughly 5386 days for 2005-2019 (15 years)
-                    SpaTemp.SlidingWindowDivided = 92;      // One Window per Season (31+30+31=92)
+                    SpaTemp._docsize = entry.Value.Count;   // No Use for now. Total Days, roughly 5475 days for 2005-2019 (15 years*365=5475)
+                    SpaTemp.SlidingWindowDivided = 92;    // How many spikes you want to detect in whole period? (15y * 12 spikes per year)
+                    // One Window per Season (31+30+31=92) or Half Year (30*6=180) or Year (30*12=360)
 
                     SpaTemp.DateTime_Start = DateTime_Start;
                     SpaTemp.RunAnalysis();
@@ -242,10 +205,145 @@ namespace Asc
             }
         }
 
-        private void StoreArrayAsResultCsv(double Index1, double Index2, string FileName)
+        public bool InterIntegratedSpikeAnalyzer()
         {
+            bool res = true;
+
+            // Create Tanks
+            //List<string> TankIdList = new List<string>();
+            SortedDictionary<string, double> Dic_SpikeCounts = new SortedDictionary<string, double>();
+            //List<Double> List_SpikeCounts = new List<double>();
+
+            // Y2005M01 ~ Y2019M12
+            for (int Y = 2005; Y <= 2019; Y++)
+            {
+                for (int M = 1; M <= 12; M++)
+                {
+                    string key = Y.ToString("0000") + M.ToString("00");
+                    Dic_SpikeCounts.Add(key, new double());
+                }
+            }
+            //TankFactory.CreatePst(TankIdList, out Dictionary<string, PrimarySedimentationTank> Dic_Pst);
+
+
+            // Read Spa files for each climate station
+            string[] files =
+                Directory.GetFiles(
+                    AppDomain.CurrentDomain.BaseDirectory + @"Meta\DACF_FrTemp\" + @"Spa\", "*.csv",
+                    SearchOption.AllDirectories);
+            foreach (string InputFilePath in files)
+            {
+                //bool res = true;
+                int LineIndex = 0;
+                string Line = "";
+                char[] Delimiters = new char[] { '\t' };
+
+                try
+                {
+                    using (FileStream fs = File.Open(InputFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    using (BufferedStream bs = new BufferedStream(fs))
+                    using (StreamReader sr = new StreamReader(bs))
+                    {
+                        //if (Cfs.FooterLinesCount > 0)
+                        //    FileTotalLinesCount = File.ReadLines(FilePath).Count();
+                        while ((Line = sr.ReadLine()) != null)
+                        {
+                            // Skip First Line
+                            LineIndex++;
+                            if (LineIndex == 1)
+                                continue;
+
+                            string[] Splits = Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
+                            // -9999 的 Spike 拿掉 (by Q_TG)
+                            if (Splits[2] != "0")
+                                continue;
+                            // Spike 整合指標: by 月份統計 (時間模式快混池)
+                            else
+                            {
+                                // DistributeToPst();
+                                // According to Splits[1],
+                                // TODO: need to do format checking
+                                string year = Splits[1].Substring(0, 4);
+                                string month = Splits[1].Substring(4, 2);
+                                string key = year + month;
+
+                                //Dic_SpikeCounts.AddOrUpdate(key, 0, (k, oldValue) => oldValue + 1);
+                                //Dic_SpikeCounts.
+                                if (Dic_SpikeCounts.TryGetValue(key, out double Cnt))
+                                {
+                                    Dic_SpikeCounts[key] = ++Cnt;
+                                }
+                                else
+                                {
+                                    // Exception (It's impossible not found)
+                                    throw new Exception();
+                                }
+
+                                // TODO: check performance
+                                //if (Dic_Pst.TryGetValue(key, out PrimarySedimentationTank Pst))
+                                //{
+                                //    // Add
+                                //    Pst.Aggregate(1, 0);
+                                //}
+                                //else
+                                //{
+                                //    // Exception (It's impossible not found)
+                                //    throw new Exception();
+                                //}
+                            }
+
+                            // Suspended: 連續或接近的 Spike 整合(True Spikes)
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("InputFilePath: " + InputFilePath +
+                        "\tLineIndex: " + LineIndex.ToString() + "\tLine: " + Line.ToString());
+                    res = false;
+                }
+                finally
+                {
+                    // Do nothing
+                }
+            }
+
+            // Write Integrated Analysis Result to one File Format
+            // Efa Input Format: List<string>, List<double>
+            List<string> List_Date = new List<string>();
+            List<double> List_SpikeCount = new List<double>();
+
+            // Sort Dic_SpikeCounts by Keys
+
+            foreach (KeyValuePair<string, double> entry in Dic_SpikeCounts)
+            {
+                List_Date.Add(DateTime.ParseExact(entry.Key, "yyyyMM", null).ToString("yyyy-MM"));
+                List_SpikeCount.Add(entry.Value);
+            }
+
+            Efa_StringList_DoubleList Efa = new Efa_StringList_DoubleList();
+            Efa.FilePath = AppDomain.CurrentDomain.BaseDirectory
+                        + "Result\\Result_Summary\\" + "Result_Auto_Data_Spa" + ".xlsx";
+            Efa.SheetName = "Spa";
+            Efa.List_X = List_Date;
+            Efa.List_Y = List_SpikeCount;
+            Efa.CreateExcel();
+
+            // Save as CSV also (for Integrated Analysis metadata)
             string FilePath = AppDomain.CurrentDomain.BaseDirectory
-                + @"Result\" + DateTime.Now.ToString("yyyyMMdd-HHmm") + "\\" + FileName + ".csv";
+                + "Result\\Result_Summary\\" + "Result_Auto_Data_Spa" + ".csv";
+            StoreArrayAsResultCsv(List_Date.ToArray(), List_SpikeCount.ToArray(), FilePath);
+
+
+            return res;
+        }
+
+
+        private void StoreArrayAsResultCsv(double Index1, double Index2, string FilePath)
+        {
+            //string FilePath = AppDomain.CurrentDomain.BaseDirectory
+            //    + @"Result\" + DateTime.Now.ToString("yyyyMMdd-HHmm") + "\\" + FileName + ".csv";
+
             FileInfo FI = new FileInfo(FilePath);
             FI.Directory.Create();  // If the directory already exists, this method does nothing.
             using (var file = new StreamWriter(FilePath, false))
@@ -254,18 +352,32 @@ namespace Asc
             }
         }
 
-        private void StoreArrayAsResultCsv(string[] DateArr, double[] IndexArr, string FileName)
+        private void StoreArrayAsResultCsv(string[] DateArr, double[] IndexArr, string FilePath)
         {
-            string FilePath = AppDomain.CurrentDomain.BaseDirectory
-                + @"Result\" + DateTime.Now.ToString("yyyyMMdd-HHmm") + "\\" + FileName + ".csv";
+            //string FilePath = AppDomain.CurrentDomain.BaseDirectory
+            //    + @"Result\" + DateTime.Now.ToString("yyyyMMdd-HHmm") + "\\" + FileName + ".csv";
+
             FileInfo FI = new FileInfo(FilePath);
             FI.Directory.Create();  // If the directory already exists, this method does nothing.
             using (var file = new StreamWriter(FilePath, false))
             {
-                int len = IndexArr.Length;
-                for (int i = 0; i < len; i++)
+                int s_cnt = 1;
+                foreach (string s in DateArr)
                 {
-                    file.WriteLine(string.Format("{0},{1}", DateArr[i], IndexArr[i]));
+                    if (s_cnt < DateArr.Length)
+                        file.Write(string.Format("{0},", s));
+                    else
+                        file.WriteLine(string.Format("{0}", s));
+                    s_cnt++;
+                }
+                int d_cnt = 1;
+                foreach (double d in IndexArr)
+                {
+                    if (d_cnt < IndexArr.Length)
+                        file.Write(string.Format("{0},", d));
+                    else
+                        file.WriteLine(string.Format("{0}", d));
+                    d_cnt++;
                 }
             }
         }
@@ -273,7 +385,7 @@ namespace Asc
         private void StoreArrayAsMetaCsv(string[] STAIDArr, string[] DATEArr, double[] TGArr, string[] Q_TGArr, string FileName)
         {
             string FilePath = AppDomain.CurrentDomain.BaseDirectory
-                + @"Meta\" + FileName + ".txt";
+                + @"Meta\DACF_FrTemp\" + @"Cfa\" + FileName + ".txt";
             FileInfo FI = new FileInfo(FilePath);
             FI.Directory.Create();  // If the directory already exists, this method does nothing.
             using (var file = new StreamWriter(FilePath, false))

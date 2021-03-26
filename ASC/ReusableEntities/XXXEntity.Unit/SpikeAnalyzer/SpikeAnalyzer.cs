@@ -17,7 +17,7 @@ namespace Asc
         public bool _hasHeader = true;
         public char _separatorChar = ',';
 
-        public int Confidence = 95;   // Magic Number to have 6 Change Points
+        public int Confidence = 95;
         public int SlidingWindowDivided = 30;   // Magic Number to have 6 Change Points
 
         public string DateTime_Start = DateTime.Now.ToString("yyyyMMdd-HHmm");
@@ -45,14 +45,15 @@ namespace Asc
             // </SnippetCallDetectSpike>
         }
 
-        public void DetectSpike(MLContext mlContext, int docSize, IDataView tempData)
+        public void DetectSpike(MLContext mlContext, int _docsize, IDataView tempData)
         {
             //Console.WriteLine("Detect Persistent changes in pattern");
 
+            //string ResultFilePath = AppDomain.CurrentDomain.BaseDirectory
+            //        + @"Result\" + DateTime_Start + "\\Spa\\" + _docName + ".csv";
             string ResultFilePath = AppDomain.CurrentDomain.BaseDirectory
-                    + @"Result\" + DateTime_Start + "\\Spa\\" + _docName + ".csv";
-            //public string ResultFilePath = AppDomain.CurrentDomain.BaseDirectory + @"Result\" +
-            //    "ChangePoints" + ".csv";
+                    + @"Meta\DACF_FrTemp\" + @"Spa\" + _docName + ".csv";
+            
 
             FileInfo FI = new FileInfo(ResultFilePath);
             FI.Directory.Create();  // If the directory already exists, this method does nothing.
@@ -67,7 +68,7 @@ namespace Asc
                 outputColumnName: nameof(TempPrediction.Prediction),
                 inputColumnName: nameof(TempData.TG),
                 confidence: Confidence,
-           /*pvalueHistoryLength: _docsize / SlidingWindowDivided);*/    // [100% / Divided] x-range: The length of the sliding window on p-values for computing the martingale score.
+            //pvalueHistoryLength: _docsize / SlidingWindowDivided);    // [100% / Divided] x-range: The length of the sliding window on p-values for computing the martingale score.
                 pvalueHistoryLength: SlidingWindowDivided);
             // </SnippetAddChangePointTrainer>
 
@@ -97,7 +98,7 @@ namespace Asc
 
             // <SnippetDisplayHeader2>
             //Console.WriteLine("Alert\tScore\tP-Value");
-            using (var file = new StreamWriter(ResultFilePath, true))
+            using (var file = new StreamWriter(ResultFilePath, false))
             {
                 file.WriteLine("STAID\tDATE\tQ_TG\tAlert\tScore\tP-Value");
             }

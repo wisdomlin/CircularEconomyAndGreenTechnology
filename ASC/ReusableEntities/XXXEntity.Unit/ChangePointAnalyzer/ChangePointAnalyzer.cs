@@ -48,16 +48,16 @@ namespace Asc
 
             //Console.WriteLine("Detect Persistent changes in pattern");
 
+            //string ResultFilePath = AppDomain.CurrentDomain.BaseDirectory
+            //        + @"Result\" + DateTime.Now.ToString("yyyyMMdd-HHmm") + "\\Cpa\\" + _docName + ".csv";
             string ResultFilePath = AppDomain.CurrentDomain.BaseDirectory
-                    + @"Result\" + DateTime.Now.ToString("yyyyMMdd-HHmm") + "\\Cpa\\" + _docName + ".csv";
-            //public string ResultFilePath = AppDomain.CurrentDomain.BaseDirectory + @"Result\" +
-            //    "ChangePoints" + ".csv";
+                                + @"Meta\DACF_EuroStat\" + @"Cpa\" + _docName + ".csv";
 
             FileInfo FI = new FileInfo(ResultFilePath);
             FI.Directory.Create();  // If the directory already exists, this method does nothing.
             using (var file = new StreamWriter(ResultFilePath, true))
             {
-                file.WriteLine("Detect Persistent changes in pattern");
+                //file.WriteLine("Detect Persistent changes in pattern");
             }
 
             //STEP 2: Set the training algorithm
@@ -66,14 +66,16 @@ namespace Asc
                 outputColumnName: nameof(TrendPrediction.Prediction),
                 inputColumnName: nameof(TrendData.Index),
                 confidence: Confidence,
-                changeHistoryLength: _docsize / SlidingWindowDivided);    // [100% / Divided] x-range: The length of the sliding window on p-values for computing the martingale score.
+                changeHistoryLength: 8);      // 12 months * 15 years / 6 change points = 30, but CHL = 8 to get 6 change points
+                //changeHistoryLength: _docsize / SlidingWindowDivided);    // [100% / Divided] x-range: The length of the sliding window on p-values for computing the martingale score.
+                // 366/30=12.2
             // </SnippetAddChangePointTrainer>
 
             //STEP 3: Create the transform
             //Console.WriteLine("=============== Training the model Using Change Point Detection Algorithm===============");            
             using (var file = new StreamWriter(ResultFilePath, true))
             {
-                file.WriteLine("=============== Training the model Using Change Point Detection Algorithm===============");
+                //file.WriteLine("=============== Training the model Using Change Point Detection Algorithm===============");
             }
             // <SnippetTrainModel2>
             var iidChangePointTransform = iidChangePointEstimator.Fit(CreateEmptyDataView(mlContext));
@@ -81,7 +83,7 @@ namespace Asc
             //Console.WriteLine("=============== End of training process ===============");            
             using (var file = new StreamWriter(ResultFilePath, true))
             {
-                file.WriteLine("=============== End of training process ===============");
+                //file.WriteLine("=============== End of training process ===============");
             }
 
             //Apply data transformation to create predictions.
@@ -95,7 +97,7 @@ namespace Asc
 
             // <SnippetDisplayHeader2>
             //Console.WriteLine("Alert\tScore\tP-Value\tMartingale value");
-            using (var file = new StreamWriter(ResultFilePath, true))
+            using (var file = new StreamWriter(ResultFilePath, false))
             {
                 file.WriteLine("Alert\tScore\tP-Value\tMartingale value");
             }
@@ -123,7 +125,7 @@ namespace Asc
             //Console.WriteLine("");            
             using (var file = new StreamWriter(ResultFilePath, true))
             {
-                file.WriteLine("Counter: " + counter.ToString());
+                //file.WriteLine("Counter: " + counter.ToString());
             }
             // </SnippetDisplayResults2>
         }

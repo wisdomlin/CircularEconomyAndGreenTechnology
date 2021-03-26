@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Asc.CircularCities.Mudule\Asc.CircularCities.Mudule.csproj" />
+    <ProjectReference Include="..\WWTP.Unit\WWTP.Unit.csproj" />
   </ItemGroup>
 
 </Project>

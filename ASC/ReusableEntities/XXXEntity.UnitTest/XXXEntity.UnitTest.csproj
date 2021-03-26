@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Asc.EconomicMoats.Mudule\Asc.EconomicMoats.Mudule.csproj" />
+    <ProjectReference Include="..\XXXEntity.Unit\XXXEntity.Unit.csproj" />
   </ItemGroup>
 
   <ItemGroup>

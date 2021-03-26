@@ -83,5 +83,18 @@ namespace Asc
             Assert.IsTrue(result);
 
         }
+
+        [Test]
+        public void UC04_TestDACF_AIS()
+        {
+            // Arrange
+            DACF_Ais Dacf = new DACF_Ais();
+
+            bool result;
+            result = Dacf.IntegratedAnalysis();
+            Assert.IsTrue(result);
+
+
+        }
     }
 }

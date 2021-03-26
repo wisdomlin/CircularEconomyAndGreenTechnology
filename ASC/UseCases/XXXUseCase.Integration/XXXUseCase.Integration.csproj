@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Module\Asc.EconomicMoats.Mudule\Asc.EconomicMoats.Mudule.csproj" />
+    <ProjectReference Include="..\..\ReusableEntities\XXXEntity.Unit\XXXEntity.Unit.csproj" />
   </ItemGroup>
 
 </Project>

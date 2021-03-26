@@ -10,11 +10,10 @@ using NPOI.XWPF.UserModel;
 using NPOI.HSSF.Util;
 using System.IO;
 using System.Linq;
-using System.Globalization;
 
 namespace Asc
 {
-    public class Efa_xlsx_DicDoubleArrTemp
+    public class Efa_Dic_StringList_DoubleArray_EuroStat
     {
         public string SheetName;
         public string FilePath;
@@ -37,16 +36,50 @@ namespace Asc
                 var RowIter = 0;
                 var ColIter = 0;
 
+                // Header Line - Food
+                var row = sheet.CreateRow(RowIter);
+                ColIter = 0;
+                row.CreateCell(ColIter).SetCellValue("Food");
+                RowIter++;
+
+                // Data Lines - Food
+                row = sheet.CreateRow(RowIter);
+                ColIter = 0;
+                dicListDate.TryGetValue("Food", out List<string> ListDate);
+                foreach (var val in ListDate)
+                {
+                    DateTime t = ParseStringToDateTime(val);
+                    NPOI.SS.UserModel.ICell cell = row.CreateCell(ColIter);
+                    cell.SetCellValue(t);
+                    cell.CellStyle = cellStyle;
+                    ColIter++;
+                }
+                RowIter++;
+
+                row = sheet.CreateRow(RowIter);
+                ColIter = 0;
+                dicArrData.TryGetValue("Food", out double[] ListFpi);
+                foreach (var val in ListFpi)
+                {
+                    row.CreateCell(ColIter).SetCellValue(val);
+                    ColIter++;
+                }
+                RowIter++;
+
+
                 foreach (KeyValuePair<string, double[]> entry
                     in dicArrData.OrderBy(o => o.Key).ToDictionary(o => o.Key, p => p.Value))
                 {
-                    // Header Line
-                    var row = sheet.CreateRow(RowIter);
+                    if (entry.Key == "Food")
+                        continue;
+
+                    // Header Line - Except Food
+                    row = sheet.CreateRow(RowIter);
                     ColIter = 0;
                     row.CreateCell(ColIter).SetCellValue(entry.Key);
                     RowIter++;
 
-                    // Data Lines
+                    // Data Lines - Except Food
                     row = sheet.CreateRow(RowIter);
                     ColIter = 0;
                     foreach (var val in entry.Value)
@@ -89,8 +122,8 @@ namespace Asc
 
         private DateTime ParseStringToDateTime(string s)
         {
-            DateTime result = DateTime.ParseExact(s, "yyyyMMdd", CultureInfo.InvariantCulture);
-            return result;
+            string[] splits = s.Split('M');
+            return DateTime.Parse(splits[0] + "-" + splits[1] + "-01"); // yyyy-MM-dd
         }
     }
 }

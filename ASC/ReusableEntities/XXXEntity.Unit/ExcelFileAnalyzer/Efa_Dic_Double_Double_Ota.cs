@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace Asc
 {
-    public class Efa_xlsx_DicDouble
+    public class Efa_Dic_Double_Double_Ota
     {
         public string SheetName;
         public string FilePath;

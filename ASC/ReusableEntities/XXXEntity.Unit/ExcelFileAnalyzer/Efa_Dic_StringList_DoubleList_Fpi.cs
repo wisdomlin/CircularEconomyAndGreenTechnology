@@ -13,15 +13,13 @@ using System.Linq;
 
 namespace Asc
 {
-    public class Efa_xlsx_DicDoubleArrFpi
+    public class Efa_Dic_StringList_DoubleList_Fpi
     {
         public string SheetName;
         public string FilePath;
 
-        public ConcurrentDictionary<string, double[]> dicArrData = new ConcurrentDictionary<string, double[]>();
         public ConcurrentDictionary<string, List<string>> dicListDate = new ConcurrentDictionary<string, List<string>>();
-
-        public int RowIterStartToUse; 
+        public ConcurrentDictionary<string, List<double>> dicListFpi = new ConcurrentDictionary<string, List<double>>();
 
         public void CreateExcel()
         {
@@ -58,7 +56,7 @@ namespace Asc
 
                 row = sheet.CreateRow(RowIter);
                 ColIter = 0;
-                dicArrData.TryGetValue("Food", out double[] ListFpi);
+                dicListFpi.TryGetValue("Food", out List<double> ListFpi);
                 foreach (var val in ListFpi)
                 {
                     row.CreateCell(ColIter).SetCellValue(val);
@@ -67,8 +65,8 @@ namespace Asc
                 RowIter++;
 
 
-                foreach (KeyValuePair<string, double[]> entry 
-                    in dicArrData.OrderBy(o => o.Key).ToDictionary(o => o.Key, p => p.Value))
+                foreach (KeyValuePair<string, List<double>> entry
+                    in dicListFpi.OrderBy(o => o.Key).ToDictionary(o => o.Key, p => p.Value))
                 {
                     if (entry.Key == "Food")
                         continue;
@@ -77,7 +75,7 @@ namespace Asc
                     row = sheet.CreateRow(RowIter);
                     ColIter = 0;
                     row.CreateCell(ColIter).SetCellValue(entry.Key);
-                    RowIter++;                    
+                    RowIter++;
 
                     // Data Lines - Except Food
                     row = sheet.CreateRow(RowIter);
@@ -88,6 +86,7 @@ namespace Asc
                         NPOI.SS.UserModel.ICell cell = row.CreateCell(ColIter);
                         cell.SetCellValue(t);
                         cell.CellStyle = cellStyle;
+                        //row.CreateCell(ColIter).SetCellValue(t);
                         ColIter++;
                     }
                     RowIter++;
@@ -108,7 +107,6 @@ namespace Asc
                 FileStream file = new FileStream(FilePath, FileMode.Create);
                 workbook.Write(file);
                 file.Close();
-                RowIterStartToUse = RowIter;
             }
             catch
             {
