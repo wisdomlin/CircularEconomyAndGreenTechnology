@@ -178,7 +178,7 @@ namespace Asc
             try
             {
                 ChangePointAnalyzer CpaFpi = new ChangePointAnalyzer();
-                CpaFpi._dataPath = AppDomain.CurrentDomain.BaseDirectory
+                CpaFpi._InputDataPath = AppDomain.CurrentDomain.BaseDirectory
                     + @"Meta\" + "trendFpi" + ".csv";
                 CpaFpi._hasHeader = false;
                 CpaFpi._docsize = 366;
@@ -188,7 +188,7 @@ namespace Asc
                 CpaFpi.RunAnalysis();
 
                 ChangePointAnalyzer CpaMpi = new ChangePointAnalyzer();
-                CpaMpi._dataPath = AppDomain.CurrentDomain.BaseDirectory
+                CpaMpi._InputDataPath = AppDomain.CurrentDomain.BaseDirectory
                     + @"Meta\" + "trendMpi" + ".csv";
                 CpaMpi._hasHeader = false;
                 CpaMpi._docsize = 366;
@@ -198,7 +198,7 @@ namespace Asc
                 CpaMpi.RunAnalysis();
 
                 ChangePointAnalyzer CpaDpi = new ChangePointAnalyzer();
-                CpaDpi._dataPath = AppDomain.CurrentDomain.BaseDirectory
+                CpaDpi._InputDataPath = AppDomain.CurrentDomain.BaseDirectory
                     + @"Meta\" + "trendDpi" + ".csv";
                 CpaDpi._hasHeader = false;
                 CpaDpi._docsize = 366;
@@ -208,7 +208,7 @@ namespace Asc
                 CpaDpi.RunAnalysis();
 
                 ChangePointAnalyzer CpaCpi = new ChangePointAnalyzer();
-                CpaCpi._dataPath = AppDomain.CurrentDomain.BaseDirectory
+                CpaCpi._InputDataPath = AppDomain.CurrentDomain.BaseDirectory
                     + @"Meta\" + "trendCpi" + ".csv";
                 CpaCpi._hasHeader = false;
                 CpaCpi._docsize = 366;
@@ -218,7 +218,7 @@ namespace Asc
                 CpaCpi.RunAnalysis();
 
                 ChangePointAnalyzer CpaOpi = new ChangePointAnalyzer();
-                CpaOpi._dataPath = AppDomain.CurrentDomain.BaseDirectory
+                CpaOpi._InputDataPath = AppDomain.CurrentDomain.BaseDirectory
                     + @"Meta\" + "trendOpi" + ".csv";
                 CpaOpi._hasHeader = false;
                 CpaOpi._docsize = 366;
@@ -228,7 +228,7 @@ namespace Asc
                 CpaOpi.RunAnalysis();
 
                 ChangePointAnalyzer CpaSpi = new ChangePointAnalyzer();
-                CpaSpi._dataPath = AppDomain.CurrentDomain.BaseDirectory
+                CpaSpi._InputDataPath = AppDomain.CurrentDomain.BaseDirectory
                     + @"Meta\" + "trendSpi" + ".csv";
                 CpaSpi._hasHeader = false;
                 CpaSpi._docsize = 366;

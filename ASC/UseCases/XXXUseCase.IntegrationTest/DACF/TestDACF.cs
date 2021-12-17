@@ -36,8 +36,8 @@ namespace Asc
         {
             // Arrange
             DACF_EuroStat Dacf = new DACF_EuroStat();
-            Dacf.FilePath = AppDomain.CurrentDomain.BaseDirectory
-                + @"DACF\Data\prc_fsc_idx_1_Data_ACP.csv";
+            //Dacf.FilePath = AppDomain.CurrentDomain.BaseDirectory
+            //    + @"DACF\Data\prc_fsc_idx_1_Data_ACP.csv";
 
             // Act
             bool result;
@@ -93,7 +93,25 @@ namespace Asc
             bool result;
             result = Dacf.IntegratedAnalysis();
             Assert.IsTrue(result);
+        }
 
+        [Test]
+        public void UC05_TestDACF_FrPrecip()
+        {
+            // Arrange
+            DACF_FrPrecip Dacf = new DACF_FrPrecip();
+            Dacf.DateTime_Start = DateTime.Now.ToString("yyyyMMdd-HHmm");
+
+            // Act
+            bool result;
+            result = Dacf.UseCsvFileAnalyzer();
+            Assert.IsTrue(result);
+
+            result = Dacf.IntraRawSpikeAnalyzer();
+            Assert.IsTrue(result);
+
+            result = Dacf.InterIntegratedSpikeAnalyzer();
+            Assert.IsTrue(result);
 
         }
     }

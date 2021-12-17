@@ -9,7 +9,8 @@ namespace Asc
     public class SpikeAnalyzer
     {
 
-        public string _dataPath = Path.Combine(Environment.CurrentDirectory, "Data", "FPI_jul20_CPA.csv");
+        public string _InputDataPath = "";
+        public string _OutputDataPath = "";
 
         //assign the Number of records in dataset file to constant variable
         public int _docsize = 366;
@@ -31,7 +32,7 @@ namespace Asc
 
             //STEP 1: Common data loading configuration
             // <SnippetLoadData>
-            IDataView dataView = mlContext.Data.LoadFromTextFile<TempData>(path: _dataPath, hasHeader: _hasHeader, separatorChar: _separatorChar);
+            IDataView dataView = mlContext.Data.LoadFromTextFile<TempData>(path: _InputDataPath, hasHeader: _hasHeader, separatorChar: _separatorChar);
             // </SnippetLoadData>
 
             //// Spike detects pattern temporary changes
@@ -51,11 +52,11 @@ namespace Asc
 
             //string ResultFilePath = AppDomain.CurrentDomain.BaseDirectory
             //        + @"Result\" + DateTime_Start + "\\Spa\\" + _docName + ".csv";
-            string ResultFilePath = AppDomain.CurrentDomain.BaseDirectory
-                    + @"Meta\DACF_FrTemp\" + @"Spa\" + _docName + ".csv";
+            //string ResultFilePath = AppDomain.CurrentDomain.BaseDirectory
+            //        + @"Meta\DACF_FrTemp\" + @"Spa\" + _docName + ".csv";
             
 
-            FileInfo FI = new FileInfo(ResultFilePath);
+            FileInfo FI = new FileInfo(_OutputDataPath);
             FI.Directory.Create();  // If the directory already exists, this method does nothing.
             //using (var file = new StreamWriter(ResultFilePath, true))
             //{
@@ -98,7 +99,7 @@ namespace Asc
 
             // <SnippetDisplayHeader2>
             //Console.WriteLine("Alert\tScore\tP-Value");
-            using (var file = new StreamWriter(ResultFilePath, false))
+            using (var file = new StreamWriter(_OutputDataPath, false))
             {
                 file.WriteLine("STAID\tDATE\tQ_TG\tAlert\tScore\tP-Value");
             }
@@ -115,7 +116,7 @@ namespace Asc
                 {
                     //results += " <-- Spike detected";
                     AnomalyCnt++;
-                    using (var file = new StreamWriter(ResultFilePath, true))
+                    using (var file = new StreamWriter(_OutputDataPath, true))
                     {
                         file.WriteLine(results);
                     }

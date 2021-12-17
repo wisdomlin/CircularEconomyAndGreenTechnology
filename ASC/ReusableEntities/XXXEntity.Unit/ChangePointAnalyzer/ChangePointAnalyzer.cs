@@ -8,8 +8,8 @@ namespace Asc
 {
     public class ChangePointAnalyzer
     {
-
-        public string _dataPath = Path.Combine(Environment.CurrentDirectory, "Data", "FPI_jul20_CPA.csv");
+        public string _InputDataPath = "";
+        public string _OutputDataPath = "";
 
         //assign the Number of records in dataset file to constant variable
         public int _docsize = 366;
@@ -28,7 +28,7 @@ namespace Asc
 
             //STEP 1: Common data loading configuration
             // <SnippetLoadData>
-            IDataView dataView = mlContext.Data.LoadFromTextFile<TrendData>(path: _dataPath, hasHeader: _hasHeader, separatorChar: ',');
+            IDataView dataView = mlContext.Data.LoadFromTextFile<TrendData>(path: _InputDataPath, hasHeader: _hasHeader, separatorChar: ',');
             // </SnippetLoadData>
 
             //// Spike detects pattern temporary changes
@@ -44,18 +44,16 @@ namespace Asc
 
         public void DetectChangepoint(MLContext mlContext, int docSize, IDataView trendData)
         {
-            
-
             //Console.WriteLine("Detect Persistent changes in pattern");
 
             //string ResultFilePath = AppDomain.CurrentDomain.BaseDirectory
             //        + @"Result\" + DateTime.Now.ToString("yyyyMMdd-HHmm") + "\\Cpa\\" + _docName + ".csv";
-            string ResultFilePath = AppDomain.CurrentDomain.BaseDirectory
-                                + @"Meta\DACF_EuroStat\" + @"Cpa\" + _docName + ".csv";
+            //string _OutputDataPath = AppDomain.CurrentDomain.BaseDirectory
+            //                    + @"Meta\DACF_EuroStat\" + @"Cpa\" + _docName + ".csv";
 
-            FileInfo FI = new FileInfo(ResultFilePath);
+            FileInfo FI = new FileInfo(_OutputDataPath);
             FI.Directory.Create();  // If the directory already exists, this method does nothing.
-            using (var file = new StreamWriter(ResultFilePath, true))
+            using (var file = new StreamWriter(_OutputDataPath, true))
             {
                 //file.WriteLine("Detect Persistent changes in pattern");
             }
@@ -73,7 +71,7 @@ namespace Asc
 
             //STEP 3: Create the transform
             //Console.WriteLine("=============== Training the model Using Change Point Detection Algorithm===============");            
-            using (var file = new StreamWriter(ResultFilePath, true))
+            using (var file = new StreamWriter(_OutputDataPath, true))
             {
                 //file.WriteLine("=============== Training the model Using Change Point Detection Algorithm===============");
             }
@@ -81,7 +79,7 @@ namespace Asc
             var iidChangePointTransform = iidChangePointEstimator.Fit(CreateEmptyDataView(mlContext));
             // </SnippetTrainModel2>
             //Console.WriteLine("=============== End of training process ===============");            
-            using (var file = new StreamWriter(ResultFilePath, true))
+            using (var file = new StreamWriter(_OutputDataPath, true))
             {
                 //file.WriteLine("=============== End of training process ===============");
             }
@@ -97,7 +95,7 @@ namespace Asc
 
             // <SnippetDisplayHeader2>
             //Console.WriteLine("Alert\tScore\tP-Value\tMartingale value");
-            using (var file = new StreamWriter(ResultFilePath, false))
+            using (var file = new StreamWriter(_OutputDataPath, false))
             {
                 file.WriteLine("Alert\tScore\tP-Value\tMartingale value");
             }
@@ -116,14 +114,14 @@ namespace Asc
                     CpCnt++;
                 }
                 //Console.WriteLine(results);                
-                using (var file = new StreamWriter(ResultFilePath, true))
+                using (var file = new StreamWriter(_OutputDataPath, true))
                 {
                     file.WriteLine(results);
                 }
                 counter++;
             }
             //Console.WriteLine("");            
-            using (var file = new StreamWriter(ResultFilePath, true))
+            using (var file = new StreamWriter(_OutputDataPath, true))
             {
                 //file.WriteLine("Counter: " + counter.ToString());
             }

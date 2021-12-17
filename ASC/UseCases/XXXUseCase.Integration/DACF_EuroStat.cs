@@ -8,9 +8,12 @@ namespace Asc
 {
     public class DACF_EuroStat
     {
-        public string FilePath;
         public CsvFileAnalyzer Cfa;
         private Dal_EuroStatFrench Dal;
+
+        private string RawFolderPath;
+        private string MetaFolderPath;
+        private string ResultFolderPath;
 
         public DACF_EuroStat()
         {
@@ -21,6 +24,11 @@ namespace Asc
             Dic_FpiUpper = new ConcurrentDictionary<string, double>();
 
             Dic_CpaFpiArr = new ConcurrentDictionary<string, double[]>();
+
+            // Data Folder Path
+            RawFolderPath = @"D:\EuroStat\FrPrice\";
+            MetaFolderPath = @"D:\Meta\DACF_EuroStat\";
+            ResultFolderPath = @"D:\Result\";
         }
 
         // F-MDCOS
@@ -37,7 +45,8 @@ namespace Asc
         {
             // 1. Creation Management
             Cfa = new CsvFileAnalyzer();
-            Cfa.FilePath = FilePath;
+            Cfa.FilePath = RawFolderPath + "prc_fsc_idx_1_Data_ACP.csv";
+
             Cfa.Delimiters = new char[] { '\t' };
 
             CsvFileStructure Cfs = new CsvFileStructure();
@@ -58,8 +67,9 @@ namespace Asc
 
             // 4. Store as Excel 
             Efa_Dic_StringList_DoubleList_Fpi Ea = new Efa_Dic_StringList_DoubleList_Fpi();
-            Ea.FilePath = AppDomain.CurrentDomain.BaseDirectory
-                        + "Result\\Result_Summary\\" + "Result_Auto_Data_Original" + ".xlsx";
+            //Ea.FilePath = AppDomain.CurrentDomain.BaseDirectory
+            //            + "Result\\Result_Summary\\" + "Result_Auto_Data_Original" + ".xlsx";
+            Ea.FilePath = ResultFolderPath + "Original\\" + "Result_Original_Price" + ".xlsx";
             Ea.SheetName = "Original";
             Ea.dicListDate = Dal.dicListDate;
             Ea.dicListFpi = Dal.dicListFpi;
@@ -83,21 +93,27 @@ namespace Asc
                     SsaFpi.AnalyzeSequence(out double[] trendFpiArr, out double[] noiseFpiArr);
                     Dic_trendFpiArr.TryAdd(entry.Key, trendFpiArr);
                     Dic_noiseFpiArr.TryAdd(entry.Key, noiseFpiArr);
-                    StoreArrayAsMetaCsv(Dal.dicListDate[entry.Key].ToArray(), trendFpiArr, "trendFpi_" + entry.Key.ToString());
-                    //StoreArrayAsResultCsv(Dal.dicListDate[entry.Key].ToArray(), trendFpiArr, "Trend\\" + "trendFpi_" + entry.Key.ToString());
-                    //StoreArrayAsResultCsv(Dal.dicListDate[entry.Key].ToArray(), noiseFpiArr, "Noise\\" + "noiseFpi_" + entry.Key.ToString());                    
+
+                    string FilePath = MetaFolderPath + "Ssa\\" + "trendFpi_" + entry.Key.ToString() + ".csv";
+                    StoreArrayAsMetaCsv(
+                        Dal.dicListDate[entry.Key].ToArray(), trendFpiArr,
+                        FilePath);                   
                 }
+
+                // Write Excel
                 Efa_Dic_StringList_DoubleArray_EuroStat Ea = new Efa_Dic_StringList_DoubleArray_EuroStat();
                 Ea.dicListDate = Dal.dicListDate;
-
-                Ea.FilePath = AppDomain.CurrentDomain.BaseDirectory
-                            + "Result\\Result_Summary\\" + "Result_Auto_Data_Trend" + ".xlsx";
+                // Trend
+                //Ea.FilePath = AppDomain.CurrentDomain.BaseDirectory
+                //            + "Result\\Result_Summary\\" + "Result_Auto_Data_Trend" + ".xlsx";
+                Ea.FilePath = ResultFolderPath + "Ssa\\" + "Result_Ssa_Trend" + ".xlsx";
                 Ea.SheetName = "Trend";
                 Ea.dicArrData = Dic_trendFpiArr;
                 Ea.CreateExcel();
-
-                Ea.FilePath = AppDomain.CurrentDomain.BaseDirectory
-                            + "Result\\Result_Summary\\" + "Result_Auto_Data_Noise" + ".xlsx";
+                // Noise
+                //Ea.FilePath = AppDomain.CurrentDomain.BaseDirectory
+                //            + "Result\\Result_Summary\\" + "Result_Auto_Data_Noise" + ".xlsx";
+                Ea.FilePath = ResultFolderPath + "Ssa\\" + "Result_Ssa_Noise" + ".xlsx";
                 Ea.SheetName = "Noise";
                 Ea.dicArrData = Dic_noiseFpiArr;
                 Ea.CreateExcel();
@@ -121,12 +137,12 @@ namespace Asc
                 OtaFpi.GetConfidenceIntervals(out double LowerFpi, out double UpperFpi);
                 Dic_FpiLower.TryAdd(entry.Key, LowerFpi);
                 Dic_FpiUpper.TryAdd(entry.Key, UpperFpi);
-                //StoreArrayAsResultCsv(LowerFpi, UpperFpi, "Ota\\" + "OtaFpi_" + entry.Key);
             }
 
             Efa_Dic_Double_Double_Ota Ea = new Efa_Dic_Double_Double_Ota();
-            Ea.FilePath = AppDomain.CurrentDomain.BaseDirectory
-                        + "Result\\Result_Summary\\" + "Result_Auto_Data_Ota" + ".xlsx";
+            //Ea.FilePath = AppDomain.CurrentDomain.BaseDirectory
+            //            + "Result\\Result_Summary\\" + "Result_Auto_Data_Ota" + ".xlsx";
+            Ea.FilePath = ResultFolderPath + "Ota/" + "Result_Ota" + ".xlsx";
             Ea.SheetName = "Ota";
             Ea.Dic_FpiLower = Dic_FpiLower;
             Ea.Dic_FpiUpper = Dic_FpiUpper;
@@ -143,11 +159,13 @@ namespace Asc
                 foreach (KeyValuePair<string, double[]> entry in Dic_trendFpiArr)
                 {
                     ChangePointAnalyzer CpaFpi = new ChangePointAnalyzer();
-                    CpaFpi._dataPath = AppDomain.CurrentDomain.BaseDirectory
-                        + @"Meta\" + "trendFpi_" + entry.Key + ".txt";
+                    //CpaFpi._dataPath = AppDomain.CurrentDomain.BaseDirectory
+                    //    + @"Meta\" + "trendFpi_" + entry.Key + ".txt";
+                    CpaFpi._InputDataPath = MetaFolderPath + "Ssa\\" + "trendFpi_" + entry.Key + ".csv";
+                    CpaFpi._OutputDataPath = MetaFolderPath + @"Cpa\" + "CpaFpi_" + entry.Key + ".csv";
                     CpaFpi._hasHeader = false;
                     CpaFpi._docsize = 177;
-                    CpaFpi._docName = "ChangePointsFpi_" + entry.Key;
+                    CpaFpi._docName = "CpaFpi_" + entry.Key;
                     CpaFpi.Confidence = 95;
                     CpaFpi.SlidingWindowDivided = 30;
                     CpaFpi.RunAnalysis();
@@ -169,8 +187,9 @@ namespace Asc
             foreach (KeyValuePair<string, double[]> entry in Dic_trendFpiArr)
             {
                 // Use key name to generate meta filename to read
-                string CpaMetaFilePath = AppDomain.CurrentDomain.BaseDirectory
-                    + @"Meta\DACF_EuroStat\" + @"Cpa\" + "ChangePointsFpi_" + entry.Key + ".csv";
+                //string CpaMetaFilePath = AppDomain.CurrentDomain.BaseDirectory
+                //    + @"Meta\DACF_EuroStat\" + @"Cpa\" + "ChangePointsFpi_" + entry.Key + ".csv";
+                string CpaMetaFilePath = MetaFolderPath + @"Cpa\" + "CpaFpi_" + entry.Key + ".csv";
 
                 bool res = true;
                 int LineIndex = 0;
@@ -221,19 +240,19 @@ namespace Asc
 
 
             Efa_Dic_StringList_DoubleArray_EuroStat Efa = new Efa_Dic_StringList_DoubleArray_EuroStat();
-            Efa.FilePath = AppDomain.CurrentDomain.BaseDirectory
-                        + "Result\\Result_Summary\\" + "Result_Auto_Data_Cpa" + ".xlsx";
+            //Efa.FilePath = AppDomain.CurrentDomain.BaseDirectory
+            //            + "Result\\Result_Summary\\" + "Result_Auto_Data_Cpa" + ".xlsx";
+            Efa.FilePath = ResultFolderPath + @"Cpa\" + "Result_Cpa" + ".xlsx";
             Efa.SheetName = "Cpa";
             Efa.dicListDate = Dal.dicListDate;
             Efa.dicArrData = Dic_CpaFpiArr;
             Efa.CreateExcel();
 
             // Save as CSV also (for Integrated Analysis metadata)
-            string FilePath = AppDomain.CurrentDomain.BaseDirectory
-                        + "Result\\Result_Summary\\" + "Result_Auto_Data_Cpa" + ".csv";
+            //string FilePath = AppDomain.CurrentDomain.BaseDirectory
+            //            + "Result\\Result_Summary\\" + "Result_Auto_Data_Cpa" + ".csv";
+            string FilePath = ResultFolderPath + @"Cpa\" + "Result_Cpa" + ".csv";
             StoreArrayAsResultCsv(Dal.dicListDate, Dic_CpaFpiArr, FilePath);
-
-
         }
 
         private void GetExcelFigureMax(double max, double min,
@@ -304,10 +323,11 @@ namespace Asc
             //return FigureMax;
         }
 
-        private void StoreArrayAsResultCsv(double Index1, double Index2, string FileName)
+        private void StoreArrayAsResultCsv(double Index1, double Index2, 
+            string OutputFilePath)
         {
             string FilePath = AppDomain.CurrentDomain.BaseDirectory
-                + @"Result\" + DateTime.Now.ToString("yyyyMMdd-HHmm") + "\\" + FileName + ".csv";
+                + @"Result\" + DateTime.Now.ToString("yyyyMMdd-HHmm") + "\\" + OutputFilePath + ".csv";
             FileInfo FI = new FileInfo(FilePath);
             FI.Directory.Create();  // If the directory already exists, this method does nothing.
             using (var file = new StreamWriter(FilePath, false))
@@ -316,10 +336,11 @@ namespace Asc
             }
         }
 
-        private void StoreArrayAsResultCsv(string[] DateArr, double[] IndexArr, string FileName)
+        private void StoreArrayAsResultCsv(string[] DateArr, double[] IndexArr, 
+            string OutputFilePath)
         {
             string FilePath = AppDomain.CurrentDomain.BaseDirectory
-                + @"Result\" + DateTime.Now.ToString("yyyyMMdd-HHmm") + "\\" + FileName + ".csv";
+                + @"Result\" + DateTime.Now.ToString("yyyyMMdd-HHmm") + "\\" + OutputFilePath + ".csv";
             FileInfo FI = new FileInfo(FilePath);
             FI.Directory.Create();  // If the directory already exists, this method does nothing.
             using (var file = new StreamWriter(FilePath, false))
@@ -332,13 +353,14 @@ namespace Asc
             }
         }
 
-        private void StoreArrayAsMetaCsv(string[] DateArr, double[] IndexArr, string FileName)
+        private void StoreArrayAsMetaCsv(string[] DateArr, double[] IndexArr, 
+            string OutputFilePath)
         {
-            string FilePath = AppDomain.CurrentDomain.BaseDirectory
-                + @"Meta\" + "\\" + FileName + ".txt";
-            FileInfo FI = new FileInfo(FilePath);
+            //string FilePath = AppDomain.CurrentDomain.BaseDirectory
+            //    + @"Meta\" + "\\" + OutputFilePath + ".txt";
+            FileInfo FI = new FileInfo(OutputFilePath);
             FI.Directory.Create();  // If the directory already exists, this method does nothing.
-            using (var file = new StreamWriter(FilePath, false))
+            using (var file = new StreamWriter(OutputFilePath, false))
             {
                 int len = IndexArr.Length;
                 for (int i = 0; i < len; i++)
@@ -351,14 +373,14 @@ namespace Asc
         private void StoreArrayAsResultCsv(
             ConcurrentDictionary<string, List<string>> DateArr,
             ConcurrentDictionary<string, double[]> IndexArr,
-            string FilePath)
+            string OutputFilePath)
         {
             //string FilePath = AppDomain.CurrentDomain.BaseDirectory
             //    + @"Result\" + DateTime.Now.ToString("yyyyMMdd-HHmm") + "\\" + FileName + ".csv";
 
-            FileInfo FI = new FileInfo(FilePath);
+            FileInfo FI = new FileInfo(OutputFilePath);
             FI.Directory.Create();  // If the directory already exists, this method does nothing.
-            using (var file = new StreamWriter(FilePath, false))
+            using (var file = new StreamWriter(OutputFilePath, false))
             {
                 // Food
                 if (DateArr.TryGetValue("Food", out List<string> dates))
