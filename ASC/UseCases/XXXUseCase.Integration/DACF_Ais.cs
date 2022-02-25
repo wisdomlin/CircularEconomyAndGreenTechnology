@@ -12,6 +12,10 @@ namespace Asc
         private Dictionary<string, List<string>> SupplyChainSet;
         private SortedDictionary<string, int> SpikeSet;
 
+        public string CpaFilePath;
+        public string SpaFilePath;
+        public string AisFilePath;
+
         public bool IntegratedAnalysis()
         {
             bool res = true;
@@ -45,8 +49,10 @@ namespace Asc
             }
 
             // Print Dic_SupplyChain_tIDW by order
-            string FilePath = AppDomain.CurrentDomain.BaseDirectory
-                        + "Result\\Result_Summary\\" + "Result_Auto_Data_Ais" + ".csv";
+            //string FilePath = AppDomain.CurrentDomain.BaseDirectory
+            //            + "Result\\Result_Summary\\" + "Result_Auto_Data_Ais" + ".csv";
+            string FilePath = AisFilePath;
+
             FileInfo FI = new FileInfo(FilePath);
             FI.Directory.Create();  // If the directory already exists, this method does nothing.
             using (var file = new StreamWriter(FilePath, false))
@@ -69,8 +75,9 @@ namespace Asc
             string tmp_key = "";
             string[] tmp_dates = { };
 
-            string InputFilePath = AppDomain.CurrentDomain.BaseDirectory
-                        + "Result\\Result_Summary\\" + "Result_Auto_Data_Cpa" + ".csv";
+            //string InputFilePath = AppDomain.CurrentDomain.BaseDirectory
+            //            + "Result\\Result_Summary\\" + "Result_Auto_Data_Cpa" + ".csv";
+            string InputFilePath = CpaFilePath;
 
             //bool res = true;
             int LineIndex = 0;
@@ -141,8 +148,11 @@ namespace Asc
             string[] DateArr = { };
             string[] SpikeCntArr = { };
 
-            string InputFilePath = AppDomain.CurrentDomain.BaseDirectory
-                        + "Result\\Result_Summary\\" + "Result_Auto_Data_Spa" + ".csv";
+            //string InputFilePath = AppDomain.CurrentDomain.BaseDirectory
+            //            + "Result\\Result_Summary\\" + "Result_Auto_Data_Spa" + ".csv";
+            string InputFilePath = SpaFilePath;
+            // Result_Spa_Rr.csv
+            // Result_Spa_Tg.csv
 
             //bool res = true;
             int LineIndex = 0;
@@ -166,7 +176,6 @@ namespace Asc
                         {
                             DateArr = Splits;
                             LocationIndex++;
-
                         }
                         // Dates
                         else if (LocationIndex == 2)

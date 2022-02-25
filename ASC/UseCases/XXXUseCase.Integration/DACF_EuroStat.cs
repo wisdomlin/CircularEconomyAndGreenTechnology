@@ -23,7 +23,9 @@ namespace Asc
             Dic_FpiLower = new ConcurrentDictionary<string, double>();
             Dic_FpiUpper = new ConcurrentDictionary<string, double>();
 
-            Dic_CpaFpiArr = new ConcurrentDictionary<string, double[]>();
+            Dic_Cpa01Score = new ConcurrentDictionary<string, double[]>();
+            Dic_Cpa02Score = new ConcurrentDictionary<string, double[]>();
+            Dic_Cpa02Date = new ConcurrentDictionary<string, List<string>>();
 
             // Data Folder Path
             RawFolderPath = @"D:\EuroStat\FrPrice\";
@@ -38,7 +40,9 @@ namespace Asc
         private ConcurrentDictionary<string, double> Dic_FpiLower;
         private ConcurrentDictionary<string, double> Dic_FpiUpper;
 
-        private ConcurrentDictionary<string, double[]> Dic_CpaFpiArr;
+        private ConcurrentDictionary<string, double[]> Dic_Cpa01Score;
+        private ConcurrentDictionary<string, double[]> Dic_Cpa02Score;
+        public ConcurrentDictionary<string, List<string>> Dic_Cpa02Date;
 
 
         public bool UseCsvFileAnalyzer()
@@ -97,7 +101,7 @@ namespace Asc
                     string FilePath = MetaFolderPath + "Ssa\\" + "trendFpi_" + entry.Key.ToString() + ".csv";
                     StoreArrayAsMetaCsv(
                         Dal.dicListDate[entry.Key].ToArray(), trendFpiArr,
-                        FilePath);                   
+                        FilePath);
                 }
 
                 // Write Excel
@@ -161,7 +165,7 @@ namespace Asc
                     ChangePointAnalyzer CpaFpi = new ChangePointAnalyzer();
                     //CpaFpi._dataPath = AppDomain.CurrentDomain.BaseDirectory
                     //    + @"Meta\" + "trendFpi_" + entry.Key + ".txt";
-                    CpaFpi._InputDataPath = MetaFolderPath + "Ssa\\" + "trendFpi_" + entry.Key + ".csv";
+                    CpaFpi._InputDataPath = MetaFolderPath + @"Ssa\" + "trendFpi_" + entry.Key + ".csv";
                     CpaFpi._OutputDataPath = MetaFolderPath + @"Cpa\" + "CpaFpi_" + entry.Key + ".csv";
                     CpaFpi._hasHeader = false;
                     CpaFpi._docsize = 177;
@@ -196,7 +200,10 @@ namespace Asc
                 string Line = "";
                 char[] Delimiters = new char[] { '\t' };
 
-                List<double> temp = new List<double>();
+                List<double> TempCpa01Score = new List<double>();
+                List<double> TempCpa02Score = new List<double>();
+                List<string> TempCpa02Date = new List<string>();
+
                 GetExcelFigureMax(entry.Value.Max(), entry.Value.Min(),
                      out double Ymax, out double Ymin, out double Yscale);
 
@@ -210,17 +217,28 @@ namespace Asc
                         //    FileTotalLinesCount = File.ReadLines(FilePath).Count();
                         while ((Line = sr.ReadLine()) != null)
                         {
-                            // Skip First Line
+                            // Skip First Header Line
                             LineIndex++;
                             if (LineIndex == 1)
                                 continue;
 
-                            // if (Column["Alert"] == 1), insert Max*1.2
+                            // if it is a Change Point
                             string[] Splits = Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
                             if (Splits[0] == "1")
-                                temp.Add(Ymax);
+                            {
+                                // Cpa01Score
+                                TempCpa01Score.Add(Ymax);
+                                // Cpa02Date
+                                string d = Dal.dicListDate[entry.Key][LineIndex - 2];  // 2 = Header Line + Zero Index
+                                TempCpa02Date.Add(d);
+                                // Cpa02Score
+                                double s = Convert.ToDouble(Splits[1]); 
+                                TempCpa02Score.Add(s);
+                            }
                             else
-                                temp.Add(0);
+                            {
+                                TempCpa01Score.Add(0);
+                            }
                         }
                     }
                 }
@@ -235,24 +253,37 @@ namespace Asc
                     // Do nothing
                 }
 
-                Dic_CpaFpiArr.TryAdd(entry.Key, temp.ToArray());
+                Dic_Cpa01Score.TryAdd(entry.Key, TempCpa01Score.ToArray());
+                Dic_Cpa02Date.TryAdd(entry.Key, TempCpa02Date);
+                Dic_Cpa02Score.TryAdd(entry.Key, TempCpa02Score.ToArray());
             }
 
-
+            // Form #1
             Efa_Dic_StringList_DoubleArray_EuroStat Efa = new Efa_Dic_StringList_DoubleArray_EuroStat();
             //Efa.FilePath = AppDomain.CurrentDomain.BaseDirectory
             //            + "Result\\Result_Summary\\" + "Result_Auto_Data_Cpa" + ".xlsx";
-            Efa.FilePath = ResultFolderPath + @"Cpa\" + "Result_Cpa" + ".xlsx";
+            Efa.FilePath = ResultFolderPath + @"Cpa\" + "Result_Cpa01" + ".xlsx";
             Efa.SheetName = "Cpa";
             Efa.dicListDate = Dal.dicListDate;
-            Efa.dicArrData = Dic_CpaFpiArr;
+            Efa.dicArrData = Dic_Cpa01Score;
             Efa.CreateExcel();
-
+                        
             // Save as CSV also (for Integrated Analysis metadata)
             //string FilePath = AppDomain.CurrentDomain.BaseDirectory
             //            + "Result\\Result_Summary\\" + "Result_Auto_Data_Cpa" + ".csv";
-            string FilePath = ResultFolderPath + @"Cpa\" + "Result_Cpa" + ".csv";
-            StoreArrayAsResultCsv(Dal.dicListDate, Dic_CpaFpiArr, FilePath);
+            string FilePath = ResultFolderPath + @"Cpa\" + "Result_Cpa01" + ".csv";
+            StoreArrayAsResultCsv(Dal.dicListDate, Dic_Cpa01Score, FilePath);
+
+            // Form #2
+            Efa_Dic_StringList_DoubleArray_EuroStat Efa2 = new Efa_Dic_StringList_DoubleArray_EuroStat();
+            Efa2.FilePath = ResultFolderPath + @"Cpa\" + "Result_Cpa02" + ".xlsx";
+            Efa2.SheetName = "Cpa";
+            Efa2.dicListDate = Dic_Cpa02Date;
+            Efa2.dicArrData = Dic_Cpa02Score;
+            Efa2.CreateExcel();
+
+            FilePath = ResultFolderPath + @"Cpa\" + "Result_Cpa02" + ".csv";
+            StoreArrayAsResultCsv(Dic_Cpa02Date, Dic_Cpa02Score, FilePath);
         }
 
         private void GetExcelFigureMax(double max, double min,
@@ -323,7 +354,7 @@ namespace Asc
             //return FigureMax;
         }
 
-        private void StoreArrayAsResultCsv(double Index1, double Index2, 
+        private void StoreArrayAsResultCsv(double Index1, double Index2,
             string OutputFilePath)
         {
             string FilePath = AppDomain.CurrentDomain.BaseDirectory
@@ -336,7 +367,7 @@ namespace Asc
             }
         }
 
-        private void StoreArrayAsResultCsv(string[] DateArr, double[] IndexArr, 
+        private void StoreArrayAsResultCsv(string[] DateArr, double[] IndexArr,
             string OutputFilePath)
         {
             string FilePath = AppDomain.CurrentDomain.BaseDirectory
@@ -353,7 +384,7 @@ namespace Asc
             }
         }
 
-        private void StoreArrayAsMetaCsv(string[] DateArr, double[] IndexArr, 
+        private void StoreArrayAsMetaCsv(string[] DateArr, double[] IndexArr,
             string OutputFilePath)
         {
             //string FilePath = AppDomain.CurrentDomain.BaseDirectory

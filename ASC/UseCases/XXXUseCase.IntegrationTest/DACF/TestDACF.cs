@@ -85,18 +85,39 @@ namespace Asc
         }
 
         [Test]
-        public void UC04_TestDACF_AIS()
+        public void UC04_TestDACF_AisTemp()
         {
             // Arrange
             DACF_Ais Dacf = new DACF_Ais();
 
             bool result;
+            string ResultFolderPath = @"D:\Result\";
+            Dacf.CpaFilePath = ResultFolderPath + @"Cpa\" + "Result_Cpa01" + ".csv";
+            Dacf.SpaFilePath = ResultFolderPath + @"Spa\" + "Result_Spa_Tg" + ".csv";
+            Dacf.AisFilePath = ResultFolderPath + @"Ais\" + "Result_Ais_Tg" + ".csv";
+
             result = Dacf.IntegratedAnalysis();
             Assert.IsTrue(result);
         }
 
         [Test]
-        public void UC05_TestDACF_FrPrecip()
+        public void UC04_TestDACF_AisPrecip()
+        {
+            // Arrange
+            DACF_Ais Dacf = new DACF_Ais();
+
+            bool result;
+            string ResultFolderPath = @"D:\Result\";
+            Dacf.CpaFilePath = ResultFolderPath + @"Cpa\" + "Result_Cpa01" + ".csv";
+            Dacf.SpaFilePath = ResultFolderPath + @"Spa\" + "Result_Spa_Rr" + ".csv";
+            Dacf.AisFilePath = ResultFolderPath + @"Ais\" + "Result_Ais_Rr" + ".csv";
+
+            result = Dacf.IntegratedAnalysis();
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void UC03_TestDACF_FrPrecip()
         {
             // Arrange
             DACF_FrPrecip Dacf = new DACF_FrPrecip();
