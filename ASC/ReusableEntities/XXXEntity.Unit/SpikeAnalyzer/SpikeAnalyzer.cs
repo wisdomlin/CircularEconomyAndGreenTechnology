@@ -14,14 +14,13 @@ namespace Asc
 
         //assign the Number of records in dataset file to constant variable
         public int _docsize = 366;
-        public string _docName = "Spikes";
         public bool _hasHeader = true;
         public char _separatorChar = ',';
 
         public int Confidence = 95;
         public int SlidingWindowDivided = 30;   // Magic Number to have 6 Change Points
 
-        public string DateTime_Start = DateTime.Now.ToString("yyyyMMdd-HHmm");
+        //public string DateTime_Start = DateTime.Now.ToString("yyyyMMdd-HHmm");
 
         public void RunAnalysis()
         {
@@ -48,13 +47,7 @@ namespace Asc
 
         public void DetectSpike(MLContext mlContext, int _docsize, IDataView tempData)
         {
-            //Console.WriteLine("Detect Persistent changes in pattern");
-
-            //string ResultFilePath = AppDomain.CurrentDomain.BaseDirectory
-            //        + @"Result\" + DateTime_Start + "\\Spa\\" + _docName + ".csv";
-            //string ResultFilePath = AppDomain.CurrentDomain.BaseDirectory
-            //        + @"Meta\DACF_FrTemp\" + @"Spa\" + _docName + ".csv";
-            
+            //Console.WriteLine("Detect Persistent changes in pattern");            
 
             FileInfo FI = new FileInfo(_OutputDataPath);
             FI.Directory.Create();  // If the directory already exists, this method does nothing.

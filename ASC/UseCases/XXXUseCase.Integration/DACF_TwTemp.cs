@@ -12,7 +12,7 @@ namespace Asc
         private string MetaFolderPath;
         private string ResultFolderPath;
         public CsvFileAnalyzer Cfa;
-        private Dal_FrWeather Dal;
+        private Dal_EcadWeather Dal;
 
         public string DateTime_Start;
 
@@ -109,7 +109,7 @@ namespace Asc
                 Cfs.DataLinesStartAt = 22;
                 Cfs.FooterLinesCount = 0;
 
-                Dal = new Dal_FrWeather();
+                Dal = new Dal_EcadWeather();
                 DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
 
                 // 2. Dependency Management
@@ -149,14 +149,13 @@ namespace Asc
                     SpaTemp._OutputDataPath = MetaFolderPath + @"Spa\" + "SpaTemp_" + entry.Key + ".csv";
                     SpaTemp._hasHeader = false;
                     SpaTemp._separatorChar = ',';
-                    SpaTemp._docName = "SpaTemp_" + entry.Key;
                     SpaTemp.Confidence = 95;
 
                     SpaTemp._docsize = entry.Value.Count;   // No Use for now. Total Days, roughly 5475 days for 2005-2019 (15 years*365=5475)
                     SpaTemp.SlidingWindowDivided = 92;    // How many spikes you want to detect in whole period? (15y * 12 spikes per year)
                     // One Window per Season (31+30+31=92) or Half Year (30*6=180) or Year (30*12=360)
 
-                    SpaTemp.DateTime_Start = DateTime_Start;
+                    //SpaTemp.DateTime_Start = DateTime_Start;
                     SpaTemp.RunAnalysis();
                 }
                 return true;

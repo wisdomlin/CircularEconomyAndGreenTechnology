@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Asc
 {
-    public class DACF_Ais
+    public class Uc_Ais
     {
 
         private Dictionary<string, List<string>> SupplyChainSet;

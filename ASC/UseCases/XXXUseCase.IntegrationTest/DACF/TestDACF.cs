@@ -32,10 +32,10 @@ namespace Asc
         }
         
         [Test]
-        public void UC02_TestDACF_FrTemp()
+        public void UC02_TestDACF_FrTg()
         {
             // 1. 
-            DACF_FrTemp Dacf = new DACF_FrTemp();
+            Uc_Spa_Old Dacf = new Uc_Spa_Old();
             bool result;
 
             // 2. 
@@ -52,30 +52,96 @@ namespace Asc
         }
 
         [Test]
-        public void UC03_TestDACF_FrPrecip()
+        public void UC03_TestDACF_FrRr()
         {
             // Arrange
-            DACF_FrPrecip Dacf = new DACF_FrPrecip();
-            Dacf.DateTime_Start = DateTime.Now.ToString("yyyyMMdd-HHmm");
+            Uc_Spa Uc_Spa = new Uc_Spa();
+
+            // Data Folder Path
+            Uc_Spa.RawFolderPath = @"D:\ECAD\ECA_blend_rr\";
+            Uc_Spa.MetaFolderPath = @"D:\Meta\DACF_FrPrecip\";
+            Uc_Spa.ResultFolderPath = @"D:\Result\";
+
+            // Precip Stations in French
+            Uc_Spa.SID_Prefix = "Rr";
+            Uc_Spa.SID_Array = new string[] {
+                "31",
+                "32",
+                "33",
+                "34",
+                "36",
+                "37",
+                "39",
+                "322",
+                "323",
+                "434",
+                "736",
+                "737",
+                "738",
+                "739",
+                "740",
+                "742",
+                "745",
+                "749",
+                "750",
+                "755",
+                "756",
+                "757",
+                "758",
+                "759",
+                "761",
+                "764",
+                "767",
+                "770",
+                "771",
+                "773",
+                "774",
+                "776",
+                "778",
+                "781",
+                "785",
+                "786",
+                "787",
+                "790",
+                "792",
+                "793",
+                "796",
+                "804",
+                "2184",
+                "2190",
+                "2192",
+                "2195",
+                "2196",
+                "2199",
+                "2200",
+                "2203",
+                "2205",
+                "2207",
+                "2209",
+                "11243",
+                "11244",
+                "11245",
+                "11246",
+                "11247",
+                "11248",
+                "11249",
+                "21359",
+                "21360"
+              };
 
             // Act
             bool result;
-            result = Dacf.UseCsvFileAnalyzer();
-            Assert.IsTrue(result);
+            result = Uc_Spa.Run();
 
-            result = Dacf.IntraRawSpikeAnalyzer();
+            // Assert
             Assert.IsTrue(result);
-
-            result = Dacf.InterIntegratedSpikeAnalyzer();
-            Assert.IsTrue(result);
-
         }
 
         [Test]
         public void UC04_TestDACF_FrPrice()
         {
             // Arrange
-            DACF_EuroStat Dacf = new DACF_EuroStat();
+            Uc_Cpa Dacf = new Uc_Cpa();
 
             // Act
             bool result;
@@ -96,7 +162,7 @@ namespace Asc
         public void UC05_TestDACF_FrAisTemp()
         {
             // Arrange
-            DACF_Ais Dacf = new DACF_Ais();
+            Uc_Ais Dacf = new Uc_Ais();
 
             bool result;
             string ResultFolderPath = @"D:\Result\";
@@ -112,7 +178,7 @@ namespace Asc
         public void UC06_TestDACF_FrAisPrecip()
         {
             // Arrange
-            DACF_Ais Dacf = new DACF_Ais();
+            Uc_Ais Dacf = new Uc_Ais();
 
             bool result;
             string ResultFolderPath = @"D:\Result\";
@@ -158,8 +224,7 @@ namespace Asc
         public void UC08_TestDACF_TwPrecip()
         {
             // Arrange
-            DACF_FrPrecip Dacf = new DACF_FrPrecip();
-            Dacf.DateTime_Start = DateTime.Now.ToString("yyyyMMdd-HHmm");
+            Uc_Spa Dacf = new Uc_Spa();
 
             // Act
             bool result;
@@ -178,7 +243,7 @@ namespace Asc
         public void UC09_TestDACF_TwPrice()
         {
             // Arrange
-            DACF_EuroStat Dacf = new DACF_EuroStat();
+            Uc_Cpa Dacf = new Uc_Cpa();
             //Dacf.FilePath = AppDomain.CurrentDomain.BaseDirectory
             //    + @"DACF\Data\prc_fsc_idx_1_Data_ACP.csv";
 

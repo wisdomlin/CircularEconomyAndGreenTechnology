@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Asc
 {
-    public class Dal_FrWeather : DatalineAnalysisLogic
+    public class Dal_EcadWeather : DatalineAnalysisLogic
     {
         public List<string> STAID = new List<string>();
         public List<string> SOUID = new List<string>();
@@ -14,7 +14,7 @@ namespace Asc
         public List<double> Val = new List<double>();
         public List<string> Q_Val = new List<string>();
 
-        public Dal_FrWeather()
+        public Dal_EcadWeather()
         {
 
         }

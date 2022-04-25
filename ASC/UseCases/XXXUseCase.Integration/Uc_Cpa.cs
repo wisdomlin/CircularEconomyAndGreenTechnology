@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Asc
 {
-    public class DACF_EuroStat
+    public class Uc_Cpa
     {
         public CsvFileAnalyzer Cfa;
         private Dal_EuroStatFrench Dal;
@@ -15,7 +15,7 @@ namespace Asc
         private string MetaFolderPath;
         private string ResultFolderPath;
 
-        public DACF_EuroStat()
+        public Uc_Cpa()
         {
             Dic_trendFpiArr = new ConcurrentDictionary<string, double[]>();
             Dic_noiseFpiArr = new ConcurrentDictionary<string, double[]>();
