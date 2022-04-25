@@ -8,26 +8,39 @@ namespace Asc
 {
     public class Uc_Ais
     {
-
+        // Internal Objects
         private Dictionary<string, List<string>> SupplyChainSet;
         private SortedDictionary<string, int> SpikeSet;
 
+        // Variables that need to be set from outside
         public string CpaFilePath;
         public string SpaFilePath;
         public string AisFilePath;
 
-        public bool IntegratedAnalysis()
+        /// <summary>
+        /// Use Case' Standard Interface
+        /// </summary>
+        /// <returns></returns>
+        public bool Run()
+        {
+            bool result = true;
+            result &= this.IntegratedAnalysis();
+            return result;
+        }
+
+        private bool IntegratedAnalysis()
         {
             bool res = true;
 
-            // Get Change Point Set Y
+            // 1. Get Change Point Set Y
             // (Supply Chain Names, CP Dates)
             SupplyChainSet = GetSupplyChainSet();
 
-            // Get Spike Set X
+            // 2. Get Spike Set X
             // (SP Dates, SP Counts)
             SpikeSet = GetSpikeSet();
 
+            // 3. Compute tIDW score
             Dictionary<string, double> Dic_SupplyChain_tIDW = new Dictionary<string, double>();
             // For each Supply Chain, 
             foreach (KeyValuePair<string, List<string>> ChangePointSet in SupplyChainSet)
@@ -48,11 +61,8 @@ namespace Asc
                 Dic_SupplyChain_tIDW.Add(ChangePointSet.Key, CP_tIDW);
             }
 
-            // Print Dic_SupplyChain_tIDW by order
-            //string FilePath = AppDomain.CurrentDomain.BaseDirectory
-            //            + "Result\\Result_Summary\\" + "Result_Auto_Data_Ais" + ".csv";
+            // 4. Print Dic_SupplyChain_tIDW by order
             string FilePath = AisFilePath;
-
             FileInfo FI = new FileInfo(FilePath);
             FI.Directory.Create();  // If the directory already exists, this method does nothing.
             using (var file = new StreamWriter(FilePath, false))

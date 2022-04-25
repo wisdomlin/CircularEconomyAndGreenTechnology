@@ -25,7 +25,7 @@ namespace Asc
         /// <returns></returns>
         public bool Run()
         {
-            bool result = false;
+            bool result = true;
             result &= this.UseCsvFileAnalyzer();
             result &= this.IntraRawSpikeAnalyzer();
             result &= this.InterIntegratedSpikeAnalyzer();

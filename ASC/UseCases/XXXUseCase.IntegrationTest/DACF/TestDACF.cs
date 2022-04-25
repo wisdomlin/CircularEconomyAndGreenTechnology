@@ -42,6 +42,7 @@ namespace Asc
             Uc_Spa.MetaFolderPath = @"D:\Meta\DACF_FrTemp\";
             Uc_Spa.ResultFolderPath = @"D:\Result\";
 
+            // TODO: 也許 直接在外部給定 filepath 才是對的? 再梳理一次以 filepaht 外部供應為導向的設計
             // Precip Stations in French
             Uc_Spa.SID_Prefix = "Tg";
             Uc_Spa.SID_Array = new string[] {
@@ -110,6 +111,7 @@ namespace Asc
             Uc_Spa.MetaFolderPath = @"D:\Meta\DACF_FrPrecip\";
             Uc_Spa.ResultFolderPath = @"D:\Result\";
 
+            // TODO: 也許 直接在外部給定 filepath 才是對的? 再梳理一次以 filepaht 外部供應為導向的設計
             // Precip Stations in French
             Uc_Spa.SID_Prefix = "Rr";
             Uc_Spa.SID_Array = new string[] {
@@ -189,20 +191,19 @@ namespace Asc
         public void UC04_TestDACF_FrPrice()
         {
             // Arrange
-            Uc_Cpa Dacf = new Uc_Cpa();
+            Uc_Cpa Uc_Cpa = new Uc_Cpa();
+
+            // Data Folder Path
+            Uc_Cpa.RawFolderPath = @"D:\EuroStat\FrPrice\";
+            Uc_Cpa.MetaFolderPath = @"D:\Meta\DACF_EuroStat\";
+            Uc_Cpa.ResultFolderPath = @"D:\Result\";
+            Uc_Cpa.RawFileName = "prc_fsc_idx_1_Data_ACP.csv";
 
             // Act
             bool result;
-            result = Dacf.UseCsvFileAnalyzer();
-            Assert.IsTrue(result);
+            result = Uc_Cpa.Run();
 
-            result = Dacf.UseSingularSpectrumAnalyzer();
-            Assert.IsTrue(result);
-
-            result = Dacf.UseOutlierTrimmingAnalyzer();
-            Assert.IsTrue(result);
-
-            result = Dacf.UseChangePointAnalyzer();
+            // Assert
             Assert.IsTrue(result);
         }
 
@@ -210,15 +211,17 @@ namespace Asc
         public void UC05_TestDACF_FrAisTemp()
         {
             // Arrange
-            Uc_Ais Dacf = new Uc_Ais();
-
-            bool result;
+            Uc_Ais Uc_Ais = new Uc_Ais();
             string ResultFolderPath = @"D:\Result\";
-            Dacf.CpaFilePath = ResultFolderPath + @"Cpa\" + "Result_Cpa01" + ".csv";
-            Dacf.SpaFilePath = ResultFolderPath + @"Spa\" + "Result_Spa_Tg" + ".csv";
-            Dacf.AisFilePath = ResultFolderPath + @"Ais\" + "Result_Ais_Tg" + ".csv";
+            Uc_Ais.CpaFilePath = ResultFolderPath + @"Cpa\" + "Result_Cpa01" + ".csv";
+            Uc_Ais.SpaFilePath = ResultFolderPath + @"Spa\" + "Result_Spa_Tg" + ".csv";
+            Uc_Ais.AisFilePath = ResultFolderPath + @"Ais\" + "Result_Ais_Tg" + ".csv";
 
-            result = Dacf.IntegratedAnalysis();
+            // Act
+            bool result;
+            result = Uc_Ais.Run();
+
+            // Assert
             Assert.IsTrue(result);
         }
 
@@ -226,15 +229,17 @@ namespace Asc
         public void UC06_TestDACF_FrAisPrecip()
         {
             // Arrange
-            Uc_Ais Dacf = new Uc_Ais();
-
-            bool result;
+            Uc_Ais Uc_Ais = new Uc_Ais();
             string ResultFolderPath = @"D:\Result\";
-            Dacf.CpaFilePath = ResultFolderPath + @"Cpa\" + "Result_Cpa01" + ".csv";
-            Dacf.SpaFilePath = ResultFolderPath + @"Spa\" + "Result_Spa_Rr" + ".csv";
-            Dacf.AisFilePath = ResultFolderPath + @"Ais\" + "Result_Ais_Rr" + ".csv";
+            Uc_Ais.CpaFilePath = ResultFolderPath + @"Cpa\" + "Result_Cpa01" + ".csv";
+            Uc_Ais.SpaFilePath = ResultFolderPath + @"Spa\" + "Result_Spa_Rr" + ".csv";
+            Uc_Ais.AisFilePath = ResultFolderPath + @"Ais\" + "Result_Ais_Rr" + ".csv";
 
-            result = Dacf.IntegratedAnalysis();
+            // Act
+            bool result;
+            result = Uc_Ais.Run();
+
+            // Assert
             Assert.IsTrue(result);
         }
 
