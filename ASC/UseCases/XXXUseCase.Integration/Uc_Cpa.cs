@@ -232,7 +232,7 @@ namespace Asc
                                 string d = Dal.dicListDate[entry.Key][LineIndex - 2];  // 2 = Header Line + Zero Index
                                 TempCpa02Date.Add(d);
                                 // Cpa02Score
-                                double s = Convert.ToDouble(Splits[1]); 
+                                double s = Convert.ToDouble(Splits[1]);
                                 TempCpa02Score.Add(s);
                             }
                             else
@@ -267,7 +267,7 @@ namespace Asc
             Efa.dicListDate = Dal.dicListDate;
             Efa.dicArrData = Dic_Cpa01Score;
             Efa.CreateExcel();
-                        
+
             // Save as CSV also (for Integrated Analysis metadata)
             //string FilePath = AppDomain.CurrentDomain.BaseDirectory
             //            + "Result\\Result_Summary\\" + "Result_Auto_Data_Cpa" + ".csv";

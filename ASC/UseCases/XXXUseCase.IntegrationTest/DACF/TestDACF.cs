@@ -30,24 +30,72 @@ namespace Asc
             result = Dacf.UseChangePointAnalyzer();
             Assert.IsTrue(result);
         }
-        
+
         [Test]
         public void UC02_TestDACF_FrTg()
         {
-            // 1. 
-            Uc_Spa_Old Dacf = new Uc_Spa_Old();
+            // Arrange
+            Uc_Spa Uc_Spa = new Uc_Spa();
+
+            // Data Folder Path
+            Uc_Spa.RawFolderPath = @"D:\ECAD\ECA_blend_tg\";
+            Uc_Spa.MetaFolderPath = @"D:\Meta\DACF_FrTemp\";
+            Uc_Spa.ResultFolderPath = @"D:\Result\";
+
+            // Precip Stations in French
+            Uc_Spa.SID_Prefix = "Tg";
+            Uc_Spa.SID_Array = new string[] {
+                "31",
+                "32",
+                "33",
+                "34",
+                "36",
+                "37",
+                "39",
+                "322",
+                "323",
+                "434",
+                "736",
+                "737",
+                "738",
+                "739",
+                "740",
+                "742",
+                "745",
+                "749",
+                "750",
+                "755",
+                "756",
+                "757",
+                "758",
+                "784",
+                "786",
+                "793",
+                "2184",
+                "2190",
+                "2192",
+                "2195",
+                "2196",
+                "2199",
+                "2200",
+                "2203",
+                "2205",
+                "2207",
+                "2209",
+                "11243",
+                "11244",
+                "11245",
+                "11246",
+                "11247",
+                "11248",
+                "11249"
+              };
+
+            // Act
             bool result;
+            result = Uc_Spa.Run();
 
-            // 2. 
-            result = Dacf.UseCsvFileAnalyzer(); // -9999 先不篩
-            Assert.IsTrue(result);
-
-            // 3. 
-            result = Dacf.IntraRawSpikeAnalyzer();
-            Assert.IsTrue(result);
-
-            // 4. 
-            result = Dacf.InterIntegratedSpikeAnalyzer();
+            // Assert
             Assert.IsTrue(result);
         }
 
@@ -173,7 +221,7 @@ namespace Asc
             result = Dacf.IntegratedAnalysis();
             Assert.IsTrue(result);
         }
-        
+
         [Test]
         public void UC06_TestDACF_FrAisPrecip()
         {
@@ -219,7 +267,7 @@ namespace Asc
             Assert.IsTrue(result);
 
         }
-        
+
         [Test]
         public void UC08_TestDACF_TwPrecip()
         {
@@ -261,11 +309,11 @@ namespace Asc
             result = Dacf.UseChangePointAnalyzer();
             Assert.IsTrue(result);
         }
-                
-       
-        
-        
-       
-        
+
+
+
+
+
+
     }
 }

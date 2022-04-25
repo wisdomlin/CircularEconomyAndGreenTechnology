@@ -6,7 +6,7 @@ using System.IO;
 namespace Asc
 {
     public class Uc_Spa
-    {        
+    {
         // Variables that need to be set from outside
         public string[] SID_Array;
         public string SID_Prefix;
@@ -18,7 +18,7 @@ namespace Asc
         public CsvFileAnalyzer Cfa;
         private Dal_EcadWeather Dal;
 
-       
+
         /// <summary>
         /// Use Case' Standard Interface
         /// </summary>
@@ -34,7 +34,7 @@ namespace Asc
 
         public Uc_Spa()
         {
-            
+
         }
 
         // For Cfa Use  // TODO: Generalize for general Spa?
@@ -80,7 +80,7 @@ namespace Asc
 
                 // Store as Meta
                 StoreArrayAsMetaCsv(
-                    Dal.STAID.ToArray(), Dal.DATE.ToArray(), Dal.Val.ToArray(), Dal.Q_Val.ToArray(), 
+                    Dal.STAID.ToArray(), Dal.DATE.ToArray(), Dal.Val.ToArray(), Dal.Q_Val.ToArray(),
                     "Raw_" + sID);        // "RawPrecip_" + sID);   // sID already contains prefix
                 // TODO: fix the Meta filename used by other functions
             }
@@ -93,7 +93,7 @@ namespace Asc
             try
             {
                 foreach (KeyValuePair<string, List<double>> entry in Dic_Val_List)
-                {                    
+                {
                     SpikeAnalyzer Spa = new SpikeAnalyzer();
                     string sID = entry.Key;
                     Spa._InputDataPath = MetaFolderPath + @"Cfa\" + "Raw_" + sID + ".txt";
