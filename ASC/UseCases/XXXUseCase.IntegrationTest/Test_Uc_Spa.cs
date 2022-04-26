@@ -6,33 +6,10 @@ using System.IO;
 
 namespace Asc
 {
-    class TestDACF
-    {
+    class Test_Uc_Spa
+    {        
         [Test]
-        public void UC01_TestDACF_GlobalPrice()
-        {
-            // Arrange
-            DACF_Fao Dacf = new DACF_Fao();
-            Dacf.FaoFilePath = AppDomain.CurrentDomain.BaseDirectory
-                + @"DACF\Data\Food_price_indices_data_jul20.csv";
-
-            // Act
-            bool result;
-            result = Dacf.UseCsvFileAnalyzer();
-            Assert.IsTrue(result);
-
-            result = Dacf.UseSingularSpectrumAnalyzer();
-            Assert.IsTrue(result);
-
-            result = Dacf.UseOutlierTrimmingAnalyzer();
-            Assert.IsTrue(result);
-
-            result = Dacf.UseChangePointAnalyzer();
-            Assert.IsTrue(result);
-        }
-
-        [Test]
-        public void UC02_TestDACF_FrTg()
+        public void Test_Uc_Spa_FrTg()
         {
             // Arrange
             Uc_Spa Uc_Spa = new Uc_Spa();
@@ -101,7 +78,7 @@ namespace Asc
         }
 
         [Test]
-        public void UC03_TestDACF_FrRr()
+        public void Test_Uc_Spa_FrRr()
         {
             // Arrange
             Uc_Spa Uc_Spa = new Uc_Spa();
@@ -186,65 +163,9 @@ namespace Asc
             // Assert
             Assert.IsTrue(result);
         }
-
+              
         [Test]
-        public void UC04_TestDACF_FrPrice()
-        {
-            // Arrange
-            Uc_Cpa Uc_Cpa = new Uc_Cpa();
-
-            // Data Folder Path
-            Uc_Cpa.RawFolderPath = @"D:\EuroStat\FrPrice\";
-            Uc_Cpa.MetaFolderPath = @"D:\Meta\DACF_EuroStat\";
-            Uc_Cpa.ResultFolderPath = @"D:\Result\";
-            Uc_Cpa.RawFileName = "prc_fsc_idx_1_Data_ACP.csv";
-
-            // Act
-            bool result;
-            result = Uc_Cpa.Run();
-
-            // Assert
-            Assert.IsTrue(result);
-        }
-
-        [Test]
-        public void UC05_TestDACF_FrAisTemp()
-        {
-            // Arrange
-            Uc_Ais Uc_Ais = new Uc_Ais();
-            string ResultFolderPath = @"D:\Result\";
-            Uc_Ais.CpaFilePath = ResultFolderPath + @"Cpa\" + "Result_Cpa01" + ".csv";
-            Uc_Ais.SpaFilePath = ResultFolderPath + @"Spa\" + "Result_Spa_Tg" + ".csv";
-            Uc_Ais.AisFilePath = ResultFolderPath + @"Ais\" + "Result_Ais_Tg" + ".csv";
-
-            // Act
-            bool result;
-            result = Uc_Ais.Run();
-
-            // Assert
-            Assert.IsTrue(result);
-        }
-
-        [Test]
-        public void UC06_TestDACF_FrAisPrecip()
-        {
-            // Arrange
-            Uc_Ais Uc_Ais = new Uc_Ais();
-            string ResultFolderPath = @"D:\Result\";
-            Uc_Ais.CpaFilePath = ResultFolderPath + @"Cpa\" + "Result_Cpa01" + ".csv";
-            Uc_Ais.SpaFilePath = ResultFolderPath + @"Spa\" + "Result_Spa_Rr" + ".csv";
-            Uc_Ais.AisFilePath = ResultFolderPath + @"Ais\" + "Result_Ais_Rr" + ".csv";
-
-            // Act
-            bool result;
-            result = Uc_Ais.Run();
-
-            // Assert
-            Assert.IsTrue(result);
-        }
-
-        [Test]
-        public void UC07_TestDACF_TwTemp()
+        public void Test_Uc_Spa_TwTg()
         {
             // Arrange
             DACF_TwTemp Dacf = new DACF_TwTemp();
@@ -274,7 +195,7 @@ namespace Asc
         }
 
         [Test]
-        public void UC08_TestDACF_TwPrecip()
+        public void Test_Uc_Spa_TwRr()
         {
             // Arrange
             Uc_Spa Dacf = new Uc_Spa();
@@ -290,35 +211,6 @@ namespace Asc
             result = Dacf.InterIntegratedSpikeAnalyzer();
             Assert.IsTrue(result);
 
-        }
-
-        [Test]
-        public void UC09_TestDACF_TwPrice()
-        {
-            // Arrange
-            Uc_Cpa Dacf = new Uc_Cpa();
-            //Dacf.FilePath = AppDomain.CurrentDomain.BaseDirectory
-            //    + @"DACF\Data\prc_fsc_idx_1_Data_ACP.csv";
-
-            // Act
-            bool result;
-            result = Dacf.UseCsvFileAnalyzer();
-            Assert.IsTrue(result);
-
-            result = Dacf.UseSingularSpectrumAnalyzer();
-            Assert.IsTrue(result);
-
-            result = Dacf.UseOutlierTrimmingAnalyzer();
-            Assert.IsTrue(result);
-
-            result = Dacf.UseChangePointAnalyzer();
-            Assert.IsTrue(result);
-        }
-
-
-
-
-
-
+        } 
     }
 }
