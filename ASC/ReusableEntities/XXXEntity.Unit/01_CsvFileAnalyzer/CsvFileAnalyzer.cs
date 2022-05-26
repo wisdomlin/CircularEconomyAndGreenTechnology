@@ -16,12 +16,12 @@ namespace Asc
     /// </summary>
     public class CsvFileAnalyzer
     {
-        public CsvFileStructure Cfs;
-        public DatalineAnalysisLogic Dal;
+        private CsvFileStructure Cfs;
+        private DatalineAnalysisLogic Dal;
 
         #region File Properties
-        public string FilePath;
-        public char[] Delimiters;
+        private string FilePath;
+        //public char[] Delimiters;
         #endregion
 
         #region Supports
@@ -31,9 +31,11 @@ namespace Asc
         BufferBlock<string> buffer;
         #endregion
 
-        public CsvFileAnalyzer()
+        public CsvFileAnalyzer(CsvFileStructure _Cfs, DatalineAnalysisLogic _Dal, string _FilePath)
         {
-
+            Cfs = _Cfs;
+            Dal = _Dal;
+            FilePath = _FilePath;
         }
 
         /// <summary>
@@ -45,7 +47,7 @@ namespace Asc
             bool res = true;
             int LineIndex = 1;
             string Line = "";
-            Dal.Delimiters = Delimiters;
+            //Dal.Delimiters = Delimiters;
 
             //// Create a BufferBlock<byte[]> object. This object serves as the 
             //// target block for the producer and the source block for the consumer.
@@ -112,7 +114,8 @@ namespace Asc
                     }
                 case CsvFileStructure.LocationInFile.HeaderLines:
                     {
-                        Headers = Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
+                        string[] Headers = Dal.ProcessHeaderLine(Line);
+                        //Headers = Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
                         break;
                     }
                 case CsvFileStructure.LocationInFile.DataLines:
@@ -165,11 +168,6 @@ namespace Asc
                 }
             }
             return result;
-        }
-
-        public bool ReadAllTgFiles()
-        {
-            throw new NotImplementedException();
         }
 
     }

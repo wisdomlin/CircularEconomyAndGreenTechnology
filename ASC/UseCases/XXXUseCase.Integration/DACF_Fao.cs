@@ -40,22 +40,36 @@ namespace Asc
         public bool UseCsvFileAnalyzer()
         {
             // 1. Creation Management
-            Cfa = new CsvFileAnalyzer();
-            Cfa.FilePath = FaoFilePath;
-            Cfa.Delimiters = new char[] { ',', ' ', '\t' };
+            int HeaderLineStartAt = 3;
+            int DataLinesStartAt = 5;
+            int FooterLinesCount = 0;
+            CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
 
-            CsvFileStructure Cfs = new CsvFileStructure();
-            Cfs.HeaderLineStartAt = 3;
-            Cfs.DataLinesStartAt = 5;
-            Cfs.FooterLinesCount = 0;
+            char[] Delimiters = new char[] { ',', ' ', '\t' };
+            DatalineEntityFormat Def = new DatalineEntityFormat(Delimiters);
 
-            Dal = new Dal_FaoFpi();
-            DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
+            Dal = new Dal_FaoFpi(Def);
+
+            string FilePath = FaoFilePath;
+            Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
+
+            // 1. Creation Management
+            //Cfa = new CsvFileAnalyzer();
+            //Cfa.FilePath = FaoFilePath;
+            //Cfa.Delimiters = new char[] { ',', ' ', '\t' };
+
+            //CsvFileStructure Cfs = new CsvFileStructure();
+            //Cfs.HeaderLineStartAt = 3;
+            //Cfs.DataLinesStartAt = 5;
+            //Cfs.FooterLinesCount = 0;
+
+            //Dal = new Dal_FaoFpi();
+            //DatalineEntityFormat Def = new DatalineEntityFormat();
 
             // 2. Dependency Management
-            Cfa.Cfs = Cfs;
-            Dal.Def = Def;
-            Cfa.Dal = Dal;
+            //Cfa.Cfs = Cfs;
+            //Dal.Def = Def;
+            //Cfa.Dal = Dal;
 
             // 3. Read Csv File
             bool result = Cfa.ReadCsvFile();

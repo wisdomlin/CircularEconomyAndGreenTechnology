@@ -50,23 +50,19 @@ namespace Asc
             foreach (string id in SID_Array)
             {
                 // 1. Creation Management
-                Cfa = new CsvFileAnalyzer();
+                int HeaderLineStartAt = 21;
+                int DataLinesStartAt = 22;
+                int FooterLinesCount = 0;
+                CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
+
+                char[] Delimiters = new char[] { ',', ' ' };
+                DatalineEntityFormat Def = new DatalineEntityFormat(Delimiters);
+
+                Dal = new Dal_EcadWeather(Def);
+
                 string sID = SID_Prefix + "_STAID" + id.PadLeft(6, '0');
-                Cfa.FilePath = RawFolderPath + sID + ".txt";
-                Cfa.Delimiters = new char[] { ',', ' ' };
-
-                CsvFileStructure Cfs = new CsvFileStructure();
-                Cfs.HeaderLineStartAt = 21;
-                Cfs.DataLinesStartAt = 22;
-                Cfs.FooterLinesCount = 0;
-
-                Dal = new Dal_EcadWeather();
-                DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
-
-                // 2. Dependency Management
-                Cfa.Cfs = Cfs;
-                Dal.Def = Def;
-                Cfa.Dal = Dal;
+                string FilePath = RawFolderPath + sID + ".txt";
+                Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
 
                 // 3. Read Csv File
                 result &= Cfa.ReadCsvFile();

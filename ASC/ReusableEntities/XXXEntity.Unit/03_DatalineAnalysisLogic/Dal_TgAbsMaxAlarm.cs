@@ -10,7 +10,7 @@ namespace Asc
     /// </summary>
     public class Dal_TgAbsMaxAlarm : DatalineAnalysisLogic
     {
-        public Dal_TgAbsMaxAlarm()
+        public Dal_TgAbsMaxAlarm(DatalineEntityFormat _Def) : base(_Def)
         {
             // Define dtAnalysisResultFormat.Columns in Subclass.
             dtAnalysisResultFormat.Columns.Add("STAID");
@@ -34,6 +34,7 @@ namespace Asc
             // Generate Dataline Analysis Result Start
             // 1. Prepare PresentValue
             string ValueType = Def.GetValueType("TG");
+            // TODO: Should be replaced by GetValueAddress()
             string ValueString = Def.GetValueString("TG");
             GenericValue PV = new GenericValue(ValueType, ValueString);
 

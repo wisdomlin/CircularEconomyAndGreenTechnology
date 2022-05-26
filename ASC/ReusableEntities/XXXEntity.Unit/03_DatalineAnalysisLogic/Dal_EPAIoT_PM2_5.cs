@@ -18,7 +18,7 @@ namespace Asc
         // Analysis Result
         public Dictionary<string, QuickMixTank> Dic_Qmt;
 
-        public Dal_EPAIoT_PM2_5()
+        public Dal_EPAIoT_PM2_5(DatalineEntityFormat _Def) : base(_Def)
         {
 
         }

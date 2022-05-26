@@ -7,15 +7,20 @@ namespace Asc
     /// DatalineEntityFormat specifies: FieldName, ValueAddress, ValueType
     /// Future: should follow ML.NET LoadColumn way..
     /// </summary>
-    public class DatalineEntityAndFormat
+    public class DatalineEntityFormat
     {
+        public DatalineEntityFormat(char[] _Delimiters)
+        {
+            Delimiters = _Delimiters;
+            LookUpTable = new Dictionary<string, (int ValueAddress, string ValueType)>();
+        }
+
         internal Dictionary<string, (int ValueAddress, string ValueType)> LookUpTable;
+        public char[] Delimiters;
+
+        // TODO: to be delected, and split outside DatalineEntityFormat
         public string[] LineSplits;
 
-        public DatalineEntityAndFormat()
-        {
-            LookUpTable = new Dictionary<string, (int, string)>();
-        }
 
         public int GetValueAddress(string FieldName)
         {

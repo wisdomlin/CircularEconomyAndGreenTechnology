@@ -17,7 +17,7 @@ namespace Asc
 
         // Internal Objects
         public CsvFileAnalyzer Cfa;
-        private Dal_EuroStatFrench Dal;
+        private Dal_EuroStatPrice Dal;
 
         /// <summary>
         /// Use Case' Standard Interface
@@ -52,29 +52,25 @@ namespace Asc
         public bool UseCsvFileAnalyzer()
         {
             // 1. Creation Management
-            Cfa = new CsvFileAnalyzer();
-            Cfa.FilePath = RawFolderPath + RawFileName;
+            int HeaderLineStartAt = 1;
+            int DataLinesStartAt = 2;
+            int FooterLinesCount = 0;
+            CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
 
-            Cfa.Delimiters = new char[] { '\t' };
+            char[] Delimiters = new char[] { '\t' };
+            DatalineEntityFormat Def = new DatalineEntityFormat(Delimiters);
+                        
+            Dal = new Dal_EuroStatPrice(Def);
 
-            CsvFileStructure Cfs = new CsvFileStructure();
-            Cfs.HeaderLineStartAt = 1;
-            Cfs.DataLinesStartAt = 2;
-            Cfs.FooterLinesCount = 0;
-
-            Dal = new Dal_EuroStatFrench();
-            DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
-
-            // 2. Dependency Management
-            Cfa.Cfs = Cfs;
-            Dal.Def = Def;
-            Cfa.Dal = Dal;
-
+            string FilePath = RawFolderPath + RawFileName;
+            Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
+           
             // 3. Read Csv File
             bool result = Cfa.ReadCsvFile();
 
             // 4. Store as Excel 
             Efa_Dic_StringList_DoubleList_Fpi Ea = new Efa_Dic_StringList_DoubleList_Fpi();
+            // TODO: Cfa's Result folder place should be given by Use Case!
             Ea.FilePath = ResultFolderPath + "Original\\" + "Result_Original_Price" + ".xlsx";
             Ea.SheetName = "Original";
             Ea.dicListDate = Dal.dicListDate;
@@ -184,9 +180,6 @@ namespace Asc
         {
             foreach (KeyValuePair<string, double[]> entry in Dic_trendFpiArr)
             {
-                // Use key name to generate meta filename to read
-                //string CpaMetaFilePath = AppDomain.CurrentDomain.BaseDirectory
-                //    + @"Meta\DACF_EuroStat\" + @"Cpa\" + "ChangePointsFpi_" + entry.Key + ".csv";
                 string CpaMetaFilePath = MetaFolderPath + @"Cpa\" + "CpaFpi_" + entry.Key + ".csv";
 
                 bool res = true;
@@ -207,8 +200,6 @@ namespace Asc
                     using (BufferedStream bs = new BufferedStream(fs))
                     using (StreamReader sr = new StreamReader(bs))
                     {
-                        //if (Cfs.FooterLinesCount > 0)
-                        //    FileTotalLinesCount = File.ReadLines(FilePath).Count();
                         while ((Line = sr.ReadLine()) != null)
                         {
                             // Skip First Header Line

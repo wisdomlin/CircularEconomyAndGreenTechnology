@@ -97,25 +97,38 @@ namespace Asc
             bool result = true;
             foreach (string id in FrStationId)
             {
-                // 1. Creation Management
-                Cfa = new CsvFileAnalyzer();
+                int HeaderLineStartAt = 21;
+                int DataLinesStartAt = 22;
+                int FooterLinesCount = 0;
+                CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
+
+                char[] Delimiters = new char[] { ',', ' ' };
+                DatalineEntityFormat Def = new DatalineEntityFormat(Delimiters);
+
+                Dal = new Dal_EcadWeather(Def);
+
                 string sID = "TG_STAID" + id.PadLeft(6, '0');
-                //Cfa.FilePath = @"C:\Workspace\Publications\EIA\Model\ECA_blend_tg\" + sID + ".txt";
-                Cfa.FilePath = RawFolderPath + sID + ".txt";
-                Cfa.Delimiters = new char[] { ',', ' ' };
+                string FilePath = RawFolderPath + sID + ".txt";
+                Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
 
-                CsvFileStructure Cfs = new CsvFileStructure();
-                Cfs.HeaderLineStartAt = 21;
-                Cfs.DataLinesStartAt = 22;
-                Cfs.FooterLinesCount = 0;
+                // 1. Creation Management
+                //Cfa = new CsvFileAnalyzer();
+                //string sID = "TG_STAID" + id.PadLeft(6, '0');
+                //Cfa.FilePath = RawFolderPath + sID + ".txt";
+                //Cfa.Delimiters = new char[] { ',', ' ' };
 
-                Dal = new Dal_EcadWeather();
-                DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
+                //CsvFileStructure Cfs = new CsvFileStructure();
+                //Cfs.HeaderLineStartAt = 21;
+                //Cfs.DataLinesStartAt = 22;
+                //Cfs.FooterLinesCount = 0;
 
-                // 2. Dependency Management
-                Cfa.Cfs = Cfs;
-                Dal.Def = Def;
-                Cfa.Dal = Dal;
+                //Dal = new Dal_EcadWeather();
+                //DatalineEntityFormat Def = new DatalineEntityFormat();
+
+                //// 2. Dependency Management
+                //Cfa.Cfs = Cfs;
+                //Dal.Def = Def;
+                //Cfa.Dal = Dal;
 
                 // 3. Read Csv File
                 result &= Cfa.ReadCsvFile();

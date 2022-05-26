@@ -14,7 +14,7 @@ namespace Asc
         public List<double> Val = new List<double>();
         public List<string> Q_Val = new List<string>();
 
-        public Dal_EcadWeather()
+        public Dal_EcadWeather(DatalineEntityFormat _Def) : base(_Def)
         {
 
         }

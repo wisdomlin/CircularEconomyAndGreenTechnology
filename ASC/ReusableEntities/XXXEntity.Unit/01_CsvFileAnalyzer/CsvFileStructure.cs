@@ -20,19 +20,24 @@ namespace Asc
         /// <summary>
         /// 1 means starting from the first line.
         /// </summary>
-        public int HeaderLineStartAt;
+        readonly public int HeaderLineStartAt;
         /// <summary>
         /// 2 means starting from the second line.
         /// </summary>
-        public int DataLinesStartAt;
-        public int FooterLinesCount;
+        readonly public int DataLinesStartAt;
+        readonly public int FooterLinesCount;
 
         /// <summary>
         /// Default: HeaderLineStartAt = 1; DataLinesStartAt = 2; FooterLinesCount = 0;
         /// </summary>
-        public CsvFileStructure()
+        public CsvFileStructure(
+            int _HeaderLineStartAt = 1,
+            int _DataLinesStartAt = 2,
+            int _FooterLinesCount = 0)
         {
-
+            HeaderLineStartAt = _HeaderLineStartAt = 1;
+            DataLinesStartAt = _DataLinesStartAt = 2;
+            FooterLinesCount = _FooterLinesCount = 0;
         }
     }
 }

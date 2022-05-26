@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace Asc
 {
-    public class Def_TG : DatalineEntityAndFormat
+    public class Def_TG : DatalineEntityFormat
     {
         /// <summary>
-        /// Dataline Entity Format for CSV File
+        /// 1 Csv File Format  for CSV File
         /// </summary>
-        public Def_TG()
+        public Def_TG(char[] _Delimiters) : base(_Delimiters)
         {
             // Specify (FieldName, ValueAddress, ValueType) Here:
             LookUpTable.Add("STAID", (ValueAddress: 0, ValueType: "UInt16"));

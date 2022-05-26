@@ -12,7 +12,7 @@ namespace Asc
     /// </summary>
     public class Dal_TgAbsMaxAlarmConsumer : DatalineAnalysisLogic
     {
-        public Dal_TgAbsMaxAlarmConsumer()
+        public Dal_TgAbsMaxAlarmConsumer(DatalineEntityFormat _Def) : base(_Def)
         {
             // Define dtAnalysisResultFormat.Columns in Subclass.
             dtAnalysisResultFormat.Columns.Add("STAID");
@@ -93,6 +93,7 @@ namespace Asc
             // ---------------------------------------
             // 1. Prepare PresentValue
             string ValueType = Def.GetValueType("TG");
+            // TODO: Should be replaced by CsvFileFormat.GetValueAddress()
             string ValueString = Def.GetValueString("TG");
             GenericValue PV = new GenericValue(ValueType, ValueString);
 

@@ -17,25 +17,21 @@ namespace Asc
         public void UC01_ReadTgCsvAndBaseAnalysis()
         {
             // 1. Creation Management
-            CsvFileAnalyzer Cfr = new CsvFileAnalyzer();
-            Cfr.FilePath = @"C:\Workspace\Publications\EIA\Model\ECA_blend_tg\TG_STAID000001.txt";
-            Cfr.Delimiters = new char[] { ',', ' ', '\t' };
+            int HeaderLineStartAt = 21;
+            int DataLinesStartAt = 22;
+            int FooterLinesCount = 0;
+            CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
 
-            CsvFileStructure Cfs = new CsvFileStructure();
-            Cfs.HeaderLineStartAt = 21;
-            Cfs.DataLinesStartAt = 22;
-            Cfs.FooterLinesCount = 0;
+            char[] Delimiters = new char[] { ',', ' ', '\t' };
+            DatalineEntityFormat Def = new DatalineEntityFormat(Delimiters);
 
-            DatalineAnalysisLogic Dal = new DatalineAnalysisLogic();
-            DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
+            DatalineAnalysisLogic Dal = new DatalineAnalysisLogic(Def);
 
-            // 2. Dependency Management
-            Cfr.Cfs = Cfs;
-            Dal.Def = Def;
-            Cfr.Dal = Dal;
+            string FilePath = @"C:\Workspace\Publications\EIA\Model\ECA_blend_tg\TG_STAID000001.txt";
+            CsvFileAnalyzer Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
 
             // 3. Read Csv File
-            bool result = Cfr.ReadCsvFile();
+            bool result = Cfa.ReadCsvFile();
             Assert.IsTrue(result);
         }
 
@@ -43,25 +39,21 @@ namespace Asc
         public void UC02_ReadTgCsvAndCustomizeAnalysis()
         {
             // 1. Creation Management
-            CsvFileAnalyzer Cfr = new CsvFileAnalyzer();
-            Cfr.FilePath = @"C:\Workspace\Publications\EIA\Model\ECA_blend_tg\TG_STAID000001.txt";
-            Cfr.Delimiters = new char[] { ',', ' ', '\t' };
+            int HeaderLineStartAt = 21;
+            int DataLinesStartAt = 22;
+            int FooterLinesCount = 0;
+            CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
 
-            CsvFileStructure Cfs = new CsvFileStructure();
-            Cfs.HeaderLineStartAt = 21;
-            Cfs.DataLinesStartAt = 22;
-            Cfs.FooterLinesCount = 0;
+            char[] Delimiters = new char[] { ',', ' ', '\t' };
+            DatalineEntityFormat Def = new Def_TG(Delimiters);
 
-            DatalineAnalysisLogic Dal = new Dal_TgAbsMaxAlarm();
-            DatalineEntityAndFormat Def = new Def_TG();
+            DatalineAnalysisLogic Dal = new Dal_TgAbsMaxAlarm(Def);
 
-            // 2. Dependency Management
-            Cfr.Cfs = Cfs;
-            Dal.Def = Def;
-            Cfr.Dal = Dal;
+            string FilePath = @"C:\Workspace\Publications\EIA\Model\ECA_blend_tg\TG_STAID000001.txt";
+            CsvFileAnalyzer Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
 
             // 3. Read Csv File
-            bool result = Cfr.ReadCsvFile();
+            bool result = Cfa.ReadCsvFile();
             Assert.IsTrue(result);
         }
 
@@ -69,22 +61,18 @@ namespace Asc
         public void UC03_ReadTenCsvFiles()
         {
             // 1. Creation Management
-            CsvFileAnalyzer Cfr = new CsvFileAnalyzer();
-            Cfr.FilePath = @"C:\Workspace\Publications\EIA\Model\ECA_blend_tg\TG_STAID000001.txt";
-            Cfr.Delimiters = new char[] { ',', ' ', '\t' };
+            int HeaderLineStartAt = 21;
+            int DataLinesStartAt = 22;
+            int FooterLinesCount = 0;
+            CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
 
-            CsvFileStructure Cfs = new CsvFileStructure();
-            Cfs.HeaderLineStartAt = 21;
-            Cfs.DataLinesStartAt = 22;
-            Cfs.FooterLinesCount = 0;
+            char[] Delimiters = new char[] { ',', ' ', '\t' };
+            DatalineEntityFormat Def = new Def_TG(Delimiters);
 
-            DatalineAnalysisLogic Dal = new Dal_TgAbsMaxAlarm();
-            DatalineEntityAndFormat Def = new Def_TG();
+            DatalineAnalysisLogic Dal = new Dal_TgAbsMaxAlarm(Def);
 
-            // 2. Dependency Management
-            Cfr.Cfs = Cfs;
-            Dal.Def = Def;
-            Cfr.Dal = Dal;
+            string FilePath = @"C:\Workspace\Publications\EIA\Model\ECA_blend_tg\TG_STAID000001.txt";
+            CsvFileAnalyzer Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
 
             // 3. Read Csv Files
             // Find all files in a folder
@@ -95,9 +83,9 @@ namespace Asc
             foreach (FileInfo file in d.GetFiles("TG_*.txt"))
             {
                 // Do something for each file
-                string FilePath = file.FullName;
-                Cfr.SetFilePath(FilePath);
-                bool result = Cfr.ReadCsvFile();
+                FilePath = file.FullName;
+                Cfa.SetFilePath(FilePath);
+                bool result = Cfa.ReadCsvFile();
                 Assert.IsTrue(result);
 
                 i++;
@@ -110,80 +98,65 @@ namespace Asc
         public void UC04_ReadFpiCsvAndCustomizeAnalysis()
         {
             // 1. Creation Management
-            CsvFileAnalyzer Cfr = new CsvFileAnalyzer();
-            Cfr.FilePath = @"C:\Workspace\Branches\CircularEconomyAndGreenTechnology\EconomicMoat\EconomicMoat\EconomicMoats.ModuleTest\SSA\Food_price_indices_data_jul20.csv";
-            Cfr.Delimiters = new char[] { ',', ' ', '\t' };
+            int HeaderLineStartAt = 3;
+            int DataLinesStartAt = 5;
+            int FooterLinesCount = 0;
+            CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
 
-            CsvFileStructure Cfs = new CsvFileStructure();
-            Cfs.HeaderLineStartAt = 3;
-            Cfs.DataLinesStartAt = 5;
-            Cfs.FooterLinesCount = 0;
+            char[] Delimiters = new char[] { ',', ' ', '\t' };
+            DatalineEntityFormat Def = new DatalineEntityFormat(Delimiters);
 
-            DatalineAnalysisLogic Dal = new Dal_FaoFpi();
-            DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
+            DatalineAnalysisLogic Dal = new Dal_FaoFpi(Def);
 
-            // 2. Dependency Management
-            Cfr.Cfs = Cfs;
-            Dal.Def = Def;
-            Cfr.Dal = Dal;
+            string FilePath = @"C:\Workspace\Branches\CircularEconomyAndGreenTechnology\EconomicMoat\EconomicMoat\EconomicMoats.ModuleTest\SSA\Food_price_indices_data_jul20.csv";
+            CsvFileAnalyzer Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
 
             // 3. Read Csv File
-            bool result = Cfr.ReadCsvFile();
+            bool result = Cfa.ReadCsvFile();
             Assert.IsTrue(result);
-
-            // 4. 
         }
 
         [Test]
         public void UC05_AnalyzeFaoCsvAndSeparateFiles()
         {
             // 1. Creation Management
-            CsvFileAnalyzer Cfr = new CsvFileAnalyzer();
-            Cfr.FilePath = @"C:\Workspace\Branches\CircularEconomyAndGreenTechnology\EconomicMoat\EconomicMoat\EconomicMoats.ModuleTest\SSA\Food_price_indices_data_jul20.csv";
-            Cfr.Delimiters = new char[] { ',', ' ', '\t' };
+            int HeaderLineStartAt = 3;
+            int DataLinesStartAt = 5;
+            int FooterLinesCount = 0;
+            CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
 
-            CsvFileStructure Cfs = new CsvFileStructure();
-            Cfs.HeaderLineStartAt = 3;
-            Cfs.DataLinesStartAt = 5;
-            Cfs.FooterLinesCount = 0;
+            char[] Delimiters = new char[] { ',', ' ', '\t' };
+            DatalineEntityFormat Def = new DatalineEntityFormat(Delimiters);
 
-            DatalineAnalysisLogic Dal = new Dal_FaoFpi();
-            DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
+            DatalineAnalysisLogic Dal = new Dal_FaoFpi(Def);
 
-            // 2. Dependency Management
-            Cfr.Cfs = Cfs;
-            Dal.Def = Def;
-            Cfr.Dal = Dal;
+            string FilePath = @"C:\Workspace\Branches\CircularEconomyAndGreenTechnology\EconomicMoat\EconomicMoat\EconomicMoats.ModuleTest\SSA\Food_price_indices_data_jul20.csv";
+            CsvFileAnalyzer Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
 
             // 3. Read Csv File
-            bool result = Cfr.ReadCsvFile();
+            bool result = Cfa.ReadCsvFile();
             Assert.IsTrue(result);
         }
 
         [Test]
         public void UC06_AnalyzeEuroStatFrenchCsv()
         {
-            // 1. Creation Management
-            CsvFileAnalyzer Cfr = new CsvFileAnalyzer();
-            Cfr.FilePath = AppDomain.CurrentDomain.BaseDirectory
+            int HeaderLineStartAt = 1;
+            int DataLinesStartAt = 2;
+            int FooterLinesCount = 0;
+            CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
+
+            char[] Delimiters = new char[] { '\t' };
+            DatalineEntityFormat Def = new DatalineEntityFormat(Delimiters);
+
+            DatalineAnalysisLogic Dal = new Dal_EuroStatPrice(Def);
+
+            string FilePath = AppDomain.CurrentDomain.BaseDirectory
                     + @"CsvFileAnalyzer\Data\" + @"prc_fsc_idx_1_Data_ACP.csv";
-            Cfr.Delimiters = new char[] { '\t' };
-
-            CsvFileStructure Cfs = new CsvFileStructure();
-            Cfs.HeaderLineStartAt = 1;
-            Cfs.DataLinesStartAt = 2;
-            Cfs.FooterLinesCount = 0;
-
-            DatalineAnalysisLogic Dal = new Dal_EuroStatFrench();
-            DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
-
-            // 2. Dependency Management
-            Cfr.Cfs = Cfs;
-            Dal.Def = Def;
-            Cfr.Dal = Dal;
+            CsvFileAnalyzer Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
 
             // 3. Read Csv File
-            bool result = Cfr.ReadCsvFile();
+            bool result = Cfa.ReadCsvFile();
             Assert.IsTrue(result);
         }
 
@@ -191,18 +164,16 @@ namespace Asc
         public void UC07_ReadPM2_5_Csv_20180101()
         {
             // 1. Creation Management
-            CsvFileAnalyzer Cfr = new CsvFileAnalyzer();
-            Cfr.FilePath = @"D:\EPA_IoT_Station_Data\2018\201801\" + @"epa_micro_20180101.csv";
-            Cfr.Delimiters = new char[] { '\t', ',' };
+            int HeaderLineStartAt = 1;
+            int DataLinesStartAt = 2;
+            int FooterLinesCount = 0;
+            CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
 
-            CsvFileStructure Cfs = new CsvFileStructure();
-            Cfs.HeaderLineStartAt = 1;
-            Cfs.DataLinesStartAt = 2;
-            Cfs.FooterLinesCount = 0;
+            char[] Delimiters = new char[] { '\t', ',' };
+            DatalineEntityFormat Def = new DatalineEntityFormat(Delimiters);
 
-            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5();
-            DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
-
+            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5(Def);
+            // 2. Dependency Management (DAL Specicial Ones)
             List<string> DeviceIdList = GetDeviceIdList();
             List<string> DeviceTypeList = GetDeviceTypeList();
             List<string> TankIdList = CreateTankIdList(DeviceIdList, DeviceTypeList);
@@ -211,18 +182,17 @@ namespace Asc
                 out Dictionary<string, QuickMixTank> Dic_Qmt,
                 out Dictionary<string, PrimarySedimentationTank> Dic_Pst);
 
-            // 2. Dependency Management
-            Cfr.Cfs = Cfs;
-            Dal.Def = Def;
             Dal.Dic_Qmt = Dic_Qmt;
             Dal.DeviceIdList = DeviceIdList;
-            //Dal.DeviceTypeList = DeviceTypeList;
-            //Dal.DeviceIdList_byType = DeviceIdList_byType;
             Dal.useDeviceIdList = false;
-            Cfr.Dal = Dal;
+
+            string FilePath = @"D:\EPA_IoT_Station_Data\2018\201801\" + @"epa_micro_20180101.csv";
+            CsvFileAnalyzer Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
+
+
 
             // 3. Read Csv File
-            bool result = Cfr.ReadCsvFile();
+            bool result = Cfa.ReadCsvFile();
             Assert.IsTrue(result);
 
             // Prepare Result Folder Path
@@ -285,18 +255,16 @@ namespace Asc
         public void UC08_AggregateFromQmtToPst()
         {
             // 1. Creation Management
-            CsvFileAnalyzer Cfr = new CsvFileAnalyzer();
-            Cfr.FilePath = @"D:\EPA_IoT_Station_Data\2018\201801\" + @"epa_micro_20180101.csv";
-            Cfr.Delimiters = new char[] { '\t', ',', '\"' };
+            int HeaderLineStartAt = 1;
+            int DataLinesStartAt = 2;
+            int FooterLinesCount = 0;
+            CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
 
-            CsvFileStructure Cfs = new CsvFileStructure();
-            Cfs.HeaderLineStartAt = 1;
-            Cfs.DataLinesStartAt = 2;
-            Cfs.FooterLinesCount = 0;
+            char[] Delimiters = new char[] { '\t', ',', '\"' };
+            DatalineEntityFormat Def = new DatalineEntityFormat(Delimiters);
 
-            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5();
-            DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
-
+            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5(Def);
+            // 2. Dependency Management
             List<string> DeviceIdList = GetDeviceIdList();
             List<string> DeviceTypeList = GetDeviceTypeList();
             List<string> TankIdList = CreateTankIdList(DeviceIdList, DeviceTypeList);
@@ -305,15 +273,12 @@ namespace Asc
                 out Dictionary<string, QuickMixTank> Dic_Qmt,
                 out Dictionary<string, PrimarySedimentationTank> Dic_Pst);
 
-            // 2. Dependency Management
-            Cfr.Cfs = Cfs;
-            Dal.Def = Def;
             Dal.Dic_Qmt = Dic_Qmt;
             Dal.DeviceIdList = DeviceIdList;
-            //Dal.DeviceTypeList = DeviceTypeList;
-            //Dal.DeviceIdList_byType = DeviceIdList_byType;
             Dal.useDeviceIdList = false;
-            Cfr.Dal = Dal;
+
+            string FilePath = @"D:\EPA_IoT_Station_Data\2018\201801\" + @"epa_micro_20180101.csv";
+            CsvFileAnalyzer Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
 
             // Debug Use
             string ResultFolder = @"D:\Result\EPAIoT_station_Taichung_Result";
@@ -330,7 +295,7 @@ namespace Asc
             }
 
             // 3. Read Csv File and Distribute by Dataline Analysis Logic (20180101)
-            bool result = Cfr.ReadCsvFile();
+            bool result = Cfa.ReadCsvFile();
             Assert.IsTrue(result);
 
             // ComputeAvg & Aggregate (1st Wave)
@@ -366,8 +331,8 @@ namespace Asc
             Assert.AreEqual(20.9623431, Dic_Pst["Y2018S04_6182023037"].DataAvg, 0.1);
 
             // 3. Read Csv File and Distribute by Dataline Analysis Logic (20180102)
-            Cfr.FilePath = @"D:\EPA_IoT_Station_Data\2018\201801\" + @"epa_micro_20180102.csv";
-            result = Cfr.ReadCsvFile();
+            Cfa.SetFilePath(@"D:\EPA_IoT_Station_Data\2018\201801\" + @"epa_micro_20180102.csv");
+            result = Cfa.ReadCsvFile();
             Assert.IsTrue(result);
 
             // ComputeAvg & Aggregate (2nd Wave)
@@ -408,17 +373,16 @@ namespace Asc
         public void UC09_Aggregate201801_OneMonth()
         {
             // 1. Creation Management
-            CsvFileAnalyzer Cfr = new CsvFileAnalyzer();
-            Cfr.Delimiters = new char[] { '\t', ',', '\"' };
+            int HeaderLineStartAt = 1;
+            int DataLinesStartAt = 2;
+            int FooterLinesCount = 0;
+            CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
 
-            CsvFileStructure Cfs = new CsvFileStructure();
-            Cfs.HeaderLineStartAt = 1;
-            Cfs.DataLinesStartAt = 2;
-            Cfs.FooterLinesCount = 0;
+            char[] Delimiters = new char[] { '\t', ',', '\"' };
+            DatalineEntityFormat Def = new DatalineEntityFormat(Delimiters);
 
-            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5();
-            DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
-
+            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5(Def);
+            // 2. Dependency Management
             List<string> DeviceIdList = GetDeviceIdList();
             List<string> DeviceTypeList = GetDeviceTypeList();
             List<string> TankIdList = CreateTankIdList(DeviceIdList, DeviceTypeList);
@@ -427,23 +391,19 @@ namespace Asc
                 out Dictionary<string, QuickMixTank> Dic_Qmt,
                 out Dictionary<string, PrimarySedimentationTank> Dic_Pst);
 
-            // 2. Dependency Management
-            Cfr.Cfs = Cfs;
-            Dal.Def = Def;
             Dal.Dic_Qmt = Dic_Qmt;
             Dal.DeviceIdList = DeviceIdList;
-            //Dal.DeviceTypeList = DeviceTypeList;
-            //Dal.DeviceIdList_byType = DeviceIdList_byType;
             Dal.useDeviceIdList = true;
-            Cfr.Dal = Dal;
 
+            string FilePath = @"";
+            CsvFileAnalyzer Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
             // All the CSV files in specified directory, including its sub-directories.
             string[] files =
                 Directory.GetFiles(@"D:\EPA_IoT_Station_Data\2018\201801\", "*.csv", SearchOption.AllDirectories);
             string TestStartTime = DateTime.Now.ToString("yyyyMMdd-HHmm");
             foreach (string InputFilePath in files)
             {
-                Cfr.FilePath = InputFilePath;
+                Cfa.SetFilePath(InputFilePath);
 
                 // Output File for Pst (Debug: Print each iteration Pst, Release: Print only final iteration Pst)
                 // ResultFilePath = TestMethod / TestTime / InputFileName
@@ -459,7 +419,7 @@ namespace Asc
                 }
 
                 // 3. Read Csv File and Distribute by Dataline Analysis Logic
-                bool result = Cfr.ReadCsvFile();
+                bool result = Cfa.ReadCsvFile();
                 Assert.IsTrue(result);
 
                 // ComputeAvg & Aggregate
@@ -482,46 +442,40 @@ namespace Asc
         public void UC10_Aggregate2018_OneYear()
         {
             // 1. Creation Management
-            CsvFileAnalyzer Cfr = new CsvFileAnalyzer();
-            Cfr.Delimiters = new char[] { '\t', ',', '\"' };
+            int HeaderLineStartAt = 1;
+            int DataLinesStartAt = 2;
+            int FooterLinesCount = 0;
+            CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
 
-            CsvFileStructure Cfs = new CsvFileStructure();
-            Cfs.HeaderLineStartAt = 1;
-            Cfs.DataLinesStartAt = 2;
-            Cfs.FooterLinesCount = 0;
+            char[] Delimiters = new char[] { '\t', ',', '\"' };
+            DatalineEntityFormat Def = new DatalineEntityFormat(Delimiters);
 
-            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5();
-            DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
-
+            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5(Def);
+            // 2. Dependency Management
             List<string> DeviceIdList = GetDeviceIdList();
             List<string> DeviceTypeList = GetDeviceTypeList();
             List<string> TankIdList = CreateTankIdList(DeviceIdList, DeviceTypeList);
             Dictionary<string, List<string>> DeviceIdList_byType = GetDeviceIdList_byType();
-
             bool Res_CreateQmtAndPst = CreateQmtAndPst(TankIdList,
                 out Dictionary<string, QuickMixTank> Dic_Qmt,
                 out Dictionary<string, PrimarySedimentationTank> Dic_Pst);
             Assert.IsTrue(Res_CreateQmtAndPst);
 
-            // 2. Dependency Management
-            Cfr.Cfs = Cfs;
-            Dal.Def = Def;
             Dal.Dic_Qmt = Dic_Qmt;
             Dal.DeviceIdList = DeviceIdList;
-            //Dal.DeviceTypeList = DeviceTypeList;
-            //Dal.DeviceIdList_byType = DeviceIdList_byType;
             Dal.useDeviceIdList = true;
-            Cfr.Dal = Dal;
 
+            string FilePath = @"";
+            CsvFileAnalyzer Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
             // Iterate all CSV files in specified directory, including its sub-directories.
             string[] files =
                 Directory.GetFiles(@"D:\EPA_IoT_Station_Data\2018\", "*.csv", SearchOption.AllDirectories);
             foreach (string InputFilePath in files)
             {
-                Cfr.FilePath = InputFilePath;
+                Cfa.SetFilePath(InputFilePath);
 
                 // 3. Read Csv File and Distribute by Dataline Analysis Logic
-                bool Res_ReadCsvFile = Cfr.ReadCsvFile();
+                bool Res_ReadCsvFile = Cfa.ReadCsvFile();
                 Assert.IsTrue(Res_ReadCsvFile);
 
                 // ComputeAvg & Aggregate
@@ -569,48 +523,40 @@ namespace Asc
         public void UC11_Aggregate2018to2020_ThreeYears()
         {
             // 1. Creation Management
-            // 1.1 
-            CsvFileAnalyzer Cfr = new CsvFileAnalyzer();
-            Cfr.Delimiters = new char[] { '\t', ',', '\"' };
+            int HeaderLineStartAt = 1;
+            int DataLinesStartAt = 2;
+            int FooterLinesCount = 0;
+            CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
 
-            CsvFileStructure Cfs = new CsvFileStructure();
-            Cfs.HeaderLineStartAt = 1;
-            Cfs.DataLinesStartAt = 2;
-            Cfs.FooterLinesCount = 0;
+            char[] Delimiters = new char[] { '\t', ',', '\"' };
+            DatalineEntityFormat Def = new DatalineEntityFormat(Delimiters);
 
-            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5();
-            DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
-
-            // 1.2 
+            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5(Def);
+            // 2. Dependency Management
             List<string> DeviceIdList = GetDeviceIdList();
             List<string> DeviceTypeList = GetDeviceTypeList();
             List<string> TankIdList = CreateTankIdList(DeviceIdList, DeviceTypeList);
             Dictionary<string, List<string>> DeviceIdList_byType = GetDeviceIdList_byType();
-
             bool Res_CreateQmtAndPst = CreateQmtAndPst(TankIdList,
                 out Dictionary<string, QuickMixTank> Dic_Qmt,
                 out Dictionary<string, PrimarySedimentationTank> Dic_Pst);
             Assert.IsTrue(Res_CreateQmtAndPst);
 
-            // 2. Dependency Management
-            Cfr.Cfs = Cfs;
-            Dal.Def = Def;
             Dal.Dic_Qmt = Dic_Qmt;
             Dal.DeviceIdList = DeviceIdList;
-            //Dal.DeviceTypeList = DeviceTypeList;
-            //Dal.DeviceIdList_byType = DeviceIdList_byType;
             Dal.useDeviceIdList = true;
-            Cfr.Dal = Dal;
 
+            string FilePath = @"";
+            CsvFileAnalyzer Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
             // Iterate all CSV files in specified directory, including its sub-directories.
             string[] files =
                 Directory.GetFiles(@"D:\EPA_IoT_Station_Data\", "*.csv", SearchOption.AllDirectories);
             foreach (string InputFilePath in files)
             {
-                Cfr.FilePath = InputFilePath;
+                Cfa.SetFilePath(InputFilePath);
 
                 // 3. Read Csv File and Distribute by Dataline Analysis Logic
-                bool Res_ReadCsvFile = Cfr.ReadCsvFile();
+                bool Res_ReadCsvFile = Cfa.ReadCsvFile();
                 Assert.IsTrue(Res_ReadCsvFile, "InputFilePath: " + InputFilePath);
 
                 // ComputeAvg & Aggregate
@@ -658,19 +604,16 @@ namespace Asc
         public void UC12_FourTanks_201801_OneMonth()
         {
             // 1. Creation Management
-            // 1.1 CsvFileAnalyzer
-            CsvFileAnalyzer Cfr = new CsvFileAnalyzer();
-            Cfr.Delimiters = new char[] { '\t', ',', '\"' };
+            int HeaderLineStartAt = 1;
+            int DataLinesStartAt = 2;
+            int FooterLinesCount = 0;
+            CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
 
-            CsvFileStructure Cfs = new CsvFileStructure();
-            Cfs.HeaderLineStartAt = 1;
-            Cfs.DataLinesStartAt = 2;
-            Cfs.FooterLinesCount = 0;
+            char[] Delimiters = new char[] { '\t', ',', '\"' };
+            DatalineEntityFormat Def = new DatalineEntityFormat(Delimiters);
 
-            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5();
-            DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
-
-            // 1.2 Tanks
+            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5(Def);
+            // 2. Dependency Management
             DeviceIdList_byType = GetDeviceIdList_byType();
             List<string> List_DeviceId = TankFactory.GetDeviceIdList();
             List<string> List_DeviceType = TankFactory.GetDeviceTypeList();
@@ -694,33 +637,23 @@ namespace Asc
             TankIdList = TankFactory.GetCombination(List_DeviceType, List_TemporalMode);
             TankFactory.CreateQmt(TankIdList, out Dictionary<string, QuickMixTank> Dic_Qmt_DtTm);
 
-            //List<string> TankIdList = CreateTankIdList(List_DeviceId, List_DeviceType);
-            //Dictionary<string, List<string>> DeviceIdList_byType = GetDeviceIdList_byType();
-
-            //bool Res_CreateQmtAndPst = CreateQmtAndPst(TankIdList,
-            //    out Dictionary<string, QuickMixTank> Dic_Qmt,
-            //    out Dictionary<string, PrimarySedimentationTank> Dic_Pst);
-            //Assert.IsTrue(Res_CreateQmtAndPst);
+            string FilePath = @"";
+            CsvFileAnalyzer Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
 
             // 2. Dependency Management
-            Cfr.Cfs = Cfs;
-            Dal.Def = Def;
             Dal.Dic_Qmt = Dic_Qmt_StumDi;
             Dal.DeviceIdList = List_DeviceId;   // 攔污柵
-            //Dal.DeviceTypeList = List_DeviceType;
-            //Dal.DeviceIdList_byType = DeviceIdList_byType;
             Dal.useDeviceIdList = true;
-            Cfr.Dal = Dal;
 
             // 3. Read Csv files in specified directory, including its sub-directories.
             string[] files =
                 Directory.GetFiles(@"D:\EPA_IoT_Station_Data\2018\201801\", "*.csv", SearchOption.AllDirectories);
             foreach (string InputFilePath in files)
             {
-                Cfr.FilePath = InputFilePath;
+                Cfa.SetFilePath(InputFilePath);
 
                 // Read Csv File and Distribute by Dataline Analysis Logic
-                bool Res_ReadCsvFile = Cfr.ReadCsvFile();
+                bool Res_ReadCsvFile = Cfa.ReadCsvFile();
                 Assert.IsTrue(Res_ReadCsvFile, "InputFilePath: " + InputFilePath);
 
                 // ComputeAvg & Aggregate
@@ -816,19 +749,16 @@ namespace Asc
         public void UC13_FourTanks_2018_OneYear()
         {
             // 1. Creation Management
-            // 1.1 CsvFileAnalyzer
-            CsvFileAnalyzer Cfr = new CsvFileAnalyzer();
-            Cfr.Delimiters = new char[] { '\t', ',', '\"' };
+            int HeaderLineStartAt = 1;
+            int DataLinesStartAt = 2;
+            int FooterLinesCount = 0;
+            CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
 
-            CsvFileStructure Cfs = new CsvFileStructure();
-            Cfs.HeaderLineStartAt = 1;
-            Cfs.DataLinesStartAt = 2;
-            Cfs.FooterLinesCount = 0;
+            char[] Delimiters = new char[] { '\t', ',', '\"' };
+            DatalineEntityFormat Def = new DatalineEntityFormat(Delimiters);
 
-            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5();
-            DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
-
-            // 1.2 Tanks
+            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5(Def);
+            // 2. Dependency Management
             DeviceIdList_byType = GetDeviceIdList_byType();
             List<string> List_DeviceId = TankFactory.GetDeviceIdList();
             List<string> List_DeviceType = TankFactory.GetDeviceTypeList();
@@ -852,33 +782,23 @@ namespace Asc
             TankIdList = TankFactory.GetCombination(List_DeviceType, List_TemporalMode);
             TankFactory.CreateQmt(TankIdList, out Dictionary<string, QuickMixTank> Dic_Qmt_DtTm);
 
-            //List<string> TankIdList = CreateTankIdList(List_DeviceId, List_DeviceType);
-            //Dictionary<string, List<string>> DeviceIdList_byType = GetDeviceIdList_byType();
-
-            //bool Res_CreateQmtAndPst = CreateQmtAndPst(TankIdList,
-            //    out Dictionary<string, QuickMixTank> Dic_Qmt,
-            //    out Dictionary<string, PrimarySedimentationTank> Dic_Pst);
-            //Assert.IsTrue(Res_CreateQmtAndPst);
+            string FilePath = @"";
+            CsvFileAnalyzer Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
 
             // 2. Dependency Management
-            Cfr.Cfs = Cfs;
-            Dal.Def = Def;
             Dal.Dic_Qmt = Dic_Qmt_StumDi;
             Dal.DeviceIdList = List_DeviceId;   // 攔污柵
-            //Dal.DeviceTypeList = List_DeviceType;
-            //Dal.DeviceIdList_byType = DeviceIdList_byType;
             Dal.useDeviceIdList = true;
-            Cfr.Dal = Dal;
 
             // 3. Read Csv files in specified directory, including its sub-directories.
             string[] files =
                 Directory.GetFiles(@"D:\EPA_IoT_Station_Data\2018\", "*.csv", SearchOption.AllDirectories);
             foreach (string InputFilePath in files)
             {
-                Cfr.FilePath = InputFilePath;
+                Cfa.SetFilePath(InputFilePath);
 
                 // Read Csv File and Distribute by Dataline Analysis Logic
-                bool Res_ReadCsvFile = Cfr.ReadCsvFile();
+                bool Res_ReadCsvFile = Cfa.ReadCsvFile();
                 Assert.IsTrue(Res_ReadCsvFile, "InputFilePath: " + InputFilePath);
 
                 // ComputeAvg & Aggregate
@@ -974,19 +894,16 @@ namespace Asc
         public void UC14_FourTanks_2018to2020_ThreeYears()
         {
             // 1. Creation Management
-            // 1.1 CsvFileAnalyzer
-            CsvFileAnalyzer Cfr = new CsvFileAnalyzer();
-            Cfr.Delimiters = new char[] { '\t', ',', '\"' };
+            int HeaderLineStartAt = 1;
+            int DataLinesStartAt = 2;
+            int FooterLinesCount = 0;
+            CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
 
-            CsvFileStructure Cfs = new CsvFileStructure();
-            Cfs.HeaderLineStartAt = 1;
-            Cfs.DataLinesStartAt = 2;
-            Cfs.FooterLinesCount = 0;
+            char[] Delimiters = new char[] { '\t', ',', '\"' };
+            DatalineEntityFormat Def = new DatalineEntityFormat(Delimiters);
 
-            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5();
-            DatalineEntityAndFormat Def = new DatalineEntityAndFormat();
-
-            // 1.2 Tanks
+            Dal_EPAIoT_PM2_5 Dal = new Dal_EPAIoT_PM2_5(Def);
+            // 2. Dependency Management
             DeviceIdList_byType = GetDeviceIdList_byType();
             List<string> List_DeviceId = TankFactory.GetDeviceIdList();
             List<string> List_DeviceType = TankFactory.GetDeviceTypeList();
@@ -1010,33 +927,23 @@ namespace Asc
             TankIdList = TankFactory.GetCombination(List_DeviceType, List_TemporalMode);
             TankFactory.CreateQmt(TankIdList, out Dictionary<string, QuickMixTank> Dic_Qmt_DtTm);
 
-            //List<string> TankIdList = CreateTankIdList(List_DeviceId, List_DeviceType);
-            //Dictionary<string, List<string>> DeviceIdList_byType = GetDeviceIdList_byType();
-
-            //bool Res_CreateQmtAndPst = CreateQmtAndPst(TankIdList,
-            //    out Dictionary<string, QuickMixTank> Dic_Qmt,
-            //    out Dictionary<string, PrimarySedimentationTank> Dic_Pst);
-            //Assert.IsTrue(Res_CreateQmtAndPst);
+            string FilePath = @"";
+            CsvFileAnalyzer Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
 
             // 2. Dependency Management
-            Cfr.Cfs = Cfs;
-            Dal.Def = Def;
             Dal.Dic_Qmt = Dic_Qmt_StumDi;
             Dal.DeviceIdList = List_DeviceId;   // 攔污柵
-            //Dal.DeviceTypeList = List_DeviceType;
-            //Dal.DeviceIdList_byType = DeviceIdList_byType;
             Dal.useDeviceIdList = true;
-            Cfr.Dal = Dal;
 
             // 3. Read Csv files in specified directory, including its sub-directories.
             string[] files =
                 Directory.GetFiles(@"D:\EPA_IoT_Station_Data\", "*.csv", SearchOption.AllDirectories);
             foreach (string InputFilePath in files)
             {
-                Cfr.FilePath = InputFilePath;
+                Cfa.SetFilePath(InputFilePath);
 
                 // Read Csv File and Distribute by Dataline Analysis Logic
-                bool Res_ReadCsvFile = Cfr.ReadCsvFile();
+                bool Res_ReadCsvFile = Cfa.ReadCsvFile();
                 Assert.IsTrue(Res_ReadCsvFile, "InputFilePath: " + InputFilePath);
 
                 // ComputeAvg & Aggregate
@@ -1127,6 +1034,7 @@ namespace Asc
                 PrintQmt(entry.Value, ResultFilePath);
             }
         }
+
         private void DistributeToQmt_DtTmu(string key, PrimarySedimentationTank value, Dictionary<string, QuickMixTank> dic_Qmt_DtTmu)
         {
             string[] splits = key.Split("_");

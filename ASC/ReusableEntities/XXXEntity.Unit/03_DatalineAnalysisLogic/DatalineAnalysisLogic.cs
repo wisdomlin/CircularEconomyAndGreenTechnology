@@ -8,14 +8,14 @@ namespace Asc
     {
 
         public Char[] Delimiters;
-
-
-        public DatalineEntityAndFormat Def;
+        internal DatalineEntityFormat Def;
 
         public DataTable dtAnalysisResultFormat;
         
-        public DatalineAnalysisLogic()
+        public DatalineAnalysisLogic(DatalineEntityFormat _Def)
         {
+            Def = _Def;
+
             dtAnalysisResultFormat = new DataTable();
             // Define dtAnalysisResultFormat.Columns in Subclass.
 
@@ -55,6 +55,11 @@ namespace Asc
             }
             //sb.AppendLine();
             Console.WriteLine(sb.ToString());
+        }
+
+        internal string[] ProcessHeaderLine(string Line)
+        {
+            return Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
         }
     }
 }
