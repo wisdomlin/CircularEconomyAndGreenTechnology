@@ -38,7 +38,7 @@ namespace Asc
                 while (source.TryReceive(out Line))
                 {
                     #region Process Data Line
-                    string[] LineSplits = Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
+                    string[] LineSplits = Line.Split(Def.Delimiters, StringSplitOptions.RemoveEmptyEntries);
                     Def.LineSplits = LineSplits;
 
                     // ---------------------------------------
@@ -85,7 +85,7 @@ namespace Asc
             // ---------------------------------------
             Dictionary<string, string> dicAnalysisResult = new Dictionary<string, string>();
 
-            string[] LineSplits = Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
+            string[] LineSplits = Line.Split(Def.Delimiters, StringSplitOptions.RemoveEmptyEntries);
             Def.LineSplits = LineSplits;
 
             // ---------------------------------------

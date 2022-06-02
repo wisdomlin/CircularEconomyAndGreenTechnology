@@ -23,7 +23,7 @@ namespace Asc
 
         internal override void CustomizedAnalyze(string Line)
         {
-            string[] LineSplits = Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
+            string[] LineSplits = Line.Split(Def.Delimiters, StringSplitOptions.RemoveEmptyEntries);
 
             // Address Linking
             int AddrTIME = Def.GetValueAddress("TIME");

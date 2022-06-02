@@ -9,17 +9,17 @@ namespace Asc
     class Test_Uc_Spa
     {        
         [Test]
-        public void Test_Uc_Spa_FrTg()
+        public void Test_Uc_Spa_FrTg_Serial()
         {
             // Arrange
-            Uc_Spa Uc_Spa = new Uc_Spa();
+            Uc_Spa_Serial Uc_Spa = new Uc_Spa_Serial();
 
             // Data Folder Path
             Uc_Spa.RawFolderPath = @"D:\ECAD\ECA_blend_tg\";
             Uc_Spa.MetaFolderPath = @"D:\Meta\DACF_FrTemp\";
             Uc_Spa.ResultFolderPath = @"D:\Result\";
 
-            // TODO: 也許 直接在外部給定 filepath 才是對的? 再梳理一次以 filepaht 外部供應為導向的設計
+            // TODO: 也許 直接在外部給定 filepath 才是對的? 再梳理一次以 filepath 外部供應為導向的設計
             // Precip Stations in French
             Uc_Spa.SID_Prefix = "Tg";
             Uc_Spa.SID_Array = new string[] {
@@ -78,10 +78,10 @@ namespace Asc
         }
 
         [Test]
-        public void Test_Uc_Spa_FrRr()
+        public void Test_Uc_Spa_FrRr_Serial()
         {
             // Arrange
-            Uc_Spa Uc_Spa = new Uc_Spa();
+            Uc_Spa_Serial Uc_Spa = new Uc_Spa_Serial();
 
             // Data Folder Path
             Uc_Spa.RawFolderPath = @"D:\ECAD\ECA_blend_rr\";
@@ -198,7 +198,7 @@ namespace Asc
         public void Test_Uc_Spa_TwRr()
         {
             // Arrange
-            Uc_Spa Dacf = new Uc_Spa();
+            Uc_Spa_Serial Dacf = new Uc_Spa_Serial();
 
             // Act
             bool result;

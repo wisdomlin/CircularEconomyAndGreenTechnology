@@ -22,7 +22,7 @@ namespace Asc
 
         internal override void CustomizedAnalyze(string Line)
         {
-            string[] LineSplits = Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);            
+            string[] LineSplits = Line.Split(Def.Delimiters, StringSplitOptions.RemoveEmptyEntries);            
             Double ParseResult;
 
             int Addr = Def.GetValueAddress("Date");

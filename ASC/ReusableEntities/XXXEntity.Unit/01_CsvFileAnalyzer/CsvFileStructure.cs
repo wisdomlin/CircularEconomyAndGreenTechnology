@@ -35,9 +35,9 @@ namespace Asc
             int _DataLinesStartAt = 2,
             int _FooterLinesCount = 0)
         {
-            HeaderLineStartAt = _HeaderLineStartAt = 1;
-            DataLinesStartAt = _DataLinesStartAt = 2;
-            FooterLinesCount = _FooterLinesCount = 0;
+            HeaderLineStartAt = _HeaderLineStartAt;
+            DataLinesStartAt = _DataLinesStartAt;
+            FooterLinesCount = _FooterLinesCount;
         }
     }
 }

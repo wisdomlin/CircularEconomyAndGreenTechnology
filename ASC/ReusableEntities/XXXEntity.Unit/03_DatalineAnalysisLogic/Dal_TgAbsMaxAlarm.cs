@@ -27,7 +27,7 @@ namespace Asc
             // Preparation Start
             //DataRow dicAnalysisResult = dtAnalysisResultFormat.NewRow();
             Dictionary<string, string> dicAnalysisResult = new Dictionary<string, string>();
-            string[] LineSplits = Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
+            string[] LineSplits = Line.Split(Def.Delimiters, StringSplitOptions.RemoveEmptyEntries);
             Def.LineSplits = LineSplits;
             // Preparation End
 

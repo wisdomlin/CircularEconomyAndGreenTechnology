@@ -47,20 +47,6 @@ namespace Asc
             bool res = true;
             int LineIndex = 1;
             string Line = "";
-            //Dal.Delimiters = Delimiters;
-
-            //// Create a BufferBlock<byte[]> object. This object serves as the 
-            //// target block for the producer and the source block for the consumer.
-            //buffer = new BufferBlock<string>();
-
-            //// Start the consumer. The Consume method runs asynchronously. 
-            ////Dal_TgAbsMaxAlarmConsumer Dalpc = new Dal_TgAbsMaxAlarmConsumer();
-            //Dal.Delimiters = Delimiters;
-            //List<Task> consumers = new List<Task>();
-            //for (int j = 1; j <= 10; j++)
-            //{
-            //    consumers.Add(((Dal_TgAbsMaxAlarmConsumer)Dal).CustomizedAnalyze_AsyncSendReceive(buffer));
-            //}
 
             try
             {
@@ -78,13 +64,6 @@ namespace Asc
                         LineIndex++;
                     }
                 }
-
-                // Wait for the consumer to process all data.
-                //Task.WaitAll(consumers.ToArray());
-                //foreach (Task consumer in consumers)
-                //{
-                //    consumer.Wait();
-                //}
             }
             catch (Exception e)
             {

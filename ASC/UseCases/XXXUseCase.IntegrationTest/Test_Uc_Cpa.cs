@@ -15,10 +15,7 @@ namespace Asc
 
             // Arrange
             DACF_Fao Dacf = new DACF_Fao();
-            //Dacf.FaoFilePath = AppDomain.CurrentDomain.BaseDirectory
-            //    + @"DACF\Data\Food_price_indices_data_jul20.csv";
-            Dacf.FaoFilePath = @"D:\EuroStat\FrPrice\"
-                + @"DACF\Data\Food_price_indices_data_jul20.csv";
+            Dacf.FaoFilePath = @"D:\EuroStat\FrPrice\Food_price_indices_data_jul20.csv";
 
             // Act
             bool result;
@@ -39,7 +36,7 @@ namespace Asc
         public void Test_Uc_Cpa_02_FrPrice_Serial()
         {
             // Arrange
-            Uc_Cpa Uc_Cpa = new Uc_Cpa();
+            Uc_Cpa_Serial Uc_Cpa = new Uc_Cpa_Serial();
 
             // Data Folder Path
             Uc_Cpa.RawFolderPath = @"D:\EuroStat\FrPrice\";
@@ -59,14 +56,15 @@ namespace Asc
         public void Test_Uc_Cpa_03_FrPrice_Parallel()
         {
             // Arrange
-            Uc_Cpa Uc_Cpa = new Uc_Cpa();
+            Uc_Cpa_Parallel Uc_Cpa = new Uc_Cpa_Parallel();
 
             // Data Folder Path
             Uc_Cpa.RawFolderPath = @"D:\EuroStat\FrPrice\";
             Uc_Cpa.MetaFolderPath = @"D:\Meta\DACF_EuroStat\";
             Uc_Cpa.ResultFolderPath = @"D:\Result\";
             Uc_Cpa.RawFileName = "prc_fsc_idx_1_Data_ACP.csv";
-
+            // string ResultFolderPath = @"D:\Result\";
+            // Uc_Ais.CpaFilePath = ResultFolderPath + @"Cpa\" + "Result_Cpa01" + ".csv";
             // Act
             bool result;
             result = Uc_Cpa.Run();

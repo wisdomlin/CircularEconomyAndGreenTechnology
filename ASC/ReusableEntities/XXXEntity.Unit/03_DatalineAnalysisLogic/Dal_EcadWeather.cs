@@ -21,7 +21,7 @@ namespace Asc
 
         internal override void CustomizedAnalyze(string Line)
         {
-            string[] LineSplits = Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
+            string[] LineSplits = Line.Split(Def.Delimiters, StringSplitOptions.RemoveEmptyEntries);
 
             //if (LineSplits[2].CompareTo("20050101") >= 0 && LineSplits[2].CompareTo("20191231") <= 0)
             if (LineSplits[2].CompareTo("20050101") >= 0 && LineSplits[2].CompareTo("20190930") <= 0)

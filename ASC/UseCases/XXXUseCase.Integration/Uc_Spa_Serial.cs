@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace Asc
 {
-    public class Uc_Spa
+    public class Uc_Spa_Serial
     {
         // Variables that need to be set from outside
         public string[] SID_Array;
@@ -25,14 +26,28 @@ namespace Asc
         /// <returns></returns>
         public bool Run()
         {
+            Stopwatch sw = new Stopwatch();
             bool result = true;
+
+            sw.Start();
             result &= this.UseCsvFileAnalyzer();
+            sw.Stop();
+            Console.WriteLine($"UseCsvFileAnalyzer {sw.ElapsedMilliseconds}ms");
+
+            sw.Restart();
             result &= this.IntraRawSpikeAnalyzer();
+            sw.Stop();
+            Console.WriteLine($"IntraRawSpikeAnalyzer {sw.ElapsedMilliseconds}ms");
+
+            sw.Restart();
             result &= this.InterIntegratedSpikeAnalyzer();
+            sw.Stop();
+            Console.WriteLine($"InterIntegratedSpikeAnalyzer {sw.ElapsedMilliseconds}ms");
+
             return result;
         }
 
-        public Uc_Spa()
+        public Uc_Spa_Serial()
         {
 
         }
@@ -56,7 +71,7 @@ namespace Asc
                 CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
 
                 char[] Delimiters = new char[] { ',', ' ' };
-                DatalineEntityFormat Def = new DatalineEntityFormat(Delimiters);
+                DatalineEntityFormat Def = new Def_TG(Delimiters);
 
                 Dal = new Dal_EcadWeather(Def);
 

@@ -28,7 +28,7 @@ namespace Asc
         internal override void CustomizedAnalyze(string Line)
         {
             // 進行分析行為
-            string[] LineSplits = Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
+            string[] LineSplits = Line.Split(Def.Delimiters, StringSplitOptions.RemoveEmptyEntries);
             bool isFormatRight = (LineSplits.Length == 5);  // should be done outside of BarScreen
             // TODO: isFormatRight relates to DatalineEntityFormat
 

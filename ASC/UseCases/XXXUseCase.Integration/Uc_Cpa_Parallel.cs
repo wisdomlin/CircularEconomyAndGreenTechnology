@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Asc
 {
-    public class Uc_Cpa
+    public class Uc_Cpa_Parallel
     {
         // Variables that need to be set from outside
         public string RawFolderPath;
@@ -25,17 +27,34 @@ namespace Asc
         /// <returns></returns>
         public bool Run()
         {
+            Stopwatch sw = new Stopwatch();            
             bool result = true;
+
+            sw.Start();
             result &= this.UseCsvFileAnalyzer();
+            sw.Stop();
+            Console.WriteLine($"UseCsvFileAnalyzer {sw.ElapsedMilliseconds}ms");
+
+            sw.Restart();
             result &= this.UseSingularSpectrumAnalyzer();
+            sw.Stop();
+            Console.WriteLine($"UseSingularSpectrumAnalyzer {sw.ElapsedMilliseconds}ms");
+
+            sw.Restart();
             result &= this.UseOutlierTrimmingAnalyzer();
+            sw.Stop();
+            Console.WriteLine($"UseOutlierTrimmingAnalyzer {sw.ElapsedMilliseconds}ms");
+
+            sw.Restart();
             result &= this.UseChangePointAnalyzer();
+            sw.Stop();
+            Console.WriteLine($"UseChangePointAnalyzer {sw.ElapsedMilliseconds}ms");
             return result;
         }
 
-        public Uc_Cpa()
+        public Uc_Cpa_Parallel()
         {
-            
+
         }
 
         // Data Structures used by Modules (and Inter-Mudules!)
@@ -58,13 +77,13 @@ namespace Asc
             CsvFileStructure Cfs = new CsvFileStructure(HeaderLineStartAt, DataLinesStartAt, FooterLinesCount);
 
             char[] Delimiters = new char[] { '\t' };
-            DatalineEntityFormat Def = new DatalineEntityFormat(Delimiters);
-                        
+            DatalineEntityFormat Def = new Def_EuroStatPrice(Delimiters);
+
             Dal = new Dal_EuroStatPrice(Def);
 
             string FilePath = RawFolderPath + RawFileName;
             Cfa = new CsvFileAnalyzer(Cfs, Dal, FilePath);
-           
+
             // 3. Read Csv File
             bool result = Cfa.ReadCsvFile();
 
@@ -85,9 +104,11 @@ namespace Asc
             bool result = true;
             try
             {
-                foreach (KeyValuePair<string, List<double>> entry in Dal.dicListFpi)
+                //Stopwatch sw = new Stopwatch();
+                //sw.Start();
+                Parallel.ForEach(Dal.dicListFpi, (KeyValuePair<string, List<double>> entry) =>
                 {
-                    // do something with entry.Value or entry.Key
+                    // Do Stuff with entry.Key or entry.Value
                     SingularSpectrumAnalyzer SsaFpi = new SingularSpectrumAnalyzer();
                     SsaFpi.SetAddSequences(entry.Value.ToArray());
                     SsaFpi.SetWindow(3);
@@ -95,10 +116,29 @@ namespace Asc
                     SsaFpi.AnalyzeSequence(out double[] trendFpiArr, out double[] noiseFpiArr);
                     Dic_trendFpiArr.TryAdd(entry.Key, trendFpiArr);
                     Dic_noiseFpiArr.TryAdd(entry.Key, noiseFpiArr);
+                });
+                //sw.Stop();
+                //Console.WriteLine($"Parallel {sw.ElapsedMilliseconds}ms");
 
+                //Parallel.ForEach(KeyValuePair<string, List<double>> entry in Dal.dicListFpi)
+                //{
+                //    // do something with entry.Value or entry.Key
+                //    SingularSpectrumAnalyzer SsaFpi = new SingularSpectrumAnalyzer();
+                //    SsaFpi.SetAddSequences(entry.Value.ToArray());
+                //    SsaFpi.SetWindow(3);
+                //    SsaFpi.SetAlgoTopKDirect(1);
+                //    SsaFpi.AnalyzeSequence(out double[] trendFpiArr, out double[] noiseFpiArr);
+                //    Dic_trendFpiArr.TryAdd(entry.Key, trendFpiArr);
+                //    Dic_noiseFpiArr.TryAdd(entry.Key, noiseFpiArr);
+                //}
+
+                // Move outside Loop to save File I/O cost
+                foreach (KeyValuePair<string, List<double>> entry in Dal.dicListFpi)
+                {
                     string FilePath = MetaFolderPath + "Ssa\\" + "trendFpi_" + entry.Key.ToString() + ".csv";
+                    Dic_trendFpiArr.TryGetValue(entry.Key, out double[] TmpTrendFpiArr);
                     StoreArrayAsMetaCsv(
-                        Dal.dicListDate[entry.Key].ToArray(), trendFpiArr,
+                        Dal.dicListDate[entry.Key].ToArray(), TmpTrendFpiArr,
                         FilePath);
                 }
 
@@ -151,8 +191,11 @@ namespace Asc
         {
             try
             {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+
                 // Run Cpa Analysis and Write as Meta File
-                foreach (KeyValuePair<string, double[]> entry in Dic_trendFpiArr)
+                Parallel.ForEach(Dic_trendFpiArr, (KeyValuePair<string, double[]> entry) =>
                 {
                     ChangePointAnalyzer CpaFpi = new ChangePointAnalyzer();
                     CpaFpi._InputDataPath = MetaFolderPath + @"Ssa\" + "trendFpi_" + entry.Key + ".csv";
@@ -163,10 +206,28 @@ namespace Asc
                     CpaFpi.Confidence = 95;
                     CpaFpi.SlidingWindowDivided = 30;
                     CpaFpi.RunAnalysis();
-                }
+                });
+                //foreach (KeyValuePair<string, double[]> entry in Dic_trendFpiArr)
+                //{
+                //    ChangePointAnalyzer CpaFpi = new ChangePointAnalyzer();
+                //    CpaFpi._InputDataPath = MetaFolderPath + @"Ssa\" + "trendFpi_" + entry.Key + ".csv";
+                //    CpaFpi._OutputDataPath = MetaFolderPath + @"Cpa\" + "CpaFpi_" + entry.Key + ".csv";
+                //    CpaFpi._hasHeader = false;
+                //    CpaFpi._docsize = 177;
+                //    CpaFpi._docName = "CpaFpi_" + entry.Key;
+                //    CpaFpi.Confidence = 95;
+                //    CpaFpi.SlidingWindowDivided = 30;
+                //    CpaFpi.RunAnalysis();
+                //}
+
+                sw.Stop();
+                Console.WriteLine($"ChangePointAnalyzer {sw.ElapsedMilliseconds}ms");
 
                 // Read Meta and Output an Integrated Auto Data CSV
+                sw.Restart();
                 ReadMetaAndOutputAnIntegratedAutoDataCSV();
+                sw.Stop();
+                Console.WriteLine($"ReadMetaAndOutputAnIntegratedAutoDataCSV {sw.ElapsedMilliseconds}ms");
 
                 return true;
             }

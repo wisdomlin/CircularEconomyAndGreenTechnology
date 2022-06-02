@@ -6,8 +6,6 @@ namespace Asc
 {
     public class DatalineAnalysisLogic
     {
-
-        public Char[] Delimiters;
         internal DatalineEntityFormat Def;
 
         public DataTable dtAnalysisResultFormat;
@@ -25,7 +23,7 @@ namespace Asc
 
         internal virtual void CustomizedAnalyze(string Dataline)
         {
-            string[] LineSplits = Dataline.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
+            string[] LineSplits = Dataline.Split(Def.Delimiters, StringSplitOptions.RemoveEmptyEntries);
 
             // Preparation Start
             DataRow drAnalysisResult = dtAnalysisResultFormat.NewRow();
@@ -59,7 +57,7 @@ namespace Asc
 
         internal string[] ProcessHeaderLine(string Line)
         {
-            return Line.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries);
+            return Line.Split(Def.Delimiters, StringSplitOptions.RemoveEmptyEntries);
         }
     }
 }
