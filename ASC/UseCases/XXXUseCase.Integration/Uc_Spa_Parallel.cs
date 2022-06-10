@@ -3,10 +3,11 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Asc
 {
-    public class Uc_Spa_Serial
+    public class Uc_Spa_Parallel
     {
         // Variables that need to be set from outside
         public string[] SID_Array;
@@ -47,7 +48,7 @@ namespace Asc
             return result;
         }
 
-        public Uc_Spa_Serial()
+        public Uc_Spa_Parallel()
         {
 
         }
@@ -103,7 +104,8 @@ namespace Asc
         {
             try
             {
-                foreach (KeyValuePair<string, List<double>> entry in Dic_Val_List)
+                Parallel.ForEach(Dic_Val_List, (KeyValuePair<string, List<double>> entry) =>
+                //foreach (KeyValuePair<string, List<double>> entry in Dic_Val_List)
                 {
                     SpikeAnalyzer Spa = new SpikeAnalyzer();
                     string sID = entry.Key;
@@ -119,7 +121,7 @@ namespace Asc
                     Spa.SlidingWindowDivided = 92;    // How many spikes you want to detect in whole period? (15y * 12 spikes per year)
                     // One Window per Season (31+30+31=92) or Half Year (30*6=180) or Year (30*12=360)
                     Spa.RunAnalysis();
-                }
+                });
                 return true;
             }
             catch (Exception e)

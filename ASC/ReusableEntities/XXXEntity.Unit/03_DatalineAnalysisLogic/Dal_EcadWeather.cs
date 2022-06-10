@@ -23,15 +23,28 @@ namespace Asc
         {
             string[] LineSplits = Line.Split(Def.Delimiters, StringSplitOptions.RemoveEmptyEntries);
 
-            //if (LineSplits[2].CompareTo("20050101") >= 0 && LineSplits[2].CompareTo("20191231") <= 0)
-            if (LineSplits[2].CompareTo("20050101") >= 0 && LineSplits[2].CompareTo("20190930") <= 0)
+            // Address Linking
+            int AddrSTAID = Def.GetValueAddress("STAID");
+            int AddrSOUID = Def.GetValueAddress("SOUID");
+            int AddrDATE = Def.GetValueAddress("DATE");
+            int AddrTG = Def.GetValueAddress("TG");
+            int AddrQ_TG = Def.GetValueAddress("Q_TG");
+
+            // Value String Accessing
+            string sValSTAID = LineSplits[AddrSTAID].Trim();
+            string sValSOUID = LineSplits[AddrSOUID].Trim();
+            string sValDATE = LineSplits[AddrDATE].Trim();
+            string sValTG = LineSplits[AddrTG].Trim();
+            string sValQ_TG = LineSplits[AddrQ_TG].Trim();
+
+            if (sValDATE.CompareTo("20050101") >= 0 && sValDATE.CompareTo("20190930") <= 0)
             {
-                STAID.Add(LineSplits[0]);
-                SOUID.Add(LineSplits[1]);
-                DATE.Add(LineSplits[2]);
-                Double.TryParse(LineSplits[3], out double ParseResult);
+                STAID.Add(sValSTAID);
+                SOUID.Add(sValSOUID);
+                DATE.Add(sValDATE);
+                Double.TryParse(sValTG, out double ParseResult);
                 Val.Add(ParseResult);
-                Q_Val.Add(LineSplits[4]);
+                Q_Val.Add(sValQ_TG);
             }    
         }
     }
